@@ -47,9 +47,7 @@ medicineCard    : FDA8F3
 
 All the design/mockups for the app have been added in the `designs` directory. You can use those for reference.
 
-<img src="./designs/Home - Screen.png" width="20%">
-<img src="./designs/Disease-Map.png" width="20%">
-<img src="./designs/Connect with patient.png" width="20%"><img src="./designs/Consult a doctor.png" width="20%">
+<img src="./designs/Home - Screen.png" width="20%"><img src="./designs/Disease-Map.png" width="20%"><img src="./designs/Connect with patient.png" width="20%"><img src="./designs/Consult a doctor.png" width="20%">
 
 ## Learn More
 
