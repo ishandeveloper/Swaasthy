@@ -1,4 +1,4 @@
-package com.example.codered
+package com.ishandeveloper.codered
 
 import io.flutter.embedding.android.FlutterActivity
 

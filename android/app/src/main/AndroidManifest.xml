@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.codered">
+    package="com.ishandeveloper.codered">
    <application
         android:label="codered"
         android:icon="@mipmap/ic_launcher">
