@@ -15,7 +15,7 @@ class CodeRedApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: CodeRedRouter.generateRoute,
       // initialRoute: '/home',
-      initialRoute: '/emergency',
+      initialRoute: '/home',
       theme: ThemeData(
           pageTransitionsTheme: PageTransitionsTheme(builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder()

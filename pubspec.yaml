@@ -28,6 +28,7 @@ dependencies:
   flutter_vector_icons: ^0.2.1
   geolocator: ^6.1.14
   google_maps_flutter: ^1.1.1
+  http: ^0.12.2
   titled_navigation_bar: ^4.1.0
 
 dev_dependencies:
@@ -41,6 +42,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/
 
   fonts:
     - family: CodeRedIcons
