@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import 'local_widgets/index.dart';
-import 'dart:math';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -15,7 +14,9 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: CodeRedColors.primary,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/emergency');
+          },
           child: Transform.translate(
             offset: Offset(25, 0),
             child: Transform(

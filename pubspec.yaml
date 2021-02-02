@@ -26,6 +26,8 @@ dependencies:
   cached_network_image: ^2.5.0
   cupertino_icons: ^1.0.2
   flutter_vector_icons: ^0.2.1
+  geolocator: ^6.1.14
+  google_maps_flutter: ^1.1.1
   titled_navigation_bar: ^4.1.0
 
 dev_dependencies:
@@ -41,8 +43,8 @@ flutter:
     - assets/images/
 
   fonts:
-     - family:  CodeRedIcons
-       fonts:
+    - family: CodeRedIcons
+      fonts:
         - asset: assets/fonts/Product-Sans-Regular.ttf
           weight: 400
         - asset: assets/fonts/Product-Sans-Bold.ttf
