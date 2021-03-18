@@ -50,8 +50,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
                           ltr: leftToRight,
                           child: DummyScreen(title: 'Forums')),
                       TransitionWrapper(
-                          ltr: leftToRight,
-                          child: DummyScreen(title: 'Talk to a doctor')),
+                          ltr: leftToRight, child: ConsultDoctor()),
                     ]))));
   }
 

@@ -16,17 +16,17 @@ class HomeCardActions extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             HalfWidthHomeCard(
-              background: CodeRedColors.medicineCard,
-              header: 'Reminder',
-              subText: 'Medicine',
-              imagePath: 'assets/images/medicine-reminder.png',
-            ),
+                background: CodeRedColors.medicineCard,
+                header: 'Reminder',
+                subText: 'Medicine',
+                imagePath: 'assets/images/medicine-reminder.png',
+                path: '/reminder'),
             HalfWidthHomeCard(
-              background: Colors.white,
-              header: 'Patients',
-              subText: 'Connect with',
-              imagePath: 'assets/images/connect.png',
-            )
+                background: Colors.white,
+                header: 'Patients',
+                subText: 'Connect with',
+                imagePath: 'assets/images/connect.png',
+                path: '/forums')
           ],
         ),
         SizedBox(height: 10),
