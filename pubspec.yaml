@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -24,19 +24,16 @@ dependencies:
   flutter:
     sdk: flutter
   cached_network_image: ^2.5.0
-  # cupertino_icons: ^1.0.2
+  cloud_firestore: ^1.0.1
   flutter_vector_icons: ^0.2.1
-  geolocator: ^6.1.14
-  google_maps_flutter: ^1.1.1
+  geolocator: ^7.0.1
+  google_maps_flutter: ^2.0.1
   http: ^0.12.2
   titled_navigation_bar: ^4.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  # integration_test:
-  #   sdk: flutter
-
 flutter:
   uses-material-design: true
 
