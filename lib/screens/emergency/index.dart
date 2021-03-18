@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -111,10 +110,11 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
             children: [
               GoogleMap(
                 mapType: MapType.normal,
-                zoomControlsEnabled: true,
+                zoomControlsEnabled: false,
                 zoomGesturesEnabled: true,
                 buildingsEnabled: false,
                 trafficEnabled: false,
+                minMaxZoomPreference: MinMaxZoomPreference(12, 16),
                 mapToolbarEnabled: false,
                 myLocationButtonEnabled: true,
                 initialCameraPosition: EmergencyScreen._initialMapPosition,
@@ -147,7 +147,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                 },
                 padding: EdgeInsets.only(bottom: 300),
               ),
-              EmergencyConfirmationSheet(),
+              EmergencyConfirmationSheet(onConfirm: () {}),
             ],
           ),
         ),

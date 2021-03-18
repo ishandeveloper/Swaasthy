@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
-class EmergencyConfirmationSheet extends StatelessWidget {
+class EmergencyConfirmationSheet extends StatefulWidget {
+  final Function onConfirm;
+
+  EmergencyConfirmationSheet({@required this.onConfirm});
+
+  @override
+  _EmergencyConfirmationSheetState createState() =>
+      _EmergencyConfirmationSheetState();
+}
+
+class _EmergencyConfirmationSheetState
+    extends State<EmergencyConfirmationSheet> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -37,7 +48,9 @@ class EmergencyConfirmationSheet extends StatelessWidget {
                 MaterialButton(
                   color: Colors.red,
                   padding: EdgeInsets.symmetric(vertical: 14, horizontal: 18),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/firstaid');
+                  },
                   child: Text('CONFIRM LOCATION',
                       style: TextStyle(
                           color: Colors.white,

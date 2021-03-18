@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   cached_network_image: ^2.5.0
-  cupertino_icons: ^1.0.2
+  # cupertino_icons: ^1.0.2
   flutter_vector_icons: ^0.2.1
   geolocator: ^6.1.14
   google_maps_flutter: ^1.1.1
@@ -34,8 +34,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  integration_test:
-    sdk: flutter
+  # integration_test:
+  #   sdk: flutter
 
 flutter:
   uses-material-design: true

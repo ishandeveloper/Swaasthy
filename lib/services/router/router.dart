@@ -17,6 +17,10 @@ class CodeRedRouter {
         return MaterialPageRoute(builder: (_) => Scaffold());
       case CodeRedRoutes.emergency:
         return MaterialPageRoute(builder: (_) => EmergencyScreen());
+      case CodeRedRoutes.reminder:
+        return MaterialPageRoute(builder: (_) => MedicineReminder());
+      case CodeRedRoutes.firstaid:
+        return MaterialPageRoute(builder: (_) => FirstAidSteps());
       default:
         return MaterialPageRoute(builder: (_) => ScreensWrapper());
     }
