@@ -43,12 +43,9 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
                     onPageChanged: _pageChangeHandler,
                     children: [
                       TransitionWrapper(ltr: leftToRight, child: HomeScreen()),
+                      TransitionWrapper(ltr: leftToRight, child: StatsScreen()),
                       TransitionWrapper(
-                          ltr: leftToRight,
-                          child: DummyScreen(title: 'In your area')),
-                      TransitionWrapper(
-                          ltr: leftToRight,
-                          child: DummyScreen(title: 'Forums')),
+                          ltr: leftToRight, child: ForumsScreen()),
                       TransitionWrapper(
                           ltr: leftToRight, child: ConsultDoctor()),
                     ]))));

@@ -23,13 +23,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cached_network_image: ^2.5.0
+  cached_network_image: ^2.5.1
   cloud_firestore: ^1.0.1
+  flutter_linkify: ^5.0.0
   flutter_vector_icons: ^0.2.1
   geolocator: ^7.0.1
   google_maps_flutter: ^2.0.1
   http: ^0.12.2
   titled_navigation_bar: ^4.1.0
+  url_launcher: ^6.0.2
 
 dev_dependencies:
   flutter_test:
@@ -42,7 +44,7 @@ flutter:
     - assets/icons/
 
   fonts:
-    - family: CodeRedIcons
+    - family: ProductSans
       fonts:
         - asset: assets/fonts/Product-Sans-Regular.ttf
           weight: 400
