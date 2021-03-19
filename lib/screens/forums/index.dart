@@ -32,7 +32,7 @@ class ForumsScreen extends StatelessWidget {
               ),
               SizedBox(height: 32),
               ListView.builder(
-                  itemCount: 10,
+                  itemCount: 1,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
@@ -159,31 +159,70 @@ class ForumPostControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 6),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(
-              icon: Icon(
-                Octicons.arrow_small_up,
-                size: 42,
-                color: CodeRedColors.primary,
-              ),
-              onPressed: () => {}),
+          ForumPostControlVotes(),
+          SizedBox(width: 20),
+          ForumPostControlComments(),
+        ],
+      ),
+    );
+  }
+}
+
+class ForumPostControlComments extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 0),
+      child: Row(
+        children: [
+          Icon(
+            Octicons.comment_discussion,
+            size: 20,
+            color: CodeRedColors.icon,
+          ),
           Container(
-            padding: EdgeInsets.only(top: 16),
+            padding: EdgeInsets.only(left: 8),
             child: Text(
-              '32',
+              '4',
               style: TextStyle(fontSize: 16),
             ),
           ),
-          IconButton(
-              icon: Icon(
-                Octicons.arrow_small_down,
-                size: 42,
-                color: CodeRedColors.text,
-              ),
-              onPressed: () => {}),
         ],
+      ),
+    );
+  }
+}
+
+class ForumPostControlVotes extends StatelessWidget {
+  const ForumPostControlVotes({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(minWidth: 50),
+      child: Container(
+        margin: EdgeInsets.only(top: 0),
+        child: Row(
+          children: [
+            Icon(
+              Octicons.arrow_up,
+              size: 22,
+              color: CodeRedColors.icon,
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 8),
+              child: Text(
+                '32',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
