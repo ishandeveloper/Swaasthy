@@ -18,7 +18,12 @@ class HomeAppBar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.menu, size: 26, color: CodeRedColors.icon),
+                InkWell(
+                    onTap: () {
+                      CodeRedKeys.drawerKey.currentState.openDrawer();
+                    },
+                    child:
+                        Icon(Icons.menu, size: 26, color: CodeRedColors.icon)),
                 Container(
                     child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
