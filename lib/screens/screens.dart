@@ -31,24 +31,31 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: CodeRedColors.base,
-        child: SafeArea(
-            child: Scaffold(
-                bottomNavigationBar: NavBar(
-                    currentIndex: currentIndex, onChange: _navbarChangeHandler),
-                body: PageView(
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: _pageChangeHandler,
-                    children: [
-                      TransitionWrapper(ltr: leftToRight, child: HomeScreen()),
-                      TransitionWrapper(ltr: leftToRight, child: StatsScreen()),
-                      TransitionWrapper(
-                          ltr: leftToRight, child: ForumsScreen()),
-                      TransitionWrapper(
-                          ltr: leftToRight, child: ConsultDoctor()),
-                    ]))));
+    return Scaffold(
+      key: CodeRedKeys.drawerKey,
+      drawer: ScreenDrawer(),
+      body: Container(
+          color: CodeRedColors.base,
+          child: SafeArea(
+              child: Scaffold(
+                  bottomNavigationBar: NavBar(
+                      currentIndex: currentIndex,
+                      onChange: _navbarChangeHandler),
+                  body: PageView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: _pageController,
+                      onPageChanged: _pageChangeHandler,
+                      children: [
+                        TransitionWrapper(
+                            ltr: leftToRight, child: HomeScreen()),
+                        TransitionWrapper(
+                            ltr: leftToRight, child: StatsScreen()),
+                        TransitionWrapper(
+                            ltr: leftToRight, child: ForumsScreen()),
+                        TransitionWrapper(
+                            ltr: leftToRight, child: ConsultDoctor()),
+                      ])))),
+    );
   }
 
   void _navbarChangeHandler(index) {

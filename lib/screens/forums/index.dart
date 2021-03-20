@@ -1,3 +1,4 @@
+import 'package:codered/services/database/forums.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -31,13 +32,21 @@ class ForumsScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 32),
-              ListView.builder(
-                  itemCount: 1,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ForumPost();
+
+              FutureBuilder(
+                  future: ForumsHelper.getPosts(),
+                  builder: (BuildContext context, snapshot) {
+                    if (!snapshot.hasData) return CircularProgressIndicator();
+
+                    return Text(snapshot.data.toString());
                   })
+              // ListView.builder(
+              //     itemCount: 20,
+              //     physics: NeverScrollableScrollPhysics(),
+              //     shrinkWrap: true,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return ForumPost();
+              //     })
             ],
           ),
         ),
@@ -56,8 +65,8 @@ class ForumPost extends StatelessWidget {
             color: Color.fromRGBO(0, 0, 0, 0.1),
             blurRadius: 3)
       ]),
-      margin: EdgeInsets.symmetric(vertical: 4),
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      margin: EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,9 +75,67 @@ class ForumPost extends StatelessWidget {
 
           ForumPostContent(),
 
-          ForumPostControls()
+          ForumPostControls(),
+
+          Container(
+            color: Color(0xffeeeeee),
+            child: TextField(
+                autofocus: false,
+                controller: TextEditingController(),
+                // focusNode: _editCommentFocus,
+                textCapitalization: TextCapitalization.sentences,
+                style: TextStyle(color: CodeRedColors.text),
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10),
+                    border: InputBorder.none,
+                    hintText: "Write your comment...",
+                    hintStyle:
+                        TextStyle(fontSize: 14, color: CodeRedColors.text))),
+          ),
+
+          ForumPostComments(),
         ],
       ),
+    );
+  }
+}
+
+class ForumPostComments extends StatefulWidget {
+  @override
+  _ForumPostCommentsState createState() => _ForumPostCommentsState();
+}
+
+class _ForumPostCommentsState extends State<ForumPostComments> {
+  int maxCommentsToDisplay = 2;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: maxCommentsToDisplay,
+      itemBuilder: (BuildContext context, index) {
+        return Container(
+          color: index % 2 != 0 ? Color(0xffF5F5F5) : Color(0xffFFFFFF),
+          padding: EdgeInsets.only(top: 6, left: 12, right: 6, bottom: 6),
+          margin: EdgeInsets.only(top: 4, bottom: 4),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 16,
+                backgroundImage: NetworkImage(
+                    'https://avatars.githubusercontent.com/u/54989142?s=460&u=dae5bd5b626e6e4ed70d23fe25d1eba5d510efc6&v=4'),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text"),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -179,7 +246,7 @@ class ForumPostControlComments extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            Octicons.comment_discussion,
+            Octicons.comment,
             size: 20,
             color: CodeRedColors.icon,
           ),

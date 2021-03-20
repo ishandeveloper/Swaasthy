@@ -8,7 +8,7 @@ class CodeRedMapsHelper {
     String apiURL =
         "https://maps.googleapis.com/maps/api/directions/json?origin=${initialpos.latitude},${initialpos.longitude}&destination=${finalpos.latitude},$finalpos.longitude}&key=${CodeRedKeys.mapsAPIKey}";
 
-    var response = await http.get(apiURL);
+    var response = await http.get(Uri.parse(apiURL));
 
     // Failed
     if (response.statusCode != 200) {

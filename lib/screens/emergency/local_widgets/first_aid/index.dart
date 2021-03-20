@@ -95,10 +95,10 @@ class FirstAidSteps extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            OutlineButton(
-                              color: CodeRedColors.primary,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 24),
+                            OutlinedButton(
+                              // color: CodeRedColors.primary,
+                              // padding: EdgeInsets.symmetric(
+                              //     vertical: 12, horizontal: 24),
                               onPressed: () {},
                               child: Row(
                                 children: [
