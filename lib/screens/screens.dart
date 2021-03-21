@@ -38,9 +38,11 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
           color: CodeRedColors.base,
           child: SafeArea(
               child: Scaffold(
-                  bottomNavigationBar: NavBar(
-                      currentIndex: currentIndex,
-                      onChange: _navbarChangeHandler),
+                  bottomNavigationBar: isKeyboardVisible(context)
+                      ? null
+                      : NavBar(
+                          currentIndex: currentIndex,
+                          onChange: _navbarChangeHandler),
                   body: PageView(
                       physics: NeverScrollableScrollPhysics(),
                       controller: _pageController,

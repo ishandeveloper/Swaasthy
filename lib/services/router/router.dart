@@ -21,6 +21,8 @@ class CodeRedRouter {
         return MaterialPageRoute(builder: (_) => MedicineReminder());
       case CodeRedRoutes.firstaid:
         return MaterialPageRoute(builder: (_) => FirstAidSteps());
+      case CodeRedRoutes.newpost:
+        return MaterialPageRoute(builder: (_) => NewForumPost());
       default:
         return MaterialPageRoute(builder: (_) => ScreensWrapper());
     }

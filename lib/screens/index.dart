@@ -9,3 +9,5 @@ export './drawer.dart';
 export './auth/login.dart';
 // First Aid Steps
 export './emergency/local_widgets/first_aid/index.dart';
+
+export './forums/new_post/index.dart';

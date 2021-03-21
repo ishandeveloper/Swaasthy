@@ -1,8 +1,11 @@
-// Checks if the keyboard is visible on user screen or in a dismissed state
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:another_flushbar/flushbar.dart';
+
+// Checks if the keyboard is visible on user screen or in a dismissed state
 bool isKeyboardVisible(BuildContext context) {
   if (MediaQuery.of(context).viewInsets.bottom == 0) return false;
   return true;
@@ -85,4 +88,24 @@ void openURL(String url, BuildContext context) async {
 void openURLinBrowser(String url) async {
   if (await canLaunch(url))
     await launch(url, forceWebView: false, enableJavaScript: true);
+}
+
+/*
+  Accepts a string message and displays a snackbar
+*/
+void displaySnackbar(BuildContext context, String message) {
+  Flushbar(
+    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 14),
+    messageText: Row(
+      children: [
+        const Icon(Icons.error, color: Colors.white, size: 24),
+        const SizedBox(width: 10),
+        Flexible(
+            child: Text(message,
+                style: TextStyle(color: Colors.white, fontSize: 14))),
+      ],
+    ),
+    backgroundColor: CodeRedColors.primary,
+    duration: Duration(seconds: 2),
+  )..show(context);
 }

@@ -23,18 +23,23 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  another_flushbar: ^1.10.17
   cached_network_image: ^2.5.1
   cloud_firestore: ^1.0.1
+  connectivity: ^3.0.3
+  firebase_auth: ^1.0.1
+  firebase_core: ^1.0.1
   flutter_linkify: ^5.0.0
   flutter_vector_icons: ^0.2.1
   geolocator: ^7.0.1
   google_maps_flutter: ^2.0.1
+  google_sign_in: ^4.5.9
   http: ^0.13.0
+  provider: ^5.0.0
+  shimmer: ^1.1.2
+  timeago: ^3.0.2
   titled_navigation_bar: ^4.1.0
   url_launcher: ^6.0.2
-  firebase_auth: ^1.0.1
-  firebase_core: ^1.0.1
-  google_sign_in: ^4.5.9
 
 dev_dependencies:
   flutter_test:
