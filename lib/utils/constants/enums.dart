@@ -1,5 +1,4 @@
 // Enums For All The Different Types Of Post Components
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum ForumPostType {
   text,

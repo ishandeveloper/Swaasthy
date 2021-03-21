@@ -23,6 +23,7 @@ class UpvotesService with ChangeNotifier {
   }
 
   void updateLike({@required int index, @required String uid}) {
+    print("UPDATE LIKE CALLED");
     if (_likes[index].contains(uid)) {
       _likes[index].remove(uid);
     } else {

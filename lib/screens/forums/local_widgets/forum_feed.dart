@@ -8,6 +8,8 @@ import 'package:shimmer/shimmer.dart';
 import 'index.dart';
 
 class ForumsFeed extends StatefulWidget {
+  ForumsFeed({bool refresh = false});
+
   @override
   _ForumsFeedState createState() => _ForumsFeedState();
 }
@@ -51,7 +53,8 @@ class _ForumsFeedState extends State<ForumsFeed> {
             ForumsHelper.resetInteractions();
           });
 
-      return Future.value(true);
+      setState(() => _data = null);
+      // return Future.value(true);
     }
 
     // If already fetching items in callstack, then don't fetch again
@@ -237,6 +240,7 @@ class ForumsTitle extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: 16, right: 16, bottom: 32),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             'Forums',
@@ -246,6 +250,12 @@ class ForumsTitle extends StatelessWidget {
               fontFamily: 'ProductSans',
             ),
           ),
+          FloatingActionButton(
+            mini: true,
+            onPressed: () => Navigator.pushNamed(context, '/newpost'),
+            backgroundColor: CodeRedColors.primary,
+            child: Icon(Icons.add),
+          )
         ],
       ),
     );

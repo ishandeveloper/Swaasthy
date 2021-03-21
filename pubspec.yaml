@@ -27,14 +27,19 @@ dependencies:
   cached_network_image: ^2.5.1
   cloud_firestore: ^1.0.1
   connectivity: ^3.0.3
+  file_picker: ^3.0.0
   firebase_auth: ^1.0.1
   firebase_core: ^1.0.1
   flutter_linkify: ^5.0.0
+  flutter_phoenix: ^1.0.0
   flutter_vector_icons: ^0.2.1
   geolocator: ^7.0.1
   google_maps_flutter: ^2.0.1
   google_sign_in: ^4.5.9
   http: ^0.13.0
+  lottie: ^1.0.1
+  multi_image_picker: ^4.8.0
+  path_provider: ^2.0.1
   provider: ^5.0.0
   shimmer: ^1.1.2
   timeago: ^3.0.2
@@ -50,6 +55,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lottie/
 
   fonts:
     - family: ProductSans

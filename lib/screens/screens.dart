@@ -5,10 +5,17 @@
 
 import 'package:codered/shared_widgets/index.dart';
 import 'package:codered/utils/index.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import './index.dart';
 import 'package:flutter/material.dart';
 
+int currentIndex = 0; // Current Screen Index
+
 class ScreensWrapper extends StatefulWidget {
+  final bool refresh;
+
+  ScreensWrapper({this.refresh = false});
+
   @override
   _ScreensWrapperState createState() => _ScreensWrapperState();
 }
@@ -20,8 +27,6 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
   bool leftToRight = true; // Boolean to check for type of transition
 
-  int currentIndex = 0; // Current Screen Index
-
 /* ================ Initialize ===================== */
   @override
   void initState() {
@@ -31,32 +36,35 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: CodeRedKeys.drawerKey,
-      drawer: ScreenDrawer(),
-      body: Container(
-          color: CodeRedColors.base,
-          child: SafeArea(
-              child: Scaffold(
-                  bottomNavigationBar: isKeyboardVisible(context)
-                      ? null
-                      : NavBar(
-                          currentIndex: currentIndex,
-                          onChange: _navbarChangeHandler),
-                  body: PageView(
-                      physics: NeverScrollableScrollPhysics(),
-                      controller: _pageController,
-                      onPageChanged: _pageChangeHandler,
-                      children: [
-                        TransitionWrapper(
-                            ltr: leftToRight, child: HomeScreen()),
-                        TransitionWrapper(
-                            ltr: leftToRight, child: StatsScreen()),
-                        TransitionWrapper(
-                            ltr: leftToRight, child: ForumsScreen()),
-                        TransitionWrapper(
-                            ltr: leftToRight, child: ConsultDoctor()),
-                      ])))),
+    return Phoenix(
+      child: Scaffold(
+        key: CodeRedKeys.drawerKey,
+        drawer: ScreenDrawer(),
+        body: Container(
+            color: CodeRedColors.base,
+            child: SafeArea(
+                child: Scaffold(
+                    bottomNavigationBar: isKeyboardVisible(context)
+                        ? null
+                        : NavBar(
+                            currentIndex: currentIndex,
+                            onChange: _navbarChangeHandler),
+                    body: PageView(
+                        physics: NeverScrollableScrollPhysics(),
+                        controller: _pageController,
+                        onPageChanged: _pageChangeHandler,
+                        children: [
+                          TransitionWrapper(
+                              ltr: leftToRight, child: HomeScreen()),
+                          TransitionWrapper(
+                              ltr: leftToRight, child: StatsScreen()),
+                          TransitionWrapper(
+                              ltr: leftToRight,
+                              child: ForumsScreen(refresh: widget.refresh)),
+                          TransitionWrapper(
+                              ltr: leftToRight, child: ConsultDoctor()),
+                        ])))),
+      ),
     );
   }
 

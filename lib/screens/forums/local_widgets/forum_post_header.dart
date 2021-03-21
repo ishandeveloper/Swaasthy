@@ -24,7 +24,7 @@ class ForumPostHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(user.userID,
+              Text(user.username,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
               Text(timeago.format(timestamp.toDate()),
                   style: TextStyle(

@@ -19,7 +19,8 @@ class ForumPostContent extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: getContextWidth(context) * 0.9,
+            width: getContextWidth(context),
+            padding: EdgeInsets.only(top: 12, left: 8),
             child: Text(this.title,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           ),

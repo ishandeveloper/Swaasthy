@@ -11,3 +11,4 @@ export './auth/login.dart';
 export './emergency/local_widgets/first_aid/index.dart';
 
 export './forums/new_post/index.dart';
+export './forums/new_post/post_upload.dart';

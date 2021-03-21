@@ -40,13 +40,31 @@ class ForumsHelper {
         .then((value) => value.docs.length);
   }
 
+  static addReplyToFirestore({String postID, dynamic data}) async {
+    await FirebaseFirestore.instance
+        .collection('forums')
+        .doc('posts')
+        .collection('posts')
+        .doc(postID)
+        .collection('replies')
+        .add(data);
+
+    await FirebaseFirestore.instance
+        .collection('forums')
+        .doc('posts')
+        .collection('posts')
+        .doc(postID)
+        .update({'replies_count': FieldValue.increment(1)});
+  }
+
   // This method returns limited number of first n snapshots of the forum posts collection
   static Future<QuerySnapshot> getLimitedSnapshots(int length,
       {DocumentSnapshot lastDocument}) async {
     Query _query = FirebaseFirestore.instance
         .collection('forums')
         .doc('posts')
-        .collection('posts');
+        .collection('posts')
+        .orderBy('create_ts', descending: true);
 
     // Checks if a last document is provided, then starts fetching more data after last document else default
     if (lastDocument != null)
@@ -54,12 +72,10 @@ class ForumsHelper {
           .collection('forums')
           .doc('posts')
           .collection('posts')
+          .orderBy('create_ts', descending: true)
           .startAfterDocument(lastDocument);
 
-    return await _query
-        .orderBy('create_ts', descending: true)
-        .limit(length)
-        .get();
+    return await _query.limit(length).get();
   }
 
   static getInteractions(String documentID, int index, int likesCount,
@@ -138,6 +154,45 @@ class ForumsHelper {
     }
 
     return _commentsData;
+  }
+
+  static toggleUpvote({String userID, String postID, bool isVoted}) async {
+    // UNLIKE
+    if (isVoted) {
+      await FirebaseFirestore.instance
+          .collection('forums')
+          .doc('posts')
+          .collection('posts')
+          .doc(postID)
+          .collection('upvotes')
+          .doc(userID)
+          .delete();
+
+      await FirebaseFirestore.instance
+          .collection('forums')
+          .doc('posts')
+          .collection('posts')
+          .doc(postID)
+          .update({'upvotes_count': FieldValue.increment(-1)});
+    }
+    // UPVOTE
+    else {
+      await FirebaseFirestore.instance
+          .collection('forums')
+          .doc('posts')
+          .collection('posts')
+          .doc(postID)
+          .collection('upvotes')
+          .doc(userID)
+          .set({'user_id': userID});
+
+      await FirebaseFirestore.instance
+          .collection('forums')
+          .doc('posts')
+          .collection('posts')
+          .doc(postID)
+          .update({'upvotes_count': FieldValue.increment(1)});
+    }
   }
 
   static resetInteractions() {

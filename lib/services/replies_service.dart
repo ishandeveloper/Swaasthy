@@ -60,10 +60,7 @@ class RepliesService with ChangeNotifier {
     ReplyModel _tempModel = _comments[index][_index];
 
     ReplyModel _newModel = ReplyModel.getModel({
-      // 'uid': _tempModel.uid,
-      // 'thumb': _tempModel.thumbnail,
       'body': text,
-      // 'user_name': _tempModel.userName,
       'user': {
         'user_name': _tempModel.user.username,
         'user_id': _tempModel.user.userID,

@@ -132,7 +132,10 @@ class _ForumPostState extends State<ForumPost>
               isExpanded: isExpanded,
               expandHandler: _expandHandler),
 
-          NewCommentInput(index: this.widget.index),
+          NewCommentInput(
+            index: this.widget.index,
+            postID: widget.data.postID,
+          ),
 
           AnimatedSize(
             duration: Duration(milliseconds: 200),
@@ -153,10 +156,12 @@ class _ForumPostState extends State<ForumPost>
 
 class NewCommentInput extends StatefulWidget {
   final int index;
+  final String postID;
 
   const NewCommentInput({
     Key key,
     @required this.index,
+    @required this.postID,
   }) : super(key: key);
 
   @override
@@ -272,39 +277,6 @@ class _NewCommentInputState extends State<NewCommentInput> {
                                 onPressed: () async {
                                   Navigator.pop(context);
 
-                                  // Provider.of<
-                                  //             CommentService>(context,
-                                  //         listen: false)
-                                  //     .updateComment(
-                                  //         index: index,
-                                  // comment: CommentModel(
-                                  // uid: DummyData.userID,
-                                  // userName: DummyData.username,
-                                  // body: _newCommentController
-                                  //     .value.text,
-                                  // key: UniqueKey(),
-                                  // thumbnail:
-                                  //     DummyData.avatarImage,
-                                  // timestamp: Timestamp
-                                  //     .fromMillisecondsSinceEpoch(
-                                  //         DateTime.now()
-                                  // .millisecondsSinceEpoch)));
-
-                                  Provider.of<RepliesService>(context,
-                                          listen: false)
-                                      .updateComment(
-                                          index: widget.index,
-                                          comment: ReplyModel(
-                                              user: PostUserModel(
-                                                  userID: userID,
-                                                  userimage: userThumb,
-                                                  username: username),
-                                              body: _commentTextController
-                                                  .value.text,
-                                              key: UniqueKey(),
-                                              timestamp: Timestamp.fromDate(
-                                                  DateTime.now())));
-
                                   if (_connectionStatus ==
                                       ConnectionStatus.Offline) {
                                     Navigator.pop(context);
@@ -317,58 +289,32 @@ class _NewCommentInputState extends State<NewCommentInput> {
                                     displaySnackbar(
                                         context, "Replies can't be empty.");
                                   } else {
-                                    //   await Firestore.instance
-                                    //       .collection(
-                                    //           FirebaseConfigs.collection_feed)
-                                    //       .document(widget.commentID)
-                                    //       .collection(FirebaseConfigs
-                                    //           .sub_collection_comments)
-                                    //       .add({
-                                    //     'body':
-                                    //         _newCommentController.value.text,
-                                    //     'uid': userID,
-                                    //     'timestamp':
-                                    //         Timestamp.fromDate(DateTime.now())
-                                    //             .millisecondsSinceEpoch,
-                                    //     'thumb': userThumb,
-                                    //     "user_name": username
-                                    //   }).then((_) async {
-                                    //     Provider.of<CommentService>(context,
-                                    //             listen: false)
-                                    //         .updateComment(
-                                    //             index: index,
-                                    //             comment: CommentModel(
-                                    //                 docID: _.documentID,
-                                    //                 uid: DummyData.userID,
-                                    //                 userName:
-                                    //                     DummyData.username,
-                                    //                 body: _newCommentController
-                                    //                     .value.text,
-                                    //                 key: Key(
-                                    //                     _newCommentController
-                                    //                             .value.text +
-                                    //                         DateTime.now()
-                                    //                             .toString()),
-                                    //                 thumbnail:
-                                    //                     DummyData.avatarImage,
-                                    //                 timestamp: Timestamp
-                                    //                     .fromMillisecondsSinceEpoch(
-                                    //                         DateTime.now()
-                                    //                             .millisecondsSinceEpoch)));
+                                    Provider.of<RepliesService>(context,
+                                            listen: false)
+                                        .updateComment(
+                                            index: widget.index,
+                                            comment: ReplyModel(
+                                                user: PostUserModel(
+                                                    userID: userID,
+                                                    userimage: userThumb,
+                                                    username: username),
+                                                body: _commentTextController
+                                                    .value.text,
+                                                key: UniqueKey(),
+                                                timestamp: Timestamp.fromDate(
+                                                    DateTime.now())));
 
-                                    //     await Firestore.instance
-                                    //         .collection(
-                                    //             FirebaseConfigs.collection_feed)
-                                    //         .document(widget.commentID)
-                                    //         .updateData({
-                                    //       'comments_count':
-                                    //           FieldValue.increment(1)
-                                    //     });
-                                    //     widget.callback();
-
-                                    //     Navigator.pop(context);
-                                    //     _newCommentController.clear();
-                                    //   });
+                                    ForumsHelper.addReplyToFirestore(
+                                        postID: widget.postID,
+                                        data: {
+                                          'body':
+                                              _commentTextController.value.text,
+                                          'user': {
+                                            'user_id': userID,
+                                            'user_name': username,
+                                            'user_image': userThumb
+                                          }
+                                        });
                                   }
 
                                   _commentTextController.clear();

@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:another_flushbar/flushbar.dart';
 
@@ -108,4 +112,17 @@ void displaySnackbar(BuildContext context, String message) {
     backgroundColor: CodeRedColors.primary,
     duration: Duration(seconds: 2),
   )..show(context);
+}
+
+// Takes an Asset as an argument and returns a File
+Future<File> getImageFileFromAssets(Asset asset) async {
+  final byteData = await asset.getByteData();
+
+  final tempFile =
+      File("${(await getTemporaryDirectory()).path}/${asset.name}");
+  final file = await tempFile.writeAsBytes(
+    byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
+  );
+
+  return file;
 }

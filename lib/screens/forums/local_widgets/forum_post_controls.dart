@@ -25,12 +25,12 @@ class _ForumPostControlsState extends State<ForumPostControls> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 6),
+      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
       child: Row(
         children: [
           ForumPostControlVotes(
               postID: this.widget.postID, index: this.widget.index),
-          SizedBox(width: 20),
+          SizedBox(width: 12),
           ForumPostControlComments(
             postID: this.widget.postID,
             index: this.widget.index,
@@ -73,7 +73,7 @@ class ForumPostControlComments extends StatelessWidget {
               color: CodeRedColors.icon,
             ),
             Container(
-              padding: EdgeInsets.only(left: 8),
+              padding: EdgeInsets.only(left: 6),
               child: Text(
                 _commentsService.getCommentsCount(this.index).toString(),
                 style: TextStyle(fontSize: 16),
@@ -86,7 +86,7 @@ class ForumPostControlComments extends StatelessWidget {
   }
 }
 
-class ForumPostControlVotes extends StatelessWidget {
+class ForumPostControlVotes extends StatefulWidget {
   final String postID;
   final int index;
 
@@ -94,9 +94,18 @@ class ForumPostControlVotes extends StatelessWidget {
       : super(key: key);
 
   @override
+  _ForumPostControlVotesState createState() => _ForumPostControlVotesState();
+}
+
+class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
+  @override
   Widget build(BuildContext context) {
     UpvotesService _votesService =
-        Provider.of<UpvotesService>(context, listen: false);
+        Provider.of<UpvotesService>(context, listen: true);
+
+    bool isVoted = _votesService
+        .getLikes(index: widget.index)
+        .contains("qUOmsgFAwKPHaBSAWTnLah7sjMd2"); //TODO: ADD USER ID;
 
     return ConstrainedBox(
       constraints: BoxConstraints(minWidth: 50),
@@ -104,15 +113,32 @@ class ForumPostControlVotes extends StatelessWidget {
         margin: EdgeInsets.only(top: 0),
         child: Row(
           children: [
-            Icon(
-              Octicons.arrow_up,
-              size: 22,
-              color: CodeRedColors.icon,
+            GestureDetector(
+              onTap: () {
+                ForumsHelper.toggleUpvote(
+                    userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
+                    postID: widget.postID,
+                    isVoted: isVoted);
+
+                _votesService.updateLike(
+                    index: widget.index,
+                    uid: "qUOmsgFAwKPHaBSAWTnLah7sjMd2"); //TODO: ADD USER ID
+              },
+              child: Icon(
+                isVoted
+                    ? FontAwesome5Solid.arrow_alt_circle_up
+                    : FontAwesome5Regular.arrow_alt_circle_up,
+                size: 22,
+                color: isVoted ? CodeRedColors.primary : CodeRedColors.icon,
+              ),
             ),
             Container(
               padding: EdgeInsets.only(left: 8),
               child: Text(
-                _votesService.getLikes(index: this.index).length.toString(),
+                _votesService
+                    .getLikes(index: this.widget.index)
+                    .length
+                    .toString(),
                 style: TextStyle(fontSize: 16),
               ),
             ),
