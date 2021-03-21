@@ -37,7 +37,7 @@ class CodeRedApp extends StatelessWidget {
               TargetPlatform.android: CupertinoPageTransitionsBuilder()
             }),
             textTheme: Theme.of(context).textTheme.apply(
-                fontFamily: 'Product Sans', displayColor: Color(0xff2A2A2A))),
+                fontFamily: 'ProductSans', displayColor: Color(0xff2A2A2A))),
         home: StreamBuilder<User>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
