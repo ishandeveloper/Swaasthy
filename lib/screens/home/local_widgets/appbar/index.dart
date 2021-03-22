@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     Key key,
+    this.drawerKey,
   }) : super(key: key);
+
+  final GlobalKey<ScaffoldState> drawerKey;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class HomeAppBar extends StatelessWidget {
               children: [
                 InkWell(
                     onTap: () {
-                      CodeRedKeys.drawerKey.currentState.openDrawer();
+                      drawerKey.currentState.openDrawer();
                     },
                     child:
                         Icon(Icons.menu, size: 26, color: CodeRedColors.icon)),
