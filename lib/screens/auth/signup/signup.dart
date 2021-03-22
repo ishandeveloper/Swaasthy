@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codered/models/user.dart';
 import 'package:codered/screens/auth/signup/gender.dart';
 import 'package:codered/services/router/routes.dart';
 import 'package:codered/services/signup_services.dart';
@@ -140,7 +142,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {
+              onTap: () async {
                 final FocusScopeNode currentFocus = FocusScope.of(context);
                 if (!currentFocus.hasPrimaryFocus &&
                     currentFocus.focusedChild != null) {
@@ -148,8 +150,18 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                 }
                 if (ss.active) if (pageController.hasClients) {
                   if (currentIndex == totalPages - 1) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, CodeRedRoutes.home, (route) => false);
+                    User user = User(
+                      username: ss.name,
+                      age: ss.age,
+                      gender: ss.gender,
+                    );
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user.uid)
+                        .update(user.toJson())
+                        .then((value) => Navigator.pushNamedAndRemoveUntil(
+                            context, CodeRedRoutes.home, (route) => false))
+                        .onError((error, stackTrace) => print(error));
                   } else
                     pageController.nextPage(
                         duration: Duration(milliseconds: 250),

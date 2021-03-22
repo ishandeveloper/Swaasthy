@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/screens/auth/signup/signup.dart';
+import 'models/user.dart' as usr;
 import 'package:codered/services/signup_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +20,30 @@ void main() async {
   runApp(CodeRedApp());
 }
 
-class CodeRedApp extends StatelessWidget {
+class CodeRedApp extends StatefulWidget {
+  @override
+  _CodeRedAppState createState() => _CodeRedAppState();
+}
+
+class _CodeRedAppState extends State<CodeRedApp> {
+  CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('users');
+
+  QuerySnapshot querySnapshot;
+  List<QueryDocumentSnapshot> documents = [];
+
+  @override
+  void initState() {
+    query();
+    super.initState();
+  }
+
+  query() async {
+    querySnapshot = await collectionReference.get();
+    documents = querySnapshot.docs;
+    print(documents.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -43,7 +68,7 @@ class CodeRedApp extends StatelessWidget {
           title: 'Code Red',
           debugShowCheckedModeBanner: false,
           onGenerateRoute: CodeRedRouter.generateRoute,
-          // initialRoute: '/home',
+          navigatorKey: CodeRedKeys.navigatorKey,
           theme: ThemeData(
               pageTransitionsTheme: PageTransitionsTheme(builders: {
                 TargetPlatform.android: CupertinoPageTransitionsBuilder()
@@ -54,9 +79,22 @@ class CodeRedApp extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
-                  User user = snapshot.data;
-                  if (user != null) {
-                    return SignUp();
+                  User authUser = snapshot.data;
+                  if (authUser != null) {
+                    documents.map((e) async {
+                      if (e.id == authUser.uid)
+                        return ScreensWrapper();
+                      else {
+                        usr.User user = usr.User(
+                            points: 0,
+                            email: authUser.email,
+                            uid: authUser.uid);
+                        await collectionReference
+                            .doc(authUser.uid)
+                            .set(user.toJson());
+                        return SignUp();
+                      }
+                    });
                   }
                   return LoginPage();
                 }

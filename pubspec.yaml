@@ -38,7 +38,8 @@ dependencies:
   geolocator: ^7.0.1
   google_maps_flutter: ^2.0.1
   google_sign_in: ^4.5.9
-  http: ^0.13.1
+  http: ^0.13.0
+  json_annotation: ^3.1.1
   lottie: ^1.0.1
   multi_image_picker: ^4.8.0
   overflow_view: ^0.2.2
@@ -57,6 +58,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  json_serializable: ^3.5.1
+  build_runner: ^1.10.1
+
 flutter:
   uses-material-design: true
 

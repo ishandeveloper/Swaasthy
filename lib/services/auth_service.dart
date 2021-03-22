@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codered/services/router/routes.dart';
+import 'package:codered/utils/constants/keys.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:codered/models/user.dart' as usr;
 
 class Authentication {
   static Future<UserCredential> signInWithGoogle() async {
@@ -16,14 +20,29 @@ class Authentication {
       idToken: googleAuth.idToken,
     );
 
-    var user = await FirebaseAuth.instance.signInWithCredential(credential);
+    var authUser = await FirebaseAuth.instance.signInWithCredential(credential);
 
-    if (user != null) {
-      // TODO:
-    }
+    // if (authUser != null) {
+    //   CollectionReference collectionReference =
+    //       FirebaseFirestore.instance.collection('users');
+
+    //   QuerySnapshot querySnapshot = await collectionReference.get();
+
+    //   querySnapshot.docs.map((e) async {
+    //     if (e.id == authUser.user.uid)
+    //       return authUser;
+    //     else {
+    //       usr.User user = usr.User(
+    //           points: 0, email: authUser.user.email, uid: authUser.user.uid);
+    //       await collectionReference.doc(authUser.user.uid).set(user.toJson());
+    //       return CodeRedKeys.navigatorKey.currentState
+    //           .pushNamedAndRemoveUntil(CodeRedRoutes.signup, (route) => false);
+    //     }
+    //   });
+    // }
 
     // Once signed in, return the UserCredential
-    return user;
+    return authUser;
   }
 
   static Future<void> signOutFromGoogle() async {

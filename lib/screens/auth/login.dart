@@ -46,15 +46,16 @@ class _LoginPageState extends State<LoginPage> {
                   setState(() {
                     loader = true;
                   });
-                  Authentication.signInWithGoogle().then((value) {
-                    if (value != null)
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, CodeRedRoutes.home, (route) => false);
-                  }).onError((error, stackTrace) {
-                    setState(() {
-                      loader = false;
-                    });
-                  });
+                  Authentication.signInWithGoogle();
+                  // .then((value) {
+                  //   if (value != null)
+                  //     Navigator.pushNamedAndRemoveUntil(
+                  //         context, CodeRedRoutes.home, (route) => false);
+                  // }).onError((error, stackTrace) {
+                  //   setState(() {
+                  //     loader = false;
+                  //   });
+                  // });
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(

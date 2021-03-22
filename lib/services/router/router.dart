@@ -1,6 +1,7 @@
 /* 
   Router for the Material Application
 */
+import 'package:codered/screens/auth/signup/signup.dart';
 import "package:flutter/material.dart";
 
 import 'package:codered/screens/index.dart';
@@ -15,6 +16,8 @@ class CodeRedRouter {
         return MaterialPageRoute(builder: (_) => Scaffold());
       case CodeRedRoutes.login:
         return MaterialPageRoute(builder: (_) => Scaffold());
+      case CodeRedRoutes.signup:
+        return MaterialPageRoute(builder: (_) => SignUp());
       case CodeRedRoutes.emergency:
         return MaterialPageRoute(builder: (_) => EmergencyScreen());
       case CodeRedRoutes.reminder:
