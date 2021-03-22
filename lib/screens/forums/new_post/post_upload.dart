@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/forums/post_user.dart';
 import 'package:codered/screens/index.dart';
+import 'package:codered/services/database/storage.dart';
+import 'package:codered/services/index.dart';
 import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -57,10 +61,33 @@ class _PostUploadState extends State<PostUpload> with TickerProviderStateMixin {
           'user_image': widget.user.userimage,
         }
       }).then((e) {
-        // Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => ScreensWrapper(refresh: true)));
+        ForumsHelper.resetInteractions();
+        Navigator.pushReplacementNamed(context, '/home');
+
+        Phoenix.rebirth(context);
+      });
+    } else {
+      File _ = await getImageFileFromAssets(widget.image);
+
+      await FirebaseFirestore.instance
+          .collection('forums')
+          .doc('posts')
+          .collection('posts')
+          .add({
+        'type': 1,
+        'image': await uploadImage(_),
+        'body': widget.body,
+        'replies_count': 0,
+        'upvotes_count': 0,
+        'title': widget.title,
+        'create_ts': FieldValue.serverTimestamp(),
+        'user_details': {
+          'user_name': widget.user.username,
+          'user_id': widget.user.userID,
+          'user_image': widget.user.userimage,
+        }
+      }).then((e) {
+        ForumsHelper.resetInteractions();
         Navigator.pushReplacementNamed(context, '/home');
 
         Phoenix.rebirth(context);

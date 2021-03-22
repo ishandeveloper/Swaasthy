@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/index.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class ForumPostHeader extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 18,
-            backgroundImage: NetworkImage(user.userimage),
+            backgroundImage: CachedNetworkImageProvider(user.userimage),
           ),
           SizedBox(width: 8),
           Column(

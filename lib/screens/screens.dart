@@ -38,7 +38,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
   Widget build(BuildContext context) {
     return Phoenix(
       child: Scaffold(
-        key: CodeRedKeys.drawerKey,
+        // key: CodeRedKeys.drawerKey,
         drawer: ScreenDrawer(),
         body: Container(
             color: CodeRedColors.base,

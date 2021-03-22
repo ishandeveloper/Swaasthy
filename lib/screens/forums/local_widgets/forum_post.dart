@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/index.dart';
 import 'package:codered/services/index.dart';
@@ -50,6 +51,8 @@ class _ForumPostState extends State<ForumPost>
             _commentsService.getComments(index: widget.index).length) {}
 
     void getComments() async {
+      print("GETTING COMMENTS");
+
       setState(() {
         isLoadingComments = true;
         isInitialFetch = false;
@@ -58,6 +61,9 @@ class _ForumPostState extends State<ForumPost>
       List<DocumentSnapshot> _commentsDocuments =
           await ForumsHelper.getComments(widget.data.postID,
               _commentsService.getLastDocument(widget.index));
+
+      print(
+          "64, ${_commentsDocuments.toString()}, ${_commentsService.getLastDocument(widget.index)}");
 
       // ignore: null_aware_before_operator
       if (_commentsDocuments?.length > 0 && _commentsDocuments != null) {
@@ -123,8 +129,10 @@ class _ForumPostState extends State<ForumPost>
           ForumPostHeader(
               user: widget.data.user, timestamp: widget.data.timestamp),
 
-          if (widget.data.type == ForumPostType.text)
-            ForumPostContent(title: widget.data.title, body: widget.data.body),
+          ForumPostContent(title: widget.data.title, body: widget.data.body),
+
+          if (widget.data.type == ForumPostType.singleimage)
+            ForumPostImage(image: widget.data.image),
 
           ForumPostControls(
               postID: widget.data.postID,
@@ -166,6 +174,60 @@ class NewCommentInput extends StatefulWidget {
 
   @override
   _NewCommentInputState createState() => _NewCommentInputState();
+}
+
+class ForumPostImage extends StatefulWidget {
+  final String image;
+
+  ForumPostImage({@required this.image});
+
+  @override
+  _ForumPostImageState createState() => _ForumPostImageState();
+}
+
+class _ForumPostImageState extends State<ForumPostImage>
+    with TickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => showModalBottomSheet(
+        isDismissible: false,
+        enableDrag: false,
+        isScrollControlled: true,
+        context: context,
+        builder: (_) => Container(
+            color: Colors.black,
+            padding: EdgeInsets.only(top: 40),
+            child: ImageGalleryView(
+              images: [widget.image],
+            )),
+      ),
+      child: AnimatedSize(
+        vsync: this,
+        duration: Duration(milliseconds: 200),
+        child: Wrap(children: [
+          ConstrainedBox(
+            constraints: BoxConstraints(
+                minHeight: 200,
+                maxHeight: MediaQuery.of(context).size.width,
+                minWidth: MediaQuery.of(context).size.width),
+            child: CachedNetworkImage(
+              imageUrl: this.widget.image,
+              imageBuilder: (context, imageProvider) =>
+                  Image(image: imageProvider),
+              errorWidget: (_, ___, __) =>
+                  Center(child: Icon(Icons.error_outline)),
+              placeholder: (context, url) => Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(CodeRedColors.primary),
+                ),
+              ),
+            ),
+          )
+        ]),
+      ),
+    );
+  }
 }
 
 class _NewCommentInputState extends State<NewCommentInput> {
@@ -307,6 +369,8 @@ class _NewCommentInputState extends State<NewCommentInput> {
                                     ForumsHelper.addReplyToFirestore(
                                         postID: widget.postID,
                                         data: {
+                                          'timestamp':
+                                              FieldValue.serverTimestamp(),
                                           'body':
                                               _commentTextController.value.text,
                                           'user': {

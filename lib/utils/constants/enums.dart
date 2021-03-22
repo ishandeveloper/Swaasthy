@@ -40,14 +40,14 @@ checkForumPostType(int type) {
       return ForumPostType.text;
       break;
 
-    // In case of a video-type post
+    // In case of a single-image-type post
     case 1:
-      return ForumPostType.video;
+      return ForumPostType.singleimage;
       break;
 
-    // In case of a single-image-type post
+    // In case of a video-type post
     case 2:
-      return ForumPostType.singleimage;
+      return ForumPostType.video;
       break;
 
     // In case of a multi-image-type post

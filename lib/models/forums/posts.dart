@@ -12,20 +12,21 @@ class ForumPostModel {
   final PostUserModel user;
   final String thumbnail;
   final String body;
+  final String image;
   final Timestamp timestamp;
 
-  ForumPostModel({
-    Key key,
-    this.postID,
-    this.content,
-    this.type,
-    this.user,
-    this.reference,
-    this.title,
-    this.thumbnail,
-    this.body,
-    this.timestamp,
-  });
+  ForumPostModel(
+      {Key key,
+      this.postID,
+      this.content,
+      this.type,
+      this.user,
+      this.reference,
+      this.title,
+      this.thumbnail,
+      this.body,
+      this.timestamp,
+      this.image});
 
   factory ForumPostModel.getModel(
       Map<String, dynamic> data, String docID, DocumentReference ref) {
@@ -34,6 +35,9 @@ class ForumPostModel {
       title: data['title'] as String,
       type: checkForumPostType(data['type']),
       body: data['body'] as String,
+      image: checkForumPostType(data['type']) == ForumPostType.singleimage
+          ? data['image']
+          : null,
       user: PostUserModel.getUser(data['user_details']),
       timestamp: data['create_ts'],
       key: Key(data['body'] + data['timestamp'].toString()),

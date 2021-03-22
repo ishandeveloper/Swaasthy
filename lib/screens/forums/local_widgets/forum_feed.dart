@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/screens/forums/new_post/index.dart';
 import 'package:codered/services/database/forums.dart';
 import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +81,6 @@ class _ForumsFeedState extends State<ForumsFeed> {
         feedItemsToDisplay = _?.docs?.length;
         _fetchingMoreItems = false;
       });
-      print("81, ${_data.toString()}");
     }
 
     // Only add snapshot changes if more document snapshots exist & are not pre-existing

@@ -30,6 +30,7 @@ dependencies:
   file_picker: ^3.0.0
   firebase_auth: ^1.0.1
   firebase_core: ^1.0.1
+  firebase_storage: ^8.0.0
   flutter_linkify: ^5.0.0
   flutter_phoenix: ^1.0.0
   flutter_vector_icons: ^0.2.1
@@ -40,11 +41,13 @@ dependencies:
   lottie: ^1.0.1
   multi_image_picker: ^4.8.0
   path_provider: ^2.0.1
+  photo_view: ^0.11.1
   provider: ^5.0.0
   shimmer: ^1.1.2
   timeago: ^3.0.2
   titled_navigation_bar: ^4.1.0
   url_launcher: ^6.0.2
+  uuid: ^3.0.2
 
 dev_dependencies:
   flutter_test:
