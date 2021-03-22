@@ -1,30 +1,31 @@
+import 'package:codered/services/signup_services.dart';
 import 'package:flutter/material.dart';
-
-import 'signup.dart';
+import 'package:provider/provider.dart';
 
 class AgePage extends StatefulWidget {
-  final PageController pageController;
-  AgePage({this.pageController});
   @override
   _AgePageState createState() => _AgePageState();
 }
 
 class _AgePageState extends State<AgePage> {
-  TextEditingController ageController = TextEditingController();
+  TextEditingController ageController;
   bool active = false;
   String error;
 
   @override
   void initState() {
     super.initState();
+    ageController = TextEditingController(
+        text: Provider.of<SignUpService>(context, listen: false).age ?? '');
+
+    Provider.of<SignUpService>(context, listen: false).updateStatus(false);
 
     ageController.addListener(() {
       if (ageController.text.length > 0) {
-        active = true;
+        Provider.of<SignUpService>(context, listen: false).updateStatus(true);
       } else {
-        active = false;
+        Provider.of<SignUpService>(context, listen: false).updateStatus(false);
       }
-      setState(() {});
     });
   }
 
@@ -37,7 +38,7 @@ class _AgePageState extends State<AgePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Enter Your Age, $name",
+              "Enter Your Age, ${Provider.of<SignUpService>(context, listen: false).name ?? ''}",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
@@ -53,7 +54,8 @@ class _AgePageState extends State<AgePage> {
                 onChanged: (value) {
                   setState(() {
                     error = '';
-                    age = value;
+                    Provider.of<SignUpService>(context, listen: false)
+                        .putAge(value);
                   });
                 },
                 keyboardType: TextInputType.number,
@@ -73,39 +75,20 @@ class _AgePageState extends State<AgePage> {
           ],
         ),
       ),
-      floatingActionButton: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: 50,
-        decoration: BoxDecoration(
-            color: active ? Colors.green : Colors.grey,
-            borderRadius: BorderRadius.circular(10)),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: active
-                ? () {
-                    if (age.isNotEmpty) {
-                      if (widget.pageController.hasClients) {
-                        widget.pageController.nextPage(
-                            duration: Duration(milliseconds: 250),
-                            curve: Curves.ease);
-                      }
-                    } else {
-                      error = "Enter Valid Email";
-                      setState(() {});
-                    }
-                  }
-                : () {},
-            child: Center(
-              child: Text(
-                'NEXT',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      //       onTap: active
+      //           ? () {
+      //               if (age.isNotEmpty) {
+      //                 if (widget.pageController.hasClients) {
+      //                   widget.pageController.nextPage(
+      //                       duration: Duration(milliseconds: 250),
+      //                       curve: Curves.ease);
+      //                 }
+      //               } else {
+      //                 error = "Enter Valid Email";
+      //                 setState(() {});
+      //               }
+      //             }
+      //           : () {},
     );
   }
 }

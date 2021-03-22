@@ -1,8 +1,11 @@
-import 'package:codered/screens/auth/signup/password.dart';
+import 'package:codered/screens/auth/signup/gender.dart';
+import 'package:codered/services/router/routes.dart';
+import 'package:codered/services/signup_services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'email.dart';
-import 'name.dart';
+import 'age.dart';
+import 'username.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -17,7 +20,6 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
   double growStepWidth, beginWidth, endWidth = 0.0;
   int totalPages = 3;
   bool _isInitialized;
-  bool active = false;
   String name, email, password, error;
   int currentIndex = 0;
 
@@ -85,30 +87,32 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            currentIndex == 0
-                ? Icons.arrow_back_ios_outlined
-                : Icons.close_rounded,
-            color: Colors.blueGrey,
-          ),
-          onPressed: () {},
-        ),
-        title: Container(
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: 15.0,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.blueGrey,
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              AnimatedProgressBar(
-                animation: _progressAnimation,
-              ),
-            ],
-          ),
+        leading: currentIndex > 0
+            ? IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios_outlined,
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  pageController.previousPage(
+                      duration: Duration(milliseconds: 250),
+                      curve: Curves.ease);
+                },
+              )
+            : null,
+        title: Stack(
+          children: <Widget>[
+            Container(
+              height: 15.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey,
+                  borderRadius: BorderRadius.circular(8)),
+            ),
+            AnimatedProgressBar(
+              animation: _progressAnimation,
+            ),
+          ],
         ),
       ),
       body: PageView(
@@ -120,18 +124,49 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
         },
         physics: NeverScrollableScrollPhysics(),
         children: [
-          NamePage(
-            pageController: pageController,
-            name: name,
-          ),
-          EmailPage(
-            pageController: pageController,
-            email: email,
-            name: name,
-          ),
-          PasswordPage(),
+          UserNamePage(),
+          AgePage(),
+          GenderPage(),
         ],
       ),
+      floatingActionButton:
+          Consumer<SignUpService>(builder: (context, ss, child) {
+        return Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: 50,
+          decoration: BoxDecoration(
+              color: ss.active ? Colors.green : Colors.grey,
+              borderRadius: BorderRadius.circular(10)),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                final FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus &&
+                    currentFocus.focusedChild != null) {
+                  FocusManager.instance.primaryFocus.unfocus();
+                }
+                if (ss.active) if (pageController.hasClients) {
+                  if (currentIndex == totalPages - 1) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, CodeRedRoutes.home, (route) => false);
+                  } else
+                    pageController.nextPage(
+                        duration: Duration(milliseconds: 250),
+                        curve: Curves.ease);
+                }
+              },
+              child: Center(
+                child: Text(
+                  'NEXT',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

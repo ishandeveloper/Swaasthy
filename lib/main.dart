@@ -1,3 +1,5 @@
+import 'package:codered/screens/auth/signup/signup.dart';
+import 'package:codered/services/signup_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -27,32 +29,42 @@ class CodeRedApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RepliesService()),
         ChangeNotifierProvider(create: (_) => UpvotesService()),
         ChangeNotifierProvider(create: (_) => ScreensWrapperService())
+        ChangeNotifierProvider(create: (_) => SignUpService())
       ],
-      child: MaterialApp(
-        title: 'Code Red',
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: CodeRedRouter.generateRoute,
-        // initialRoute: '/home',
-        theme: ThemeData(
-            pageTransitionsTheme: PageTransitionsTheme(builders: {
-              TargetPlatform.android: CupertinoPageTransitionsBuilder()
-            }),
-            textTheme: Theme.of(context).textTheme.apply(
-                fontFamily: 'ProductSans', displayColor: Color(0xff2A2A2A))),
-        home: StreamBuilder<User>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              // if (snapshot.connectionState == ConnectionState.active) {
-              // User user = snapshot.data;
-              // if (user != null) {
-              return ScreensWrapper();
-              // }
-              // return LoginPage();
-              // }
-              // return Center(
-              //   child: CircularProgressIndicator(),
-              // );
-            }),
+      child: GestureDetector(
+        onTap: () {
+          final FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            FocusManager.instance.primaryFocus.unfocus();
+          }
+        },
+        child: MaterialApp(
+          title: 'Code Red',
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: CodeRedRouter.generateRoute,
+          // initialRoute: '/home',
+          theme: ThemeData(
+              pageTransitionsTheme: PageTransitionsTheme(builders: {
+                TargetPlatform.android: CupertinoPageTransitionsBuilder()
+              }),
+              textTheme: Theme.of(context).textTheme.apply(
+                  fontFamily: 'ProductSans', displayColor: Color(0xff2A2A2A))),
+          home: StreamBuilder<User>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  User user = snapshot.data;
+                  if (user != null) {
+                    return SignUp();
+                  }
+                  return LoginPage();
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }),
+        ),
       ),
     );
   }
