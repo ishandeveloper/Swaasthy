@@ -21,11 +21,12 @@ class _GenderPageState extends State<GenderPage> {
   @override
   void initState() {
     super.initState();
-    _selectedGender = Provider.of<SignUpService>(context, listen: false)
-            .gender
-            .startsWith('m')
-        ? 0
-        : 1;
+    if (Provider.of<SignUpService>(context, listen: false).gender.length > 1)
+      _selectedGender = Provider.of<SignUpService>(context, listen: false)
+              .gender
+              .startsWith('m')
+          ? 0
+          : 1;
     Provider.of<SignUpService>(context, listen: false).updateStatus(false);
   }
 

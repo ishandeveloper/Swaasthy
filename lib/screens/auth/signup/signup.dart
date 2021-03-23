@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/user.dart';
 import 'package:codered/screens/auth/signup/gender.dart';
+import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/router/routes.dart';
 import 'package:codered/services/signup_services.dart';
 import 'package:flutter/material.dart';
@@ -150,7 +151,10 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                 }
                 if (ss.active) if (pageController.hasClients) {
                   if (currentIndex == totalPages - 1) {
-                    User user = User(
+                    user = User(
+                      points: 0,
+                      email: user.email,
+                      uid: user.uid,
                       username: ss.name,
                       age: ss.age,
                       gender: ss.gender,

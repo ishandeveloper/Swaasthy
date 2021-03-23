@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class SignUpService with ChangeNotifier {
-  String name, age, gender;
+  String name, age, gender='';
   bool active = false;
 
   putName(String val) {

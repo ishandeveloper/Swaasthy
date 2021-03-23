@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/screens/auth/signup/signup.dart';
-import 'models/user.dart' as usr;
+import 'package:codered/screens/indicator.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:codered/services/signup_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,9 +14,33 @@ import 'package:provider/provider.dart';
 import 'screens/index.dart';
 import 'utils/index.dart';
 
+/// Define a top-level named handler which background/terminated messages will
+/// call.
+///
+/// To verify things are working, check out the native platform logs.
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+  print('Handling a background message ${message.messageId}');
+}
+
+/// Create a [AndroidNotificationChannel] for heads up notifications
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel', // id
+  'High Importance Notifications', // title
+  'This channel is used for important notifications.', // description
+  importance: Importance.high,
+);
+
+/// Initialize the [FlutterLocalNotificationsPlugin] package.
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(CodeRedApp());
 }
 
@@ -52,13 +76,17 @@ class CodeRedApp extends StatelessWidget {
               }),
               textTheme: Theme.of(context).textTheme.apply(
                   fontFamily: 'ProductSans', displayColor: Color(0xff2A2A2A))),
-          home: StreamBuilder<Widget>(
-              stream: checkUserExistance(),
+          home: StreamBuilder<User>(
+              stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  // if (snapshot.data != null) {
-                    return snapshot.data;
-                  // }
+                if (snapshot.connectionState == ConnectionState.active) {
+                  User user = snapshot.data;
+                  if (user != null) {
+                    return Indicator(
+                      authUser: user,
+                    );
+                  }
+                  return LoginPage();
                 }
                 return Center(
                   child: CircularProgressIndicator(),
@@ -67,26 +95,5 @@ class CodeRedApp extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Stream<Widget> checkUserExistance() {
-    FirebaseAuth.instance.userChanges().listen((authUser) async {
-      if (authUser != null) {
-        CollectionReference collectionReference =
-            FirebaseFirestore.instance.collection('users');
-
-        final DocumentSnapshot value =
-            await collectionReference.doc(authUser.uid).get();
-        if (value.exists)
-          return ScreensWrapper();
-        else {
-          usr.User user =
-              usr.User(points: 0, email: authUser.email, uid: authUser.uid);
-          // collectionReference.doc(authUser.uid).set(user.toJson());
-          return SignUp();
-        }
-      }
-      return LoginPage();
-    });
   }
 }
