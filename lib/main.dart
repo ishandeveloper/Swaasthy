@@ -20,30 +20,7 @@ void main() async {
   runApp(CodeRedApp());
 }
 
-class CodeRedApp extends StatefulWidget {
-  @override
-  _CodeRedAppState createState() => _CodeRedAppState();
-}
-
-class _CodeRedAppState extends State<CodeRedApp> {
-  CollectionReference collectionReference =
-      FirebaseFirestore.instance.collection('users');
-
-  QuerySnapshot querySnapshot;
-  List<QueryDocumentSnapshot> documents = [];
-
-  @override
-  void initState() {
-    query();
-    super.initState();
-  }
-
-  query() async {
-    querySnapshot = await collectionReference.get();
-    documents = querySnapshot.docs;
-    print(documents.length);
-  }
-
+class CodeRedApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -75,28 +52,13 @@ class _CodeRedAppState extends State<CodeRedApp> {
               }),
               textTheme: Theme.of(context).textTheme.apply(
                   fontFamily: 'ProductSans', displayColor: Color(0xff2A2A2A))),
-          home: StreamBuilder<User>(
-              stream: FirebaseAuth.instance.authStateChanges(),
+          home: StreamBuilder<Widget>(
+              stream: checkUserExistance(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.active) {
-                  User authUser = snapshot.data;
-                  if (authUser != null) {
-                    documents.map((e) async {
-                      if (e.id == authUser.uid)
-                        return ScreensWrapper();
-                      else {
-                        usr.User user = usr.User(
-                            points: 0,
-                            email: authUser.email,
-                            uid: authUser.uid);
-                        await collectionReference
-                            .doc(authUser.uid)
-                            .set(user.toJson());
-                        return SignUp();
-                      }
-                    });
-                  }
-                  return LoginPage();
+                if (snapshot.hasData) {
+                  // if (snapshot.data != null) {
+                    return snapshot.data;
+                  // }
                 }
                 return Center(
                   child: CircularProgressIndicator(),
@@ -105,5 +67,26 @@ class _CodeRedAppState extends State<CodeRedApp> {
         ),
       ),
     );
+  }
+
+  Stream<Widget> checkUserExistance() {
+    FirebaseAuth.instance.userChanges().listen((authUser) async {
+      if (authUser != null) {
+        CollectionReference collectionReference =
+            FirebaseFirestore.instance.collection('users');
+
+        final DocumentSnapshot value =
+            await collectionReference.doc(authUser.uid).get();
+        if (value.exists)
+          return ScreensWrapper();
+        else {
+          usr.User user =
+              usr.User(points: 0, email: authUser.email, uid: authUser.uid);
+          // collectionReference.doc(authUser.uid).set(user.toJson());
+          return SignUp();
+        }
+      }
+      return LoginPage();
+    });
   }
 }

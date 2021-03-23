@@ -3,16 +3,20 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
+//TODO: Provider
 class User {
-  User(
-      {this.points,
-      this.age,
-      this.gender,
-      this.username,
-      this.email,
-      this.ip,
-      this.type,
-      this.uid});
+  User({
+    this.points,
+    this.age,
+    this.gender,
+    this.username,
+    this.email,
+    this.ip,
+    this.type,
+    this.uid,
+    this.fcmToken,
+    this.verificationStatus,
+  });
 
   final int points;
   final String age;
@@ -22,6 +26,9 @@ class User {
   final String email;
   final String ip;
   final String type;
+  //TODO:
+  final String fcmToken;
+  final bool verificationStatus;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
