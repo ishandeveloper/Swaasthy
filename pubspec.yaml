@@ -31,8 +31,8 @@ dependencies:
   file_picker: ^3.0.0
   firebase_auth: ^1.0.1
   firebase_core: ^1.0.1
-  firebase_storage: ^8.0.0
   firebase_messaging: ^9.0.1
+  firebase_storage: ^8.0.0
   flutter_linkify: ^5.0.0
   flutter_local_notifications: ^5.0.0
   flutter_phoenix: ^1.0.0
@@ -50,6 +50,7 @@ dependencies:
   photo_view: ^0.11.1
   provider: ^5.0.0
   razorpay_flutter: ^1.2.5
+  rxdart: ^0.23.1
   shimmer: ^1.1.2
   slide_to_act: ^2.0.1
   timeago: ^3.0.2

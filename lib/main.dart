@@ -10,9 +10,13 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:codered/services/index.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/subjects.dart';
 
 import 'screens/index.dart';
 import 'utils/index.dart';
+
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 /// Define a top-level named handler which background/terminated messages will
 /// call.
@@ -37,11 +41,32 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
+final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
+    BehaviorSubject<ReceivedNotification>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await _configureLocalTimeZone();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('app_icon');
+
+  final InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onSelectNotification: (String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: $payload');
+    }
+  });
   runApp(CodeRedApp());
+}
+
+Future<void> _configureLocalTimeZone() async {
+  tz.initializeTimeZones();
+  final String timeZoneName = 'Asia/Kolkata';
+  tz.setLocalLocation(tz.getLocation(timeZoneName));
 }
 
 class CodeRedApp extends StatelessWidget {
@@ -96,4 +121,18 @@ class CodeRedApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class ReceivedNotification {
+  ReceivedNotification({
+    @required this.id,
+    @required this.title,
+    @required this.body,
+    @required this.payload,
+  });
+
+  final int id;
+  final String title;
+  final String body;
+  final String payload;
 }
