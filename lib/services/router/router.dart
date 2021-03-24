@@ -25,7 +25,6 @@ class CodeRedRouter {
         return MaterialPageRoute(builder: (_) => NewForumPost());
       case CodeRedRoutes.bookdoctor:
         return MaterialPageRoute(builder: (_) => BookAppointment());
-
       default:
         return MaterialPageRoute(builder: (_) => ScreensWrapper());
     }

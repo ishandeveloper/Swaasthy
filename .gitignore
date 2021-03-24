@@ -123,3 +123,8 @@ pubspec.lock
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+pubspec.lock
