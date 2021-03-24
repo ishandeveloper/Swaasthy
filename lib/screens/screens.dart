@@ -54,8 +54,6 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
     return Phoenix(
       child: Scaffold(
-        // key: CodeRedKeys.drawerKey,
-        drawer: ScreenDrawer(),
         body: Container(
             color: CodeRedColors.base,
             child: SafeArea(

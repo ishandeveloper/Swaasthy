@@ -54,7 +54,7 @@ class CodeRedApp extends StatelessWidget {
             create: (_) => ConnectionService().connectioncontroller.stream),
         ChangeNotifierProvider(create: (_) => RepliesService()),
         ChangeNotifierProvider(create: (_) => UpvotesService()),
-        ChangeNotifierProvider(create: (_) => ScreensWrapperService())
+        ChangeNotifierProvider(create: (_) => ScreensWrapperService()),
         ChangeNotifierProvider(create: (_) => SignUpService())
       ],
       child: GestureDetector(
