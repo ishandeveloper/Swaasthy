@@ -3,13 +3,16 @@
   navigation bar and manages different routes of the screen
 */
 
+import 'package:codered/services/index.dart';
 import 'package:codered/shared_widgets/index.dart';
 import 'package:codered/utils/index.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:provider/provider.dart';
 import './index.dart';
 import 'package:flutter/material.dart';
 
-int currentIndex = 0; // Current Screen Index
+// int currentIndex = 0; // Current Screen Index
 
 class ScreensWrapper extends StatefulWidget {
   final bool refresh;
@@ -36,6 +39,16 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    ScreensWrapperService _service =
+        Provider.of<ScreensWrapperService>(context, listen: true);
+
+    int currentIndex = _service.getIndex();
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (_pageController.page.round() != currentIndex)
+        _pageController.jumpToPage(currentIndex);
+    });
+
     return Phoenix(
       child: Scaffold(
         // key: CodeRedKeys.drawerKey,
@@ -48,11 +61,11 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
                         ? null
                         : NavBar(
                             currentIndex: currentIndex,
-                            onChange: _navbarChangeHandler),
+                            onChange: (e) => _navbarChangeHandler(_service, e)),
                     body: PageView(
                         physics: NeverScrollableScrollPhysics(),
                         controller: _pageController,
-                        onPageChanged: _pageChangeHandler,
+                        onPageChanged: (e) => _pageChangeHandler(_service, e),
                         children: [
                           TransitionWrapper(
                               ltr: leftToRight, child: HomeScreen()),
@@ -68,24 +81,26 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
     );
   }
 
-  void _navbarChangeHandler(index) {
+  void _navbarChangeHandler(ScreensWrapperService svc, index) {
     _pageController.jumpToPage(index);
-    setState(() => currentIndex = index);
+    svc.changeIndex(index);
+    // setState(() => currentIndex = index);
   }
 
   // Handles PageView Tab Change
-  void _pageChangeHandler(index) {
+  void _pageChangeHandler(ScreensWrapperService svc, index) {
     setState(() {
-      leftToRight = index < currentIndex;
-      currentIndex = index;
+      leftToRight = index < svc.getIndex();
     });
+
+    svc.changeIndex(index);
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _pageController.dispose();
+  //   super.dispose();
+  // }
 }
 
 class DummyScreen extends StatelessWidget {

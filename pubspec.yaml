@@ -40,10 +40,12 @@ dependencies:
   http: ^0.13.0
   lottie: ^1.0.1
   multi_image_picker: ^4.8.0
+  overflow_view: ^0.2.2
   path_provider: ^2.0.1
   photo_view: ^0.11.1
   provider: ^5.0.0
   shimmer: ^1.1.2
+  slide_to_act: ^2.0.1
   timeago: ^3.0.2
   titled_navigation_bar: ^4.1.0
   url_launcher: ^6.0.2
@@ -61,6 +63,9 @@ flutter:
     - assets/lottie/
 
   fonts:
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/CustomIcons.ttf
     - family: ProductSans
       fonts:
         - asset: assets/fonts/Product-Sans-Regular.ttf

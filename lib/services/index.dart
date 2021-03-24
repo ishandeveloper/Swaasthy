@@ -10,3 +10,7 @@ export './auth_service.dart';
 export './replies_service.dart';
 
 export './upvotes_service.dart';
+
+export './database/consult.dart';
+
+export './screens_wrapper_service.dart';

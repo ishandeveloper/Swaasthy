@@ -126,3 +126,80 @@ Future<File> getImageFileFromAssets(Asset asset) async {
 
   return file;
 }
+
+String monthFormatter(int month) {
+  switch (month) {
+    case 1:
+      return "Jan";
+    case 2:
+      return "Feb";
+    case 3:
+      return "Mar";
+    case 4:
+      return "Apr";
+    case 5:
+      return "May";
+    case 6:
+      return "Jun";
+    case 7:
+      return "Jul";
+    case 8:
+      return "Aug";
+    case 9:
+      return "Sep";
+    case 10:
+      return "Oct";
+    case 11:
+      return "Nov";
+    case 12:
+      return "Dec";
+      break;
+    default:
+      return "";
+  }
+}
+
+String dayFormatter(int day) {
+  switch (day) {
+    case 1:
+      return "Mon";
+    case 2:
+      return "Tue";
+    case 3:
+      return "Wed";
+    case 4:
+      return "Thu";
+    case 5:
+      return "Fri";
+    case 6:
+      return "Sat";
+    case 7:
+      return "Sun";
+    default:
+      return "";
+  }
+}
+
+String dateFormatter(DateTime date) {
+  return "${dayFormatter(date.weekday)}, ${date.day} ${monthFormatter(date.month)}";
+}
+
+String timeFormatter(DateTime time) {
+  if (time.hour < 10) {
+    if (time.minute < 10) {
+      return "0${time.hour}:0${time.minute} AM";
+    }
+    return "0${time.hour}:${time.minute} AM";
+  } else if (time.hour > 12) {
+    if (time.minute < 10) {
+      if ((time.hour - 12) > 9) return "${time.hour - 12}:0${time.minute} PM";
+      return "0${time.hour - 12}:0${time.minute} PM";
+    }
+    return "${time.hour - 12}:${time.minute} PM";
+  } else {
+    if (time.minute < 10) {
+      return "${time.hour}:0${time.minute} AM";
+    }
+    return "${time.hour}:${time.minute} AM";
+  }
+}

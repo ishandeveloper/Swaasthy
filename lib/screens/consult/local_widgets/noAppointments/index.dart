@@ -23,7 +23,7 @@ class NoAppointments extends StatelessWidget {
         SizedBox(height: 12),
         MaterialButton(
             color: CodeRedColors.primary,
-            onPressed: () {},
+            onPressed: () => Navigator.pushNamed(context, '/bookdoctor'),
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),

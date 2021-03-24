@@ -1,4 +1,4 @@
-import 'package:codered/services/database/forums.dart';
+import 'package:codered/services/index.dart';
 import 'package:flutter/material.dart';
 
 class Playground extends StatefulWidget {
@@ -19,7 +19,7 @@ class _PlaygroundState extends State<Playground> {
             MaterialButton(
               child: Text("PRESS ME TO TEST"),
               onPressed: () async {
-                await ForumsHelper.getLimitedSnapshots(5)
+                await ConsultHelper.getHeroDoctors()
                     .then((value) => setState(() {
                           data = value;
                         }));

@@ -25,7 +25,8 @@ class CodeRedApp extends StatelessWidget {
             initialData: null,
             create: (_) => ConnectionService().connectioncontroller.stream),
         ChangeNotifierProvider(create: (_) => RepliesService()),
-        ChangeNotifierProvider(create: (_) => UpvotesService())
+        ChangeNotifierProvider(create: (_) => UpvotesService()),
+        ChangeNotifierProvider(create: (_) => ScreensWrapperService())
       ],
       child: MaterialApp(
         title: 'Code Red',

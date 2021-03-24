@@ -5,3 +5,5 @@ export './constants/enums.dart';
 
 export './helpers/interactions.dart';
 export './helpers/network_sensitive_handler.dart';
+
+export './constants/custom_icons.dart';
