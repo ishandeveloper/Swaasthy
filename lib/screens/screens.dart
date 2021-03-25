@@ -3,6 +3,11 @@
   navigation bar and manages different routes of the screen
 */
 
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codered/models/user.dart';
+import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/index.dart';
 import 'package:codered/shared_widgets/index.dart';
 import 'package:codered/utils/index.dart';
@@ -11,6 +16,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import './index.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 // int currentIndex = 0; // Current Screen Index
 
@@ -38,6 +44,29 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
   void initState() {
     super.initState();
     _pageController = PageController();
+    getUserIp();
+  }
+
+  getUserIp() async {
+    http.Response response =
+        await http.get(Uri.parse('https://worldtimeapi.org/api/ip'));
+    if (response.statusCode == 200) {
+      print("JSON BODY" + json.decode(response.body).toString());
+
+      user = User(
+          points: user.points,
+          age: user.age,
+          gender: user.gender,
+          username: user.username,
+          ip: json.decode(response.body)['client_ip'],
+          type: user.type,
+          uid: user.uid);
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .update(user.toJson());
+    }
   }
 
   @override

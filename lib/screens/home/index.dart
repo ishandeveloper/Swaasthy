@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.pushNamed(context, CodeRedRoutes.home);
     });
     // TODO: Updaate the schedule
-    _repeatNotification();
+    // _repeatNotification();
   }
 
   void setToken(String token) {
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'key=${CodeRedKeys.fcmServerKey}'
+          'Authorization': CodeRedKeys.fcmServerKey
         },
         body: constructFCMPayload(_token),
       );
@@ -198,7 +198,11 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: CodeRedColors.primary,
           onPressed: () {
             sendPushMessage();
-            // Navigator.pushNamed(context, '/emergency');
+            Future<void> _cancelAllNotifications() async {
+              await flutterLocalNotificationsPlugin.cancelAll();
+            }
+
+            Navigator.pushNamed(context, '/emergency');
           },
           child: Transform.translate(
             offset: Offset(25, 0),

@@ -28,10 +28,12 @@ class _IndicatorState extends State<Indicator> {
 
       final DocumentSnapshot value =
           await collectionReference.doc(widget.authUser.uid).get();
-      if (value.exists)
+      if (value.exists) {
+        user = usr.User.fromJson(value.data());
+        setState(() {});
         Navigator.pushNamedAndRemoveUntil(
             context, CodeRedRoutes.home, (route) => false);
-      else {
+      } else {
         user = usr.User(
             points: 0, email: widget.authUser.email, uid: widget.authUser.uid);
         setState(() {});
