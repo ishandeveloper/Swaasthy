@@ -22,7 +22,7 @@ class HDCell extends StatelessWidget {
         height: 199,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: CodeRedColors.primary,
+          color: CodeRedColors.primary2,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Stack(
@@ -73,7 +73,7 @@ class HDCell extends StatelessWidget {
                 width: 77,
                 height: 54,
                 decoration: BoxDecoration(
-                  color: CodeRedColors.primaryAccent,
+                  color: CodeRedColors.primary2Accent,
                   borderRadius:
                       BorderRadius.only(topRight: Radius.circular(32)),
                 ),
@@ -233,7 +233,7 @@ class TopRatedDoctorCell extends StatelessWidget {
         height: 77,
         width: 90,
         decoration: BoxDecoration(
-          color: CodeRedColors.primary,
+          color: CodeRedColors.primary2,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             image: CachedNetworkImageProvider(doctor.image),

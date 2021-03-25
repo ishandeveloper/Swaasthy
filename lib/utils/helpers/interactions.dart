@@ -203,3 +203,27 @@ String timeFormatter(DateTime time) {
     return "${time.hour}:${time.minute} AM";
   }
 }
+
+String specialTimeFormatter(DateTime time) {
+  if (time.hour < 10) {
+    if (time.minute < 10) {
+      return "${time.hour}:0${time.minute} AM";
+    }
+    return "${time.hour}:${time.minute} AM";
+  } else if (time.hour > 12) {
+    if (time.minute < 10) {
+      if ((time.hour - 12) > 9) return "${time.hour - 12}:0${time.minute} PM";
+      return "${time.hour - 12}:0${time.minute} PM";
+    }
+    return "${time.hour - 12}:${time.minute} PM";
+  } else {
+    if (time.minute < 10) {
+      return "${time.hour}:0${time.minute} AM";
+    }
+    return "${time.hour}:${time.minute} AM";
+  }
+}
+
+String dateTimeFormatter(DateTime date) {
+  return "${dateFormatter(date)} at ${timeFormatter(date)}";
+}

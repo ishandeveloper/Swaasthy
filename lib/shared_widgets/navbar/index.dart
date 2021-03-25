@@ -25,7 +25,9 @@ class _NavBarState extends State<NavBar> {
         currentIndex: this.widget.currentIndex,
         enableShadow: false,
         onTap: this.widget.onChange,
-        activeColor: CodeRedColors.primary,
+        activeColor: widget.currentIndex == 3
+            ? CodeRedColors.primary2
+            : CodeRedColors.primary,
         items: [
           TitledNavigationBarItem(
               title: Icon(Ionicons.ios_home, color: CodeRedColors.inactive),

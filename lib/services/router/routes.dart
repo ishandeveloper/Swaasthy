@@ -13,4 +13,5 @@ class CodeRedRoutes {
   static const String emergency = '/emergency';
   static const String firstaid = '/firstaid';
   static const String bookdoctor = '/bookdoctor';
+  static const String appointment = '/appointment';
 }

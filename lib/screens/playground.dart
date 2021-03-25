@@ -19,10 +19,11 @@ class _PlaygroundState extends State<Playground> {
             MaterialButton(
               child: Text("PRESS ME TO TEST"),
               onPressed: () async {
-                await ConsultHelper.getHeroDoctors()
-                    .then((value) => setState(() {
-                          data = value;
-                        }));
+                // await ConsultHelper.getAppointments(
+                //         userID: "Y1yRtDNFAoNW1TgGwrYV6mMmzSk2")
+                //     .then((value) => setState(() {
+                //           data = value.appointments.toString();
+                //         }));
               },
             ),
             Container(

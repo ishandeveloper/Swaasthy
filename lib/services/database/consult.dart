@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codered/models/consult/appointment.dart';
 import 'package:codered/models/index.dart';
+import 'package:uuid/uuid.dart';
 
 class ConsultHelper {
   static Future<List<Doctor>> getHeroDoctors() async {
@@ -42,15 +44,26 @@ class ConsultHelper {
     String userID,
     String username,
     String doctorID,
+    String doctorName,
+    String doctorImage,
     Timestamp timestamp,
     DateTime date,
   }) async {
+    var uuid = Uuid();
+
     // Calculate Final Timestamp
     Timestamp _timestamp = Timestamp.fromDate(DateTime(date.year, date.month,
         date.day, timestamp.toDate().hour, timestamp.toDate().minute, 0));
 
     var _appointmentList = [
-      {'timestamp': _timestamp, 'doctorID': doctorID, 'prescription': []}
+      {
+        'timestamp': _timestamp,
+        'doctorID': doctorID,
+        'doctor_name': doctorName,
+        'doctor_image': doctorImage,
+        'prescription': [],
+        'id': uuid.v4()
+      }
     ];
 
     await FirebaseFirestore.instance
@@ -70,5 +83,18 @@ class ConsultHelper {
     });
 
     return true;
+  }
+
+  static Stream getAppointmentsSnapshot({String userID}) {
+    return FirebaseFirestore.instance
+        .collection('appointments')
+        .doc(userID)
+        .get()
+        .asStream();
+    //     .then((doc) {
+    //   if (!doc.exists) return null;
+
+    //   return Appointment.getModel(doc.data());
+    // });
   }
 }

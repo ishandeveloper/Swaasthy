@@ -101,7 +101,6 @@ class _BookAppointmentState extends State<BookAppointment> {
           SizedBox(
             height: 32,
           ),
-
           Shimmer.fromColors(
               child: ListView.separated(
                 primary: false,
@@ -126,52 +125,6 @@ class _BookAppointmentState extends State<BookAppointment> {
               ),
               baseColor: Colors.grey[200],
               highlightColor: Colors.grey[100])
-          // ListView.builder(itemBuilder: (_, index) {
-          //   return Container(
-          //     margin: EdgeInsets.symmetric(horizontal: 16),
-          //     child: Shimmer.fromColors(
-          //         child: Column(
-          //           children: [
-          //             Row(
-          //               crossAxisAlignment: CrossAxisAlignment.center,
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 Container(
-          //                   height: 50,
-          //                   width: 50,
-          //                   color: Colors.grey[400],
-          //                 ),
-          //                 Column(
-          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //                   mainAxisSize: MainAxisSize.max,
-          //                   children: [
-          //                     Container(
-          //                       width: getContextWidth(context) - 100,
-          //                       height: 10,
-          //                       color: Colors.grey[400],
-          //                     ),
-          //                     SizedBox(height: 5),
-          //                     Container(
-          //                       width: getContextWidth(context) - 100,
-          //                       height: 10,
-          //                       color: Colors.grey[400],
-          //                     ),
-          //                     SizedBox(height: 5),
-          //                     Container(
-          //                       width: getContextWidth(context) - 100,
-          //                       height: 10,
-          //                       color: Colors.grey[400],
-          //                     ),
-          //                   ],
-          //                 )
-          //               ],
-          //             )
-          //           ],
-          //         ),
-          //         baseColor: Colors.grey[200],
-          //         highlightColor: Colors.grey[100]),
-          //   );
-          // }),
         ],
       );
 

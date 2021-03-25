@@ -108,6 +108,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                           "Y1yRtDNFAoNW1TgGwrYV6mMmzSk2", //TODO:ADD USER ID,
                       username: 'Himanshu Sharma',
                       doctorID: widget.doctor.uid,
+                      doctorName: widget.doctor.name,
+                      doctorImage: widget.doctor.image,
                       timestamp: _selectedTimeSlot,
                       date: _selectedDate,
                     ).then((value) => print("BOOKED : ${value.toString()}"));
@@ -124,7 +126,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       color: Colors.white),
                   text: 'Confirm Appointment',
                   innerColor: Colors.white,
-                  outerColor: CodeRedColors.primary,
+                  outerColor: CodeRedColors.primary2,
                 ),
                 SizedBox(height: 16)
               ],
@@ -142,7 +144,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           child: MaterialButton(
             color: (_isLoading || !_isValid)
                 ? Colors.grey[400]
-                : CodeRedColors.primary,
+                : CodeRedColors.primary2,
             padding: EdgeInsets.symmetric(vertical: 18),
             onPressed: () => _isLoading
                 ? null
@@ -353,7 +355,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
                               backgroundColor: _selectedDate == dates[i]
-                                  ? CodeRedColors.primary
+                                  ? CodeRedColors.primary2
                                   : Colors.transparent),
                           onPressed: () {
                             setState(() {
@@ -398,7 +400,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
                               backgroundColor: _selectedTimeSlot == timeslots[i]
-                                  ? CodeRedColors.primary
+                                  ? CodeRedColors.primary2
                                   : Colors.transparent),
                           onPressed: () {
                             setState(() {
@@ -424,7 +426,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: CodeRedColors.primary,
+      backgroundColor: CodeRedColors.primary2,
       elevation: 0,
       brightness: Brightness.dark,
       iconTheme: IconThemeData(color: Colors.white),
@@ -439,7 +441,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   Container _titleSection() {
     return Container(
       height: 250,
-      color: CodeRedColors.primary,
+      color: CodeRedColors.primary2,
       child: Stack(
         children: [
           SizedBox(width: getContextWidth(context), height: 178),
