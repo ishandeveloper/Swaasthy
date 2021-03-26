@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import 'local_widgets/index.dart';
 
@@ -32,9 +33,18 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
   PageController _pageController;
 
+  Razorpay _razorpay;
+
   @override
   void initState() {
     super.initState();
+
+    _razorpay = Razorpay();
+
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _paymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _paymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _paymentExternal);
+
     _pageController = PageController(initialPage: 0);
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -46,8 +56,52 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
     });
   }
 
+  void _initPayment() {
+    // var options = {
+    //   "key": CodeRedKeys.razorPay,
+    //   'amount': 1,
+    //   'name': 'Swaasthy Appointment',
+    //   'description': "Your doctor's appointment on Swaasthy",
+    // };
+
+    // try {
+    //   _razorpay.open(options);
+    // } catch (e) {
+    //   print("PAYMENT-ERROR: $e");
+    // }
+
+    /* SKIP PAYMENTS TEMPORARILY */
+    _paymentSuccess();
+  }
+
+  void _paymentExternal() {
+    print("Payment External");
+  }
+
+  void _paymentError() {
+    Navigator.pop(context);
+    displaySnackbar(context, "Your transaction has failed. Please try again");
+  }
+
+  void _paymentSuccess() async {
+    await ConsultHelper.createAppointment(
+      userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2", //TODO:ADD USER ID,
+      username: 'Himanshu Sharma',
+      userImage: "https://avatars.githubusercontent.com/u/54989142?v=4",
+      doctorID: widget.doctor.uid,
+      doctorName: widget.doctor.name,
+      doctorImage: widget.doctor.image,
+      timestamp: _selectedTimeSlot,
+      date: _selectedDate,
+    ).then((value) => print("BOOKED : ${value.toString()}"));
+
+    Navigator.pushReplacementNamed(context, '/home');
+    HapticFeedback.heavyImpact();
+  }
+
   @override
   void dispose() {
+    _razorpay.clear();
     _pageController.dispose();
     super.dispose();
   }
@@ -102,21 +156,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 SizedBox(height: 16),
                 SlideAction(
                   animationDuration: Duration(milliseconds: 500),
-                  onSubmit: () async {
-                    await ConsultHelper.createAppointment(
-                      userID:
-                          "Y1yRtDNFAoNW1TgGwrYV6mMmzSk2", //TODO:ADD USER ID,
-                      username: 'Himanshu Sharma',
-                      doctorID: widget.doctor.uid,
-                      doctorName: widget.doctor.name,
-                      doctorImage: widget.doctor.image,
-                      timestamp: _selectedTimeSlot,
-                      date: _selectedDate,
-                    ).then((value) => print("BOOKED : ${value.toString()}"));
-
-                    Navigator.pushReplacementNamed(context, '/home');
-                    HapticFeedback.heavyImpact();
-                  },
+                  onSubmit: () => _swipeToConfirm(),
                   height: 60,
                   sliderButtonIconPadding: 12,
                   sliderButtonIconSize: 18,
@@ -124,7 +164,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       fontFamily: 'ProductSans',
                       fontSize: 20,
                       color: Colors.white),
-                  text: 'Confirm Appointment',
+                  text: 'Proceed to pay Rs. 10',
                   innerColor: Colors.white,
                   outerColor: CodeRedColors.primary2,
                 ),
@@ -133,6 +173,32 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
             ),
           );
         });
+  }
+
+  // Future<dynamic> _initiateTransaction() async {
+
+  // }
+
+  void _swipeToConfirm() async {
+    _initPayment();
+    // await ConsultHelper.createAppointment(
+    //   userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2", //TODO:ADD USER ID,
+    //   username: 'Himanshu Sharma',
+    //   userImage: "https://avatars.githubusercontent.com/u/54989142?v=4",
+    //   doctorID: widget.doctor.uid,
+    //   doctorName: widget.doctor.name,
+    //   doctorImage: widget.doctor.image,
+    //   timestamp: _selectedTimeSlot,
+    //   date: _selectedDate,
+    // ).then((value) => print("BOOKED : ${value.toString()}"));
+
+    // Navigator.pushReplacementNamed(context, '/home');
+    // HapticFeedback.heavyImpact();
+
+    // FAILED PAYMENT
+    // Navigator.pop(context);
+    // displaySnackbar(
+    //     context, "Your transaction has failed. Please try again");
   }
 
   @override

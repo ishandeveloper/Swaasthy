@@ -5,3 +5,5 @@ export './forums/reply.dart';
 
 export './consult/doctor.dart';
 export './consult/doctor_category.dart';
+
+export './emergency/ambulance.dart';

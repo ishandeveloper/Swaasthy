@@ -14,3 +14,5 @@ export './upvotes_service.dart';
 export './database/consult.dart';
 
 export './screens_wrapper_service.dart';
+
+export './database/emergency.dart';

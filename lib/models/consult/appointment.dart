@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Appointment {
-  final String patient;
   final List<AppointmentItem> appointments;
 
-  Appointment({this.appointments, this.patient});
+  Appointment({this.appointments});
 
   factory Appointment.getModel(DocumentSnapshot data) {
     List<AppointmentItem> _ = [];
@@ -13,7 +12,7 @@ class Appointment {
       _.add(AppointmentItem.getModel(e));
     });
 
-    return Appointment(patient: data['patient_name'], appointments: _);
+    return Appointment(appointments: _);
   }
 }
 

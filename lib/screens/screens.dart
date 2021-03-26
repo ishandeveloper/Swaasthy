@@ -17,7 +17,10 @@ import 'package:flutter/material.dart';
 class ScreensWrapper extends StatefulWidget {
   final bool refresh;
 
-  ScreensWrapper({this.refresh = false});
+  final int userType;
+
+  ScreensWrapper(
+      {this.refresh = false, this.userType = 0}); //TODO: ADD USER TYPE
 
   @override
   _ScreensWrapperState createState() => _ScreensWrapperState();
@@ -75,7 +78,10 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
                               ltr: leftToRight,
                               child: ForumsScreen(refresh: widget.refresh)),
                           TransitionWrapper(
-                              ltr: leftToRight, child: ConsultDoctor()),
+                              ltr: leftToRight,
+                              child: ConsultDoctor(
+                                userType: widget.userType,
+                              )),
                         ])))),
       ),
     );

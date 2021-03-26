@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  agora_rtc_engine: ^3.3.2
   another_flushbar: ^1.10.17
   cached_network_image: ^2.5.1
   cloud_firestore: ^1.0.1
@@ -37,13 +38,15 @@ dependencies:
   geolocator: ^7.0.1
   google_maps_flutter: ^2.0.1
   google_sign_in: ^4.5.9
-  http: ^0.13.0
+  http: ^0.13.1
   lottie: ^1.0.1
   multi_image_picker: ^4.8.0
   overflow_view: ^0.2.2
   path_provider: ^2.0.1
+  permission_handler: ^6.1.1
   photo_view: ^0.11.1
   provider: ^5.0.0
+  razorpay_flutter: ^1.2.5
   shimmer: ^1.1.2
   slide_to_act: ^2.0.1
   timeago: ^3.0.2

@@ -9,6 +9,10 @@ import 'package:shimmer/shimmer.dart';
 import 'local_widgets/index.dart';
 
 class ConsultDoctor extends StatefulWidget {
+  final int userType;
+
+  ConsultDoctor({@required this.userType});
+
   @override
   _ConsultDoctorState createState() => _ConsultDoctorState();
 }
@@ -24,13 +28,20 @@ class _ConsultDoctorState extends State<ConsultDoctor> {
         body: SafeArea(
           child: StreamBuilder(
             stream: ConsultHelper.getAppointmentsSnapshot(
-                userID: "Y1yRtDNFAoNW1TgGwrYV6mMmzSk2"),
+              userType: widget.userType,
+              userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
+            ),
             builder: (context, snapshot) {
-              if (!snapshot.hasData) return ShimmeringConsultPage();
+              if (!snapshot.hasData)
+                return ShimmeringConsultPage(userType: widget.userType);
 
-              if (!snapshot.data.exists) return NoAppointments();
+              if (!snapshot.data.exists)
+                return NoAppointments(
+                  userType: widget.userType,
+                );
 
               return AppointmentsList(
+                  userType: widget.userType,
                   appointment: Appointment.getModel(snapshot.data));
             },
           ),
@@ -40,14 +51,15 @@ class _ConsultDoctorState extends State<ConsultDoctor> {
 
 class AppointmentsList extends StatelessWidget {
   final Appointment appointment;
+  final int userType;
 
-  AppointmentsList({@required this.appointment});
+  AppointmentsList({@required this.appointment, @required this.userType});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ConsultHeader(action: true),
+        ConsultHeader(action: true, userType: userType),
         Expanded(
           child: SingleChildScrollView(
               child: Container(
@@ -57,8 +69,9 @@ class AppointmentsList extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: appointment.appointments.length,
-                  itemBuilder: (_, index) =>
-                      AppointmentCard(data: appointment.appointments[index])),
+                  itemBuilder: (_, index) => AppointmentCard(
+                      data: appointment.appointments[index],
+                      userType: this.userType)),
             ),
           )),
         ),
@@ -70,7 +83,9 @@ class AppointmentsList extends StatelessWidget {
 class AppointmentCard extends StatelessWidget {
   final AppointmentItem data;
 
-  AppointmentCard({this.data});
+  final int userType;
+
+  AppointmentCard({this.data, @required this.userType});
 
   @override
   Widget build(BuildContext context) {
@@ -123,14 +138,18 @@ class AppointmentCard extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(8)),
+                        borderRadius: BorderRadius.circular(50)),
                     height: 102,
-                    padding: EdgeInsets.only(top: 8, left: 8, right: 8),
+                    padding:
+                        EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
                     child: Hero(
-                        tag: data.doctorID,
-                        child: Image(
-                          image: CachedNetworkImageProvider(data.doctorImage),
-                        )),
+                      tag: data.doctorID,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image(
+                            image: CachedNetworkImageProvider(data.doctorImage),
+                          )),
+                    ),
                   ),
                   SizedBox(width: 16),
                   Container(
@@ -138,7 +157,10 @@ class AppointmentCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Dr. ${data.doctorName}',
+                        Text(
+                            userType == 2
+                                ? '${data.doctorName}'
+                                : 'Dr. ${data.doctorName}',
                             style: TextStyle(fontSize: 22)),
                         MaterialButton(
                           color: Colors.grey[200],
@@ -148,8 +170,10 @@ class AppointmentCard extends StatelessWidget {
                           onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) =>
-                                      AppointmentDetails(data: data))),
+                                  builder: (_) => AppointmentDetails(
+                                        data: data,
+                                        userType: this.userType,
+                                      ))),
                           child: Text('View details'),
                         )
                       ],
@@ -166,12 +190,16 @@ class AppointmentCard extends StatelessWidget {
 }
 
 class ShimmeringConsultPage extends StatelessWidget {
+  final int userType;
+
+  ShimmeringConsultPage({@required this.userType});
+
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Column(
       children: [
-        ConsultHeader(),
+        ConsultHeader(userType: userType),
         SizedBox(height: 24),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -203,8 +231,10 @@ class ShimmeringConsultPage extends StatelessWidget {
 
 class ConsultHeader extends StatelessWidget {
   final bool action;
+  final int userType;
 
-  const ConsultHeader({Key key, this.action = false}) : super(key: key);
+  const ConsultHeader({Key key, this.action = false, @required this.userType})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +252,7 @@ class ConsultHeader extends StatelessWidget {
             ),
           ),
           AnimatedOpacity(
-            opacity: this.action ? 1 : 0,
+            opacity: this.action && this.userType != 2 ? 1 : 0,
             duration: Duration(milliseconds: 400),
             child: FloatingActionButton(
               mini: true,
