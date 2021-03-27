@@ -25,7 +25,7 @@ class User {
   final String gender;
   final String email;
   final String ip;
-  final String type;
+  final int type;
   //TODO:
   final String fcmToken;
   final bool verificationStatus;

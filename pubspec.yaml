@@ -38,6 +38,7 @@ dependencies:
   flutter_phoenix: ^1.0.0
   flutter_vector_icons: ^0.2.1
   geolocator: ^7.0.1
+  google_maps_cluster_manager: ^1.0.0
   google_maps_flutter: ^2.0.1
   google_sign_in: ^4.5.9
   http: ^0.13.1

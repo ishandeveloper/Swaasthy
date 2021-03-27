@@ -14,7 +14,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     username: json['username'] as String,
     email: json['email'] as String,
     ip: json['ip'] as String,
-    type: json['type'] as String,
+    type: json['type'] as int,
     uid: json['uid'] as String,
   );
 }
