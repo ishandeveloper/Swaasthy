@@ -48,6 +48,7 @@ class _GenderPageState extends State<GenderPage> {
               margin: const EdgeInsets.only(top: 30),
               width: double.infinity,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: genderList.map((e) => genderCard(gender: e)).toList(),
               )),
         ],

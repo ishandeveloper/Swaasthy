@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/forums/post_user.dart';
-import 'package:codered/screens/index.dart';
 import 'package:codered/services/database/storage.dart';
 import 'package:codered/services/index.dart';
 import 'package:codered/utils/index.dart';

@@ -31,8 +31,6 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
 
   Position _userGeoPosition;
 
-  var _geoLocator = Geolocator();
-
   BitmapDescriptor myLocationPin;
 
   BitmapDescriptor ambulancePin;

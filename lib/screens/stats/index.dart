@@ -1,4 +1,4 @@
-import 'package:codered/screens/map_sample.dart';
+import 'package:codered/screens/stats/map.dart';
 import 'package:flutter/material.dart';
 
 class StatsScreen extends StatelessWidget {

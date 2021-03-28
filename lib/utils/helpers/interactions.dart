@@ -203,7 +203,6 @@ String timeFormatter(DateTime time) {
     return "${time.hour}:${time.minute} AM";
   }
 }
-<<<<<<< HEAD
 
 String specialTimeFormatter(DateTime time) {
   if (time.hour < 10) {
@@ -228,5 +227,3 @@ String specialTimeFormatter(DateTime time) {
 String dateTimeFormatter(DateTime date) {
   return "${dateFormatter(date)} at ${timeFormatter(date)}";
 }
-=======
->>>>>>> 824e5d5... Newest Changes

@@ -1,9 +1,11 @@
+import 'package:codered/models/medicine_reminder.dart';
 import 'package:codered/screens/indicator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:codered/services/signup_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'models/received_notification.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -80,7 +82,8 @@ class CodeRedApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RepliesService()),
         ChangeNotifierProvider(create: (_) => UpvotesService()),
         ChangeNotifierProvider(create: (_) => ScreensWrapperService()),
-        ChangeNotifierProvider(create: (_) => SignUpService())
+        ChangeNotifierProvider(create: (_) => SignUpService()),
+        ChangeNotifierProvider(create: (_) => MedicineReminderService())
       ],
       child: GestureDetector(
         onTap: () {
@@ -121,18 +124,4 @@ class CodeRedApp extends StatelessWidget {
       ),
     );
   }
-}
-
-class ReceivedNotification {
-  ReceivedNotification({
-    @required this.id,
-    @required this.title,
-    @required this.body,
-    @required this.payload,
-  });
-
-  final int id;
-  final String title;
-  final String body;
-  final String payload;
 }

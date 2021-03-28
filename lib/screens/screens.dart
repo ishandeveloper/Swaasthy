@@ -56,6 +56,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
       user = User(
           points: user.points,
           age: user.age,
+          email: user.email,
           gender: user.gender,
           username: user.username,
           ip: json.decode(response.body)['client_ip'],

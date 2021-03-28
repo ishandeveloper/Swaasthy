@@ -37,19 +37,21 @@ class _IndicatorState extends State<Indicator> {
         user = usr.User(
             points: 0, email: widget.authUser.email, uid: widget.authUser.uid);
         setState(() {});
-        await collectionReference
-            .doc(widget.authUser.uid)
-            .set(user.toJson())
-            .then((value) => Navigator.pushNamedAndRemoveUntil(
-                context, CodeRedRoutes.signup, (route) => false));
+        // await collectionReference
+        //     .doc(widget.authUser.uid)
+        //     .set(user.toJson())
+        //     .then((value) => Navigator.pushNamedAndRemoveUntil(
+        //         context, CodeRedRoutes.signup, (route) => false));
+        Navigator.pushNamedAndRemoveUntil(
+                context, CodeRedRoutes.signup, (route) => false);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
+    return Scaffold(
+        body: Center(
       child: CircularProgressIndicator(),
     ));
   }

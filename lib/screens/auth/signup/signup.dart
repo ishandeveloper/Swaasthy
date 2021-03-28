@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'age.dart';
 import 'username.dart';
+import 'account_type.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
   PageController pageController;
 
   double growStepWidth, beginWidth, endWidth = 0.0;
-  int totalPages = 3;
+  int totalPages = 4;
   bool _isInitialized;
   String name, email, password, error;
   int currentIndex = 0;
@@ -126,11 +127,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
           _setProgressAnimation(maxWidth, i + 1);
         },
         physics: NeverScrollableScrollPhysics(),
-        children: [
-          UserNamePage(),
-          AgePage(),
-          GenderPage(),
-        ],
+        children: [UserNamePage(), AgePage(), GenderPage(), AccountType()],
       ),
       floatingActionButton:
           Consumer<SignUpService>(builder: (context, ss, child) {
@@ -158,11 +155,12 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                       username: ss.name,
                       age: ss.age,
                       gender: ss.gender,
+                      type: ss.accountType
                     );
                     await FirebaseFirestore.instance
                         .collection('users')
                         .doc(user.uid)
-                        .update(user.toJson())
+                        .set(user.toJson())
                         .then((value) => Navigator.pushNamedAndRemoveUntil(
                             context, CodeRedRoutes.home, (route) => false))
                         .onError((error, stackTrace) => print(error));

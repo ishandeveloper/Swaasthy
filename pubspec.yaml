@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^1.0.1
   firebase_messaging: ^9.0.1
   firebase_storage: ^8.0.0
+  flutter_datetime_picker: ^1.5.0
   flutter_linkify: ^5.0.0
   flutter_local_notifications: ^5.0.0
   flutter_phoenix: ^1.0.0

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:codered/models/received_notification.dart';
 import 'package:codered/services/router/routes.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:codered/utils/constants/keys.dart';
@@ -71,8 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
       print('A new onMessageOpenedApp event was published!');
       Navigator.pushNamed(context, CodeRedRoutes.home);
     });
-    // TODO: Updaate the schedule
-    // _repeatNotification();
   }
 
   void setToken(String token) {
@@ -148,46 +146,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future<void> _repeatNotification() async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('repeating channel id',
-            'repeating channel name', 'repeating description');
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating title',
-        'repeating body', RepeatInterval.everyMinute, platformChannelSpecifics,
-        androidAllowWhileIdle: true);
-  }
-
-  //TODO:Update the schedule
-  Future<void> _scheduleDailyTenAMNotification() async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'daily scheduled notification title',
-        'daily scheduled notification body',
-        _nextInstanceOfTenAM(),
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-              'daily notification channel id',
-              'daily notification channel name',
-              'daily notification description'),
-        ),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
-  }
-
-  tz.TZDateTime _nextInstanceOfTenAM() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 10);
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -196,12 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
         key: drawerKey,
         floatingActionButton: FloatingActionButton(
           backgroundColor: CodeRedColors.primary,
-          onPressed: () {
-            sendPushMessage();
-            Future<void> _cancelAllNotifications() async {
-              await flutterLocalNotificationsPlugin.cancelAll();
-            }
-
+          onPressed: () async {
+            await sendPushMessage();
             Navigator.pushNamed(context, '/emergency');
           },
           child: Transform.translate(
