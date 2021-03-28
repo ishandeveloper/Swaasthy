@@ -37,6 +37,7 @@ dependencies:
   flutter_linkify: ^5.0.0
   flutter_local_notifications: ^5.0.0
   flutter_phoenix: ^1.0.0
+  flutter_svg:
   flutter_vector_icons: ^0.2.1
   geolocator: ^7.0.1
   google_maps_cluster_manager: ^1.0.0
@@ -70,6 +71,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/
     - assets/images/
     - assets/icons/
     - assets/lottie/

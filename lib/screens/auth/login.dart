@@ -1,6 +1,6 @@
 import 'package:codered/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_svg/svg.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -20,7 +20,14 @@ class _LoginPageState extends State<LoginPage> {
             Flexible(
               flex: 4,
               fit: FlexFit.tight,
-              child: Lottie.asset('assets/lottie/auth.json'),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.08,
+                    vertical: MediaQuery.of(context).size.height * 0.06),
+                child: SvgPicture.asset(
+                  'assets/swaasthy.svg',
+                ),
+              ),
             ),
             Text(
               'Swaasthy',
@@ -58,7 +65,8 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) => Colors.white,
+                    (Set<MaterialState> states) =>
+                        Color.fromRGBO(238, 70, 110, 1),
                   ),
                 ),
                 child: Row(
@@ -71,14 +79,14 @@ class _LoginPageState extends State<LoginPage> {
                     ] else ...[
                       Image.network(
                         'https://img.icons8.com/ios-filled/50/000000/google-logo.png',
-                        color: Colors.red,
+                        color: Colors.white,
                         height: 30,
                         width: 30,
                       ),
                       Text(
                         'Sign in with Google',
                         style: TextStyle(
-                          color: Colors.red,
+                          color: Colors.white,
                           fontSize: 18,
                         ),
                       ),
