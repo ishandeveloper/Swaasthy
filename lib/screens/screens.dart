@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/user.dart';
 import 'package:codered/screens/indicator.dart';
+import 'package:codered/services/apimedic_service.dart';
 import 'package:codered/services/index.dart';
 import 'package:codered/shared_widgets/index.dart';
 import 'package:codered/utils/index.dart';
@@ -45,6 +46,8 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
     super.initState();
     _pageController = PageController();
     getUserIp();
+    //TODO: Save in sharedpref
+    ApiMedicService().auth();
   }
 
   getUserIp() async {

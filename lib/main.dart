@@ -1,5 +1,7 @@
+import 'package:codered/models/diagnosis.dart';
 import 'package:codered/models/medicine_reminder.dart';
 import 'package:codered/screens/indicator.dart';
+import 'package:codered/services/apimedic_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:codered/services/signup_services.dart';
@@ -83,7 +85,9 @@ class CodeRedApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UpvotesService()),
         ChangeNotifierProvider(create: (_) => ScreensWrapperService()),
         ChangeNotifierProvider(create: (_) => SignUpService()),
-        ChangeNotifierProvider(create: (_) => MedicineReminderService())
+        ChangeNotifierProvider(create: (_) => MedicineReminderService()),
+        ChangeNotifierProvider(create: (_) => ApiMedicService()),
+        ChangeNotifierProvider(create: (_) => DiagnosisResult())
       ],
       child: GestureDetector(
         onTap: () {

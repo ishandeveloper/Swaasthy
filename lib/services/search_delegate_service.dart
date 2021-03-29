@@ -1,4 +1,4 @@
-
+import 'package:codered/services/apimedic_service.dart';
 import 'package:codered/utils/constants/symptoms.dart';
 import 'package:flutter/material.dart';
 
@@ -67,6 +67,7 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
         itemBuilder: (context, index) => ListTile(
               onTap: () {
                 query = suggestionList[index].Name;
+                ApiMedicService().getInfo([suggestionList[index].ID]);
                 showResults(context);
                 recentSuggest.insert(0, suggestionList[index]);
               },
