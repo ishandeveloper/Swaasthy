@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/index.dart';
+import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/index.dart';
 import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
   void _paymentSuccess() async {
     await ConsultHelper.createAppointment(
-      userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2", //TODO:ADD USER ID,
+      userID: user.uid,
       username: 'Himanshu Sharma',
       userImage: "https://avatars.githubusercontent.com/u/54989142?v=4",
       doctorID: widget.doctor.uid,

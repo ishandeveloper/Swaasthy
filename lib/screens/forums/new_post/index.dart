@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 import '../../index.dart';
+import '../../indicator.dart';
 
 class NewForumPost extends StatefulWidget {
   @override
@@ -57,7 +58,7 @@ class _NewForumPostState extends State<NewForumPost> {
                 title: _titleTextController.value.text.toString(),
                 body: _plainTextController.value.text,
                 user: PostUserModel(
-                    userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2", //TODO:ADD USER ID
+                    userID: user.uid, //TODO:ADD USER ID
                     username: 'ishandeveloper',
                     userimage:
                         'https://avatars.githubusercontent.com/u/54989142?s=460&u=dae5bd5b626e6e4ed70d23fe25d1eba5d510efc6&v=4'))));

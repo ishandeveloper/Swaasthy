@@ -12,7 +12,6 @@ import 'package:codered/main.dart';
 import '../drawer.dart';
 import 'package:http/http.dart' as http;
 import 'local_widgets/index.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -59,9 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 channel.id,
                 channel.name,
                 channel.description,
-                // TODO add a proper drawable resource to android, for now using
-                //      one that already exists in example app.
-                icon: 'launch_background',
+                icon: 'app_icon',
               ),
             ));
       }
@@ -174,8 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
         body: Container(
             padding: EdgeInsets.symmetric(horizontal: 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
                 HomeGreetings(),
                 SizedBox(height: 20),

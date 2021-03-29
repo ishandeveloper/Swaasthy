@@ -23,10 +23,10 @@ import 'package:http/http.dart' as http;
 class ScreensWrapper extends StatefulWidget {
   final bool refresh;
 
-  final int userType;
+  final int userType = user.type;
 
   ScreensWrapper(
-      {this.refresh = false, this.userType = 0}); //TODO: ADD USER TYPE
+      {this.refresh = false});
 
   @override
   _ScreensWrapperState createState() => _ScreensWrapperState();

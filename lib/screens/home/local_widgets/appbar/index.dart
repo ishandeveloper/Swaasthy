@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
 
+import '../../../indicator.dart';
+
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     Key key,
@@ -35,7 +37,7 @@ class HomeAppBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Ishan Sharma',
+                          user.username,
                           style: TextStyle(
                               fontSize: 14,
                               color: CodeRedColors.text,

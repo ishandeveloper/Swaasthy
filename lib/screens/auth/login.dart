@@ -1,6 +1,5 @@
 import 'package:codered/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../utils/constants/colors.dart';
 

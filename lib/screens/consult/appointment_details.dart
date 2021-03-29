@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../index.dart';
+import '../indicator.dart';
 
 class AppointmentDetails extends StatelessWidget {
   final AppointmentItem data;
@@ -97,7 +98,7 @@ class AppointmentDetails extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                    "Hello ${"Himanshu Sharma"?.split(" ")[0]?.toString()},", //TODO: ADD USER NAME
+                                    "Hello ${user.username?.split(" ")[0]?.toString()},",
                                     style: TextStyle(fontSize: 17)),
                               ],
                             ),

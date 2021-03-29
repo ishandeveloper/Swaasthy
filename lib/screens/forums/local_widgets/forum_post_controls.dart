@@ -1,3 +1,4 @@
+import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/index.dart';
 import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,7 @@ class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
 
     bool isVoted = _votesService
         .getLikes(index: widget.index)
-        .contains("qUOmsgFAwKPHaBSAWTnLah7sjMd2"); //TODO: ADD USER ID;
+        .contains(user.uid); //TODO: ADD USER ID;
 
     return ConstrainedBox(
       constraints: BoxConstraints(minWidth: 50),
@@ -122,7 +123,7 @@ class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
 
                 _votesService.updateLike(
                     index: widget.index,
-                    uid: "qUOmsgFAwKPHaBSAWTnLah7sjMd2"); //TODO: ADD USER ID
+                    uid: user.uid); //TODO: ADD USER ID
               },
               child: Icon(
                 isVoted

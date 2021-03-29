@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/forums/posts.dart';
+import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -97,14 +98,14 @@ class ForumsHelper {
           .collection('posts')
           .doc(documentID)
           .collection('upvotes')
-          .doc("qUOmsgFAwKPHaBSAWTnLah7sjMd2") //TODO: ADD USER ID
+          .doc(user.uid) //TODO: ADD USER ID
           .get();
 
       if (_likesData.exists) {
         List<String> _tempList =
             List.generate(likesCount - 1, (index) => "$index");
         _likes = [
-          "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
+          user.uid,
           ..._tempList
         ]; //TODO: ADD USER ID
       } else {
