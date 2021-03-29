@@ -38,7 +38,7 @@ class _AgePageState extends State<AgePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Enter Your Age, ${Provider.of<SignUpService>(context, listen: false).name ?? ''}",
+              "What's your age, ${Provider.of<SignUpService>(context, listen: false).name ?? ''} ?",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
@@ -72,9 +72,35 @@ class _AgePageState extends State<AgePage> {
               error ?? '',
               style: TextStyle(fontSize: 16, color: Colors.red),
             ),
+            SizedBox(height: 32),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(6)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.info,
+                    color: Colors.grey[800],
+                    size: 22,
+                  ),
+                  SizedBox(width: 6),
+                  Expanded(
+                      child: Wrap(
+                    children: [
+                      Text(
+                          "This data will only be used for symptom based disease diagnose purposes and we would never share this with anyone. Promise.")
+                    ],
+                  ))
+                ],
+              ),
+            )
           ],
         ),
       ),
+
       //       onTap: active
       //           ? () {
       //               if (age.isNotEmpty) {

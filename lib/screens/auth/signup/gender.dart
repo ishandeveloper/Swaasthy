@@ -1,5 +1,7 @@
 import 'package:codered/services/signup_services.dart';
+import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 
 class GenderPage extends StatefulWidget {
@@ -12,8 +14,8 @@ class _GenderPageState extends State<GenderPage> {
   bool active = false;
 
   List<Gender> genderList = <Gender>[
-    Gender(name: 'MALE', imgrURL: '', index: 0),
-    Gender(name: 'FEMALE', imgrURL: '', index: 1)
+    Gender(name: 'MALE', imgrURL: '', icon: FontAwesome.male, index: 0),
+    Gender(name: 'FEMALE', imgrURL: '', icon: FontAwesome.female, index: 1)
   ];
 
   int _selectedGender;
@@ -41,7 +43,7 @@ class _GenderPageState extends State<GenderPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Enter Your Password",
+            "What's your gender?",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Container(
@@ -59,11 +61,12 @@ class _GenderPageState extends State<GenderPage> {
   Widget genderCard({Gender gender}) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: _selectedGender == gender.index
-                  ? Colors.blueGrey
+                  ? CodeRedColors.primary
                   : Colors.white,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
@@ -89,8 +92,11 @@ class _GenderPageState extends State<GenderPage> {
                 child: Column(
                   children: [
                     Icon(
-                      Icons.image,
-                      size: 35,
+                      gender.icon,
+                      size: 48,
+                      color: _selectedGender == gender.index
+                          ? Colors.white
+                          : Colors.black,
                     ),
                     SizedBox(
                       height: 20,
@@ -117,6 +123,7 @@ class _GenderPageState extends State<GenderPage> {
 class Gender {
   final String name;
   final String imgrURL;
+  final IconData icon;
   final int index;
-  Gender({this.name, this.imgrURL, this.index});
+  Gender({this.name, this.imgrURL, this.icon, this.index});
 }

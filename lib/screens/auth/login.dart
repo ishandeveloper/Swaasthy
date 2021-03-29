@@ -1,6 +1,8 @@
 import 'package:codered/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
+
+import '../../utils/constants/colors.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,17 +20,14 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
-              flex: 4,
-              fit: FlexFit.tight,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.08,
-                    vertical: MediaQuery.of(context).size.height * 0.06),
-                child: SvgPicture.asset(
-                  'assets/swaasthy.svg',
-                ),
-              ),
-            ),
+                flex: 4,
+                fit: FlexFit.tight,
+                // child: Lottie.asset('assets/lottie/auth.json'),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 84.0, top: 96, right: 84),
+                  child: Image(image: AssetImage('assets/images/swaasthy.png')),
+                )),
             Text(
               'Swaasthy',
               style: TextStyle(
@@ -65,8 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) =>
-                        Color.fromRGBO(238, 70, 110, 1),
+                    (Set<MaterialState> states) => CodeRedColors.primary,
                   ),
                 ),
                 child: Row(
@@ -79,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     ] else ...[
                       Image.network(
                         'https://img.icons8.com/ios-filled/50/000000/google-logo.png',
+                        // color: Colors.red,
                         color: Colors.white,
                         height: 30,
                         width: 30,

@@ -4,6 +4,7 @@ import 'package:codered/screens/auth/signup/gender.dart';
 import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/router/routes.dart';
 import 'package:codered/services/signup_services.dart';
+import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -95,7 +96,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
             ? IconButton(
                 icon: Icon(
                   Icons.arrow_back_ios_outlined,
-                  color: Colors.blueGrey,
+                  color: Colors.grey[400],
                 ),
                 onPressed: () {
                   pageController.previousPage(
@@ -110,7 +111,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
               height: 15.0,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: Colors.blueGrey,
+                  color: Colors.grey[400],
                   borderRadius: BorderRadius.circular(8)),
             ),
             AnimatedProgressBar(
@@ -135,7 +136,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
           width: MediaQuery.of(context).size.width * 0.9,
           height: 50,
           decoration: BoxDecoration(
-              color: ss.active ? Colors.green : Colors.grey,
+              color: ss.active ? CodeRedColors.primary : Colors.grey,
               borderRadius: BorderRadius.circular(10)),
           child: Material(
             color: Colors.transparent,
@@ -149,14 +150,13 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                 if (ss.active) if (pageController.hasClients) {
                   if (currentIndex == totalPages - 1) {
                     user = User(
-                      points: 0,
-                      email: user.email,
-                      uid: user.uid,
-                      username: ss.name,
-                      age: ss.age,
-                      gender: ss.gender,
-                      type: ss.accountType
-                    );
+                        points: 0,
+                        email: user.email,
+                        uid: user.uid,
+                        username: ss.name,
+                        age: ss.age,
+                        gender: ss.gender,
+                        type: ss.accountType);
                     await FirebaseFirestore.instance
                         .collection('users')
                         .doc(user.uid)
@@ -172,7 +172,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
               },
               child: Center(
                 child: Text(
-                  'NEXT',
+                  currentIndex == totalPages - 1 ? 'Finish' : 'NEXT',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
@@ -197,7 +197,7 @@ class AnimatedProgressBar extends AnimatedWidget {
       curve: Curves.ease,
       width: animation.value,
       decoration: BoxDecoration(
-          color: Colors.green, borderRadius: BorderRadius.circular(8)),
+          color: CodeRedColors.primary, borderRadius: BorderRadius.circular(8)),
     );
   }
 }

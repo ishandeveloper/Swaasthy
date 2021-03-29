@@ -1,4 +1,5 @@
 import 'package:codered/services/signup_services.dart';
+import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,25 +41,29 @@ class _AccountTypeState extends State<AccountType> {
   }
 
   Widget chooseAccount(String text, int value) {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: Colors.grey[200]),
-      child: Row(
-        children: [
-          Radio(
-              value: value,
-              groupValue: accountType,
-              onChanged: (val) {
-                setState(() {
-                  accountType = val;
-                  Provider.of<SignUpService>(context, listen: false)
-                      .putType(val);
-                });
-              }),
-          Text(text),
-          SizedBox(width: 4)
-        ],
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 6),
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12), color: Colors.grey[200]),
+        child: Row(
+          children: [
+            Radio(
+                value: value,
+                groupValue: accountType,
+                activeColor: CodeRedColors.primary,
+                onChanged: (val) {
+                  setState(() {
+                    accountType = val;
+                    Provider.of<SignUpService>(context, listen: false)
+                        .putType(val);
+                  });
+                }),
+            Text(text),
+            SizedBox(width: 4)
+          ],
+        ),
       ),
     );
   }
