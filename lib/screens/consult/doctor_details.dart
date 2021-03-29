@@ -154,18 +154,34 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                         )),
                   ],
                 ),
+                SizedBox(height: 8),
+                Text("₹10.00 INR",
+                    style: TextStyle(
+                      color: CodeRedColors.primary2,
+                      fontFamily: 'ProductSans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 24,
+                    )),
                 SizedBox(height: 16),
                 SlideAction(
+                  sliderRotate: false,
                   animationDuration: Duration(milliseconds: 500),
                   onSubmit: () => _swipeToConfirm(),
-                  height: 60,
-                  sliderButtonIconPadding: 12,
+                  height: 58,
+                  sliderButtonIcon: Container(
+                    height: 42,
+                    width: 42,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/icons/gpay.png'))),
+                  ),
+                  sliderButtonIconPadding: 2,
                   sliderButtonIconSize: 18,
                   textStyle: TextStyle(
                       fontFamily: 'ProductSans',
-                      fontSize: 20,
+                      fontSize: 18,
                       color: Colors.white),
-                  text: 'Proceed to pay Rs. 10',
+                  text: 'Pay with Google Pay',
                   innerColor: Colors.white,
                   outerColor: CodeRedColors.primary2,
                 ),
