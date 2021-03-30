@@ -21,7 +21,7 @@ class ApiMedicService with ChangeNotifier {
     });
   }
 
-  getInfo(List<int> symptoms) async {
+  Future<void> getInfo(List<int> symptoms) async {
     uriUpdate(symptoms).then((value) async => await http
             .get(
           Uri.parse(value),
@@ -37,6 +37,6 @@ class ApiMedicService with ChangeNotifier {
   }
 
   Future<String> uriUpdate(List<int> symptoms) async {
-    return 'https://healthservice.priaid.ch/diagnosis?token=$TOKEN&language=en-gb&gender=${user.gender}&year_of_birth=${2021 - int.parse(user.age)}&symptoms=$symptoms';
+    return 'https://healthservice.priaid.ch/diagnosis?token=$TOKEN&language=en-gb&gender=${user.gender}&year_of_birth=${2021-int.parse(user.age)}&symptoms=$symptoms';
   }
 }

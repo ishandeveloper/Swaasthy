@@ -1,5 +1,5 @@
 class DiagnosisResult {
-  List<Diagnosis> diagnosisResult;
+  List<Diagnosis> diagnosisResult = [];
 
   DiagnosisResult({this.diagnosisResult});
 

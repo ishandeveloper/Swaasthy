@@ -1,9 +1,7 @@
-import 'package:codered/models/diagnosis.dart';
+import 'package:codered/screens/diagnosis.dart';
 import 'package:codered/services/apimedic_service.dart';
 import 'package:codered/utils/constants/symptoms.dart';
-import '../services/daignosis_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SearchBarDelegateService extends SearchDelegate<Symptoms> {
   List<Symptoms> recentSuggest;
@@ -41,35 +39,7 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
 
   @override
   Widget buildResults(BuildContext context) {
-    PageController pageController = PageController();
-
-    Widget pageView(Diagnosis diagnosis) {
-      return Column(
-        children: [Text(diagnosis.name)],
-      );
-    }
-
-    return Container(
-      child: Consumer<DiagnosisResultNotifier>(builder: (context, dsn, child) {
-        //TODO: Check here
-        if (dsn.diagnosisResult == null)
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        else
-          return Column(
-            children: [
-              PageView(
-                controller: pageController,
-                children: dsn.diagnosisResult.diagnosisResult
-                    // .sublist(0, 1)
-                    .map((e) => pageView(e))
-                    .toList(),
-              ),
-            ],
-          );
-      }),
-    );
+    return DiagnosisReport();
   }
 
   @override
@@ -83,10 +53,12 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
     return ListView.builder(
         itemCount: suggestionList.length,
         itemBuilder: (context, index) => ListTile(
-              onTap: () {
+              onTap: () async {
                 query = suggestionList[index].Name;
-                ApiMedicService().getInfo([suggestionList[index].ID]);
-                showResults(context);
+                await ApiMedicService()
+                    .getInfo([suggestionList[index].ID]).then(
+                        (value) => showResults(context));
+
                 recentSuggest.insert(0, suggestionList[index]);
               },
               title: RichText(
