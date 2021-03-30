@@ -102,21 +102,24 @@ class MapSampleState extends State<MapSample> {
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
             _activeMapsController = controller;
-            getUserPosition();
+
+            //TODO: REMOVE THIS
+            // TEMPORARILY DISABLED FOR DEMONSTRATION
+            // getUserPosition();
             _manager.setMapController(controller);
           },
           onCameraMove: _manager.onCameraMove,
           onCameraIdle: _manager.updateMap),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _manager.setItems(<ClusterItem<Place>>[
-            for (int i = 0; i < 30; i++)
-              ClusterItem<Place>(LatLng(48.858265 + i * 0.01, 2.350107),
-                  item: Place(name: 'New Place ${DateTime.now()}'))
-          ]);
-        },
-        child: Icon(Icons.update),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     _manager.setItems(<ClusterItem<Place>>[
+      //       for (int i = 0; i < 30; i++)
+      //         ClusterItem<Place>(LatLng(48.858265 + i * 0.01, 2.350107),
+      //             item: Place(name: 'New Place ${DateTime.now()}'))
+      //     ]);
+      //   },
+      //   child: Icon(Icons.update),
+      // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
