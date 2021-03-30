@@ -1,6 +1,9 @@
+import 'package:codered/models/diagnosis.dart';
 import 'package:codered/services/apimedic_service.dart';
 import 'package:codered/utils/constants/symptoms.dart';
+import '../services/daignosis_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchBarDelegateService extends SearchDelegate<Symptoms> {
   List<Symptoms> recentSuggest;
@@ -38,20 +41,35 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return Center(
-      child: Container(
-        width: 100.0,
-        height: 100.0,
-        child: Card(
-          color: Colors.redAccent,
-          child: Center(
-            child: Text(query),
-          ),
-        ),
-      ),
+    PageController pageController = PageController();
+
+    Widget pageView(Diagnosis diagnosis) {
+      return Column(
+        children: [Text(diagnosis.name)],
+      );
+    }
+
+    return Container(
+      child: Consumer<DiagnosisResultNotifier>(builder: (context, dsn, child) {
+        //TODO: Check here
+        if (dsn.diagnosisResult == null)
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        else
+          return Column(
+            children: [
+              PageView(
+                controller: pageController,
+                children: dsn.diagnosisResult.diagnosisResult
+                    // .sublist(0, 1)
+                    .map((e) => pageView(e))
+                    .toList(),
+              ),
+            ],
+          );
+      }),
     );
-    ;
   }
 
   @override

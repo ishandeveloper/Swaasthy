@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
-
-class DiagnosisResult with ChangeNotifier{
-  final List<Diagnosis> diagnosisResult;
+class DiagnosisResult {
+  List<Diagnosis> diagnosisResult;
 
   DiagnosisResult({this.diagnosisResult});
 
@@ -13,7 +11,7 @@ class DiagnosisResult with ChangeNotifier{
 }
 
 class Diagnosis {
-  final double accuracy;
+  final num accuracy;
   final String name;
   final String specialist;
   final String alsoKnownAs;

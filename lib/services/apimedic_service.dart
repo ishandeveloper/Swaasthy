@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:codered/models/diagnosis.dart';
+import './daignosis_notifier.dart';
 import 'package:codered/screens/indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -29,12 +29,14 @@ class ApiMedicService with ChangeNotifier {
             .then((response) {
           print(response.body);
           if (response.statusCode == 200) {
-            DiagnosisResult.fromJSON(json.decode(response.body));
+            DiagnosisResultNotifier()
+                .onNewDiagnosis(json.decode(response.body));
+            notifyListeners();
           }
         }));
   }
 
   Future<String> uriUpdate(List<int> symptoms) async {
-    return 'https://healthservice.priaid.ch/diagnosis?token=$TOKEN&language=en-gb&gender=${user.gender}&year_of_birth=${2021-int.parse(user.age)}&symptoms=$symptoms';
+    return 'https://healthservice.priaid.ch/diagnosis?token=$TOKEN&language=en-gb&gender=${user.gender}&year_of_birth=${2021 - int.parse(user.age)}&symptoms=$symptoms';
   }
 }
