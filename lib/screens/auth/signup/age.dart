@@ -1,4 +1,4 @@
-import 'package:codered/services/signup_services.dart';
+import 'package:codered/services/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,15 +16,15 @@ class _AgePageState extends State<AgePage> {
   void initState() {
     super.initState();
     ageController = TextEditingController(
-        text: Provider.of<SignUpService>(context, listen: false).age ?? '');
+        text: Provider.of<UserService>(context, listen: false).age ?? '');
 
-    Provider.of<SignUpService>(context, listen: false).updateStatus(false);
+    Provider.of<UserService>(context, listen: false).updateStatus(false);
 
     ageController.addListener(() {
       if (ageController.text.length > 0) {
-        Provider.of<SignUpService>(context, listen: false).updateStatus(true);
+        Provider.of<UserService>(context, listen: false).updateStatus(true);
       } else {
-        Provider.of<SignUpService>(context, listen: false).updateStatus(false);
+        Provider.of<UserService>(context, listen: false).updateStatus(false);
       }
     });
   }
@@ -38,7 +38,7 @@ class _AgePageState extends State<AgePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "What's your age, ${Provider.of<SignUpService>(context, listen: false).name ?? ''} ?",
+              "What's your age, ${Provider.of<UserService>(context, listen: false).name ?? ''} ?",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
@@ -54,7 +54,7 @@ class _AgePageState extends State<AgePage> {
                 onChanged: (value) {
                   setState(() {
                     error = '';
-                    Provider.of<SignUpService>(context, listen: false)
+                    Provider.of<UserService>(context, listen: false)
                         .putAge(value);
                   });
                 },

@@ -1,4 +1,4 @@
-import 'package:codered/services/signup_services.dart';
+import 'package:codered/services/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,15 +15,15 @@ class _UserNamePageState extends State<UserNamePage> {
     super.initState();
 
     nameController = TextEditingController(
-        text: Provider.of<SignUpService>(context, listen: false).name ?? '');
+        text: Provider.of<UserService>(context, listen: false).name ?? '');
 
-    Provider.of<SignUpService>(context, listen: false).updateStatus(false);
+    Provider.of<UserService>(context, listen: false).updateStatus(false);
 
     nameController.addListener(() {
       if (nameController.text.length > 0) {
-        Provider.of<SignUpService>(context, listen: false).updateStatus(true);
+        Provider.of<UserService>(context, listen: false).updateStatus(true);
       } else {
-        Provider.of<SignUpService>(context, listen: false).updateStatus(false);
+        Provider.of<UserService>(context, listen: false).updateStatus(false);
       }
     });
   }
@@ -58,7 +58,7 @@ class _UserNamePageState extends State<UserNamePage> {
               ),
               onChanged: (value) {
                 setState(() {
-                  Provider.of<SignUpService>(context, listen: false)
+                  Provider.of<UserService>(context, listen: false)
                       .putName(value);
                 });
               },

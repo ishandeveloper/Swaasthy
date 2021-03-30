@@ -3,7 +3,7 @@ import 'package:codered/models/user.dart';
 import 'package:codered/screens/auth/signup/gender.dart';
 import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/router/routes.dart';
-import 'package:codered/services/signup_services.dart';
+import 'package:codered/services/user_services.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -131,7 +131,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
         children: [UserNamePage(), AgePage(), GenderPage(), AccountType()],
       ),
       floatingActionButton:
-          Consumer<SignUpService>(builder: (context, ss, child) {
+          Consumer<UserService>(builder: (context, ss, child) {
         return Container(
           width: MediaQuery.of(context).size.width * 0.9,
           height: 50,

@@ -15,7 +15,6 @@ class ApiMedicService with ChangeNotifier {
         headers: {'Authorization': BEARER}).then((response) {
       if (response.statusCode == 200) {
         TOKEN = json.decode(response.body)['Token'];
-        print(TOKEN);
         notifyListeners();
       }
     });
@@ -27,7 +26,6 @@ class ApiMedicService with ChangeNotifier {
           Uri.parse(value),
         )
             .then((response) {
-          print(response.body);
           if (response.statusCode == 200) {
             DiagnosisResultNotifier()
                 .onNewDiagnosis(json.decode(response.body));

@@ -1,4 +1,4 @@
-import 'package:codered/services/signup_services.dart';
+import 'package:codered/services/user_services.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +56,7 @@ class _AccountTypeState extends State<AccountType> {
                 onChanged: (val) {
                   setState(() {
                     accountType = val;
-                    Provider.of<SignUpService>(context, listen: false)
+                    Provider.of<UserService>(context, listen: false)
                         .putType(val);
                   });
                 }),

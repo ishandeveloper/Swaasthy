@@ -75,11 +75,11 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
   Widget build(BuildContext context) {
     return Consumer<DiagnosisResultNotifier>(builder: (context, dsn, child) {
       //TODO: Check here
-      // if (dsn.diagnosisResult == null)
-      //   return Center(
-      //     child: CircularProgressIndicator(),
-      //   );
-      // else
+      if (dsn.diagnosisResult == null)
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      else
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

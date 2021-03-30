@@ -4,7 +4,7 @@ import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/apimedic_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:codered/services/signup_services.dart';
+import 'package:codered/services/user_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'models/received_notification.dart';
@@ -63,6 +63,9 @@ void main() async {
     if (payload != null) {
       debugPrint('notification payload: $payload');
     }
+    if (FirebaseAuth.instance.currentUser != null) {
+      UserService().increaseUserHeartPoints(10);
+    }
   });
   runApp(CodeRedApp());
 }
@@ -84,7 +87,7 @@ class CodeRedApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RepliesService()),
         ChangeNotifierProvider(create: (_) => UpvotesService()),
         ChangeNotifierProvider(create: (_) => ScreensWrapperService()),
-        ChangeNotifierProvider(create: (_) => SignUpService()),
+        ChangeNotifierProvider(create: (_) => UserService()),
         ChangeNotifierProvider(create: (_) => MedicineReminderService()),
         ChangeNotifierProvider(create: (_) => ApiMedicService()),
         ChangeNotifierProvider(create: (_) => DiagnosisResultNotifier())

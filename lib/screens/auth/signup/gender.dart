@@ -1,4 +1,4 @@
-import 'package:codered/services/signup_services.dart';
+import 'package:codered/services/user_services.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -23,19 +23,19 @@ class _GenderPageState extends State<GenderPage> {
   @override
   void initState() {
     super.initState();
-    if (Provider.of<SignUpService>(context, listen: false).gender.length > 1)
-      _selectedGender = Provider.of<SignUpService>(context, listen: false)
+    if (Provider.of<UserService>(context, listen: false).gender.length > 1)
+      _selectedGender = Provider.of<UserService>(context, listen: false)
               .gender
               .startsWith('m')
           ? 0
           : 1;
-    Provider.of<SignUpService>(context, listen: false).updateStatus(false);
+    Provider.of<UserService>(context, listen: false).updateStatus(false);
   }
 
   @override
   Widget build(BuildContext context) {
     if (_selectedGender != null)
-      Provider.of<SignUpService>(context, listen: false).updateStatus(true);
+      Provider.of<UserService>(context, listen: false).updateStatus(true);
     return Scaffold(
         body: Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -82,9 +82,9 @@ class _GenderPageState extends State<GenderPage> {
                 setState(() {
                   _selectedGender = gender.index;
                 });
-                Provider.of<SignUpService>(context, listen: false)
+                Provider.of<UserService>(context, listen: false)
                     .putGender(gender.name.toLowerCase());
-                Provider.of<SignUpService>(context, listen: false)
+                Provider.of<UserService>(context, listen: false)
                     .updateStatus(true);
               },
               child: Padding(
