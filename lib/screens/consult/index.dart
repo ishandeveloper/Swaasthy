@@ -28,9 +28,10 @@ class _ConsultDoctorState extends State<ConsultDoctor> {
         body: SafeArea(
           child: StreamBuilder(
             stream: ConsultHelper.getAppointmentsSnapshot(
-              userType: widget.userType,
-              userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
-            ),
+                userType: widget.userType,
+                // userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
+                userID: "fm4kdMY8alSg7byooUH9OkO2Wik2" //TODO: ADD USER ID
+                ),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
                 return ShimmeringConsultPage(userType: widget.userType);

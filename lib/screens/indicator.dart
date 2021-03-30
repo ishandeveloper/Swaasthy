@@ -3,6 +3,7 @@ import 'package:codered/services/router/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:codered/models/user.dart' as usr;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 usr.User user;
 
@@ -30,20 +31,24 @@ class _IndicatorState extends State<Indicator> {
           await collectionReference.doc(widget.authUser.uid).get();
       if (value.exists) {
         user = usr.User.fromJson(value.data());
-        setState(() {});
-        Navigator.pushNamedAndRemoveUntil(
-            context, CodeRedRoutes.home, (route) => false);
+        // setState(() {});
+        SchedulerBinding.instance.addPostFrameCallback((e) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, CodeRedRoutes.home, (route) => false);
+        });
       } else {
         user = usr.User(
             points: 0, email: widget.authUser.email, uid: widget.authUser.uid);
-        setState(() {});
+        // setState(() {});
         // await collectionReference
         //     .doc(widget.authUser.uid)
         //     .set(user.toJson())
         //     .then((value) => Navigator.pushNamedAndRemoveUntil(
         //         context, CodeRedRoutes.signup, (route) => false));
-        Navigator.pushNamedAndRemoveUntil(
-                context, CodeRedRoutes.signup, (route) => false);
+        SchedulerBinding.instance.addPostFrameCallback((e) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, CodeRedRoutes.signup, (route) => false);
+        });
       }
     }
   }
