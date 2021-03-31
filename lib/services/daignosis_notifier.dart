@@ -6,5 +6,6 @@ class DiagnosisResultNotifier with ChangeNotifier {
   onNewDiagnosis(List<dynamic> parsedJson) {
     this.diagnosisResult = DiagnosisResult.fromJSON(parsedJson);
     notifyListeners();
+    print('diagnosisResult: ' + diagnosisResult.diagnosisResult.toString());
   }
 }

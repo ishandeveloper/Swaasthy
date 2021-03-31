@@ -32,18 +32,20 @@ dependencies:
   firebase_auth: ^1.0.1
   firebase_core: ^1.0.1
   firebase_messaging: ^9.0.1
+  firebase_ml_vision: ^0.11.0
   firebase_storage: ^8.0.0
   flutter_datetime_picker: ^1.5.0
   flutter_linkify: ^5.0.0
   flutter_local_notifications: ^5.0.0
   flutter_phoenix: ^1.0.0
-  flutter_svg:
+  flutter_svg: null
   flutter_vector_icons: ^0.2.1
   geolocator: ^7.0.1
   google_maps_cluster_manager: ^1.0.0
   google_maps_flutter: ^2.0.1
   google_sign_in: ^4.5.9
   http: ^0.13.1
+  image_picker: ^0.7.4
   json_annotation: ^3.1.1
   lottie: ^1.0.1
   multi_image_picker: ^4.8.0

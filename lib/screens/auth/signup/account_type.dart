@@ -1,3 +1,4 @@
+import 'package:codered/screens/text_recognition.dart';
 import 'package:codered/services/user_services.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -22,19 +23,32 @@ class _AccountTypeState extends State<AccountType> {
         body: Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Are you a medical volunteer?",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Flexible(
+            flex: 2,
+            fit: FlexFit.tight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Are you a medical volunteer?",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                    margin: const EdgeInsets.only(top: 30),
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        chooseAccount('Yes', 1),
+                        chooseAccount('No', 0)
+                      ],
+                    )),
+              ],
+            ),
           ),
-          Container(
-              margin: const EdgeInsets.only(top: 30),
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [chooseAccount('Yes', 1), chooseAccount('No', 0)],
-              )),
+          if (accountType == 1)
+            Flexible(flex: 8, fit: FlexFit.tight, child: TextRecognition())
         ],
       ),
     ));

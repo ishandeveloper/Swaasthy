@@ -51,6 +51,11 @@ android {
             shrinkResources false
         }
     }
+
+    aaptOptions {
+        noCompress 'tflite'
+        noCompress 'lite'
+    }
 }
 
 flutter {
