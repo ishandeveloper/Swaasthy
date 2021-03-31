@@ -58,21 +58,18 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   }
 
   void _initPayment() {
-    // var options = {
-    //   "key": CodeRedKeys.razorPay,
-    //   'amount': 1,
-    //   'name': 'Swaasthy Appointment',
-    //   'description': "Your doctor's appointment on Swaasthy",
-    // };
+    var options = {
+      "key": CodeRedKeys.razorPay,
+      'amount': 1,
+      'name': 'Swaasthy Appointment',
+      'description': "Your doctor's appointment on Swaasthy",
+    };
 
-    // try {
-    //   _razorpay.open(options);
-    // } catch (e) {
-    //   print("PAYMENT-ERROR: $e");
-    // }
-
-    /* SKIP PAYMENTS TEMPORARILY */
-    _paymentSuccess();
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      print("PAYMENT-ERROR: $e");
+    }
   }
 
   void _paymentExternal() {

@@ -4,9 +4,10 @@ class DiagnosisResult {
   DiagnosisResult({this.diagnosisResult});
 
   factory DiagnosisResult.fromJSON(List<dynamic> parsedJson) {
-    print(parsedJson);
-    return DiagnosisResult(
+    DiagnosisResult diagnosisResult = DiagnosisResult(
         diagnosisResult: parsedJson.map((e) => Diagnosis.fromJSON(e)).toList());
+    print("Checking " + diagnosisResult.diagnosisResult[1].name);
+    return diagnosisResult;
   }
 }
 

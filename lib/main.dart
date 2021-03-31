@@ -1,4 +1,3 @@
-import 'services/daignosis_notifier.dart';
 import 'package:codered/models/medicine_reminder.dart';
 import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/apimedic_service.dart';
@@ -89,8 +88,7 @@ class CodeRedApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ScreensWrapperService()),
         ChangeNotifierProvider(create: (_) => UserService()),
         ChangeNotifierProvider(create: (_) => MedicineReminderService()),
-        ChangeNotifierProvider(create: (_) => ApiMedicService()),
-        ChangeNotifierProvider(create: (_) => DiagnosisResultNotifier())
+        ChangeNotifierProvider(create: (_) => ApiMedicService())
       ],
       child: GestureDetector(
         onTap: () {

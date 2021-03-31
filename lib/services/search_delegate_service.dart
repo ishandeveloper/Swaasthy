@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class SearchBarDelegateService extends SearchDelegate<Symptoms> {
   List<Symptoms> recentSuggest;
   List<Symptoms> symptomsList;
+  List<int> symptomsId = [];
   SearchBarDelegateService() {
     symptomsList = symptoms;
     recentSuggest = [
@@ -39,7 +40,9 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return DiagnosisReport();
+    return DiagnosisReport(
+      symptoms: symptomsId,
+    );
   }
 
   @override
@@ -55,10 +58,8 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
         itemBuilder: (context, index) => ListTile(
               onTap: () async {
                 query = suggestionList[index].Name;
-                await ApiMedicService()
-                    .getInfo([suggestionList[index].ID]).then(
-                        (value) => showResults(context));
-
+                symptomsId.add(suggestionList[index].ID);
+                showResults(context);
                 recentSuggest.insert(0, suggestionList[index]);
               },
               title: RichText(
