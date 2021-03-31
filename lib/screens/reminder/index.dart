@@ -1,13 +1,8 @@
+import 'package:codered/models/medicine_reminder.dart';
+import 'package:codered/services/router/routes.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
-
-List<Map<String, dynamic>> medicineData = [
-  {
-    'time': DateTime.now(),
-    'title': 'Diabetes Tablets',
-    'description': 'Take Starvog M 0.3 tablets along with water',
-  },
-];
+import 'package:provider/provider.dart';
 
 class MedicineReminder extends StatefulWidget {
   const MedicineReminder({Key key}) : super(key: key);
@@ -35,7 +30,10 @@ class _MedicineReminderState extends State<MedicineReminder> {
                         color: CodeRedColors.inputFields,
                         elevation: 0,
                         padding: EdgeInsets.symmetric(vertical: 16),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, CodeRedRoutes.medicineReminder);
+                        },
                         child: Icon(Icons.add, size: 28))
                   ]),
                 ),
@@ -50,71 +48,77 @@ class _MedicineReminderState extends State<MedicineReminder> {
                 ])),
               ),
               // CONTENT
-              SliverPadding(
-                padding: EdgeInsets.only(top: 0),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      var _currentRecord = medicineData[index];
-
-                      return Container(
-                          height: 120,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 12),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 24),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.15),
-                                    offset: Offset(0, 1),
-                                    blurRadius: 2)
-                              ],
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width -
-                                    48 -
-                                    32 -
-                                    100,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(_currentRecord['time'].toString(),
-                                        style: TextStyle(
-                                            color: Color(0xff828282),
-                                            fontSize: 10)),
-                                    SizedBox(height: 10),
-                                    Text(_currentRecord['title'],
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 20)),
-                                    SizedBox(height: 4),
-                                    Text(_currentRecord['description'],
-                                        style: TextStyle(
-                                            color: Color(0xff828282),
-                                            fontSize: 14))
+              Consumer<MedicineReminderService>(builder: (context, mrs, child) {
+                return SliverPadding(
+                  padding: EdgeInsets.only(top: 0),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        var _currentRecord = mrs.medicineReminderList[index];
+                        // TODO: Add condition to remove list item
+                        // if (_currentRecord.time.isAfter(DateTime.now()))
+                          return Container(
+                              height: 120,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 12),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 24),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Color.fromRGBO(0, 0, 0, 0.15),
+                                        offset: Offset(0, 1),
+                                        blurRadius: 2)
                                   ],
-                                ),
-                              ),
-                              Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.contain,
-                                        image: AssetImage(
-                                            'assets/images/tablets.png'))),
-                              )
-                            ],
-                          ));
-                    },
-                    childCount: medicineData.length,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width -
+                                        48 -
+                                        32 -
+                                        100,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(_currentRecord.time.toString(),
+                                            style: TextStyle(
+                                                color: Color(0xff828282),
+                                                fontSize: 10)),
+                                        SizedBox(height: 10),
+                                        Text(_currentRecord.title,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20)),
+                                        SizedBox(height: 4),
+                                        Text(_currentRecord.description,
+                                            style: TextStyle(
+                                                color: Color(0xff828282),
+                                                fontSize: 14))
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.contain,
+                                            image: AssetImage(
+                                                'assets/images/tablets.png'))),
+                                  )
+                                ],
+                              ));
+                      },
+                      childCount: mrs.medicineReminderList.length,
+                    ),
                   ),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),

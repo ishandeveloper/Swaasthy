@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:codered/models/index.dart';
+import 'package:codered/services/database/emergency.dart';
 import 'package:flutter/material.dart';
 
 import 'package:geolocator/geolocator.dart';
@@ -29,11 +31,11 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
 
   Position _userGeoPosition;
 
-  var _geoLocator = Geolocator();
-
   BitmapDescriptor myLocationPin;
 
   BitmapDescriptor ambulancePin;
+
+  List<Ambulance> _ambulancesList;
 
   void locateUserPosition() async {
     Position _position = await Geolocator.getCurrentPosition(
@@ -66,16 +68,19 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
 
   void getAmbulanceLocations() async {
     // Perform API CALL or something
-    var _locations = [
-      LatLng(31.35640071369591, 75.58713275939226),
-      LatLng(31.35047652728435, 75.58832164853811)
-    ];
+    // var _locations = [
+    //   LatLng(31.35640071369591, 75.58713275939226),
+    //   LatLng(31.35047652728435, 75.58832164853811)
+    // ];
 
-    for (int i = 0; i < _locations.length; i++) {
+    List<Ambulance> _temp = await EmergencyHelper.getAmbulance();
+    setState(() => _ambulancesList = _temp);
+
+    for (int i = 0; i < _temp.length; i++) {
       Marker marker = Marker(
         markerId: MarkerId(i.toString()),
         draggable: true,
-        position: _locations[i],
+        position: _temp[i].coordinates,
         icon: ambulancePin,
       );
 
@@ -147,7 +152,10 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                 },
                 padding: EdgeInsets.only(bottom: 300),
               ),
-              EmergencyConfirmationSheet(onConfirm: () {}),
+              EmergencyConfirmationSheet(
+                  onConfirm: () {},
+                  ambulance:
+                      _ambulancesList != null ? _ambulancesList[0] : null),
             ],
           ),
         ),

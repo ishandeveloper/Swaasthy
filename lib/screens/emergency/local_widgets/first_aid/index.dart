@@ -1,7 +1,14 @@
+import 'package:codered/models/emergency/ambulance.dart';
 import 'package:codered/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
+import 'dart:math';
+
 class FirstAidSteps extends StatelessWidget {
+  final Ambulance ambulance;
+
+  FirstAidSteps({this.ambulance});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +33,7 @@ class FirstAidSteps extends StatelessWidget {
                           style: TextStyle(color: Colors.white, fontSize: 22))),
                   Container(
                       margin: EdgeInsets.only(bottom: 32),
-                      child: Text('4 mins',
+                      child: Text('${Random().nextInt(10)} mins',
                           style: TextStyle(
                               fontSize: 48,
                               color: Colors.white,
@@ -86,7 +93,7 @@ class FirstAidSteps extends StatelessWidget {
                           children: [
                             Icon(Icons.medical_services),
                             SizedBox(width: 8),
-                            Text('PB08 BX 95XX',
+                            Text(ambulance.vehicleNumber,
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w600))
                           ],
@@ -96,9 +103,6 @@ class FirstAidSteps extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             OutlinedButton(
-                              // color: CodeRedColors.primary,
-                              // padding: EdgeInsets.symmetric(
-                              //     vertical: 12, horizontal: 24),
                               onPressed: () {},
                               child: Row(
                                 children: [

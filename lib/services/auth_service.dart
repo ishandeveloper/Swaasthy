@@ -16,14 +16,29 @@ class Authentication {
       idToken: googleAuth.idToken,
     );
 
-    var user = await FirebaseAuth.instance.signInWithCredential(credential);
+    var authUser = await FirebaseAuth.instance.signInWithCredential(credential);
 
-    if (user != null) {
-      // TODO:
-    }
+    // if (authUser != null) {
+    //   CollectionReference collectionReference =
+    //       FirebaseFirestore.instance.collection('users');
+
+    //   QuerySnapshot querySnapshot = await collectionReference.get();
+
+    //   querySnapshot.docs.map((e) async {
+    //     if (e.id == authUser.user.uid)
+    //       return authUser;
+    //     else {
+    //       usr.User user = usr.User(
+    //           points: 0, email: authUser.user.email, uid: authUser.user.uid);
+    //       await collectionReference.doc(authUser.user.uid).set(user.toJson());
+    //       return CodeRedKeys.navigatorKey.currentState
+    //           .pushNamedAndRemoveUntil(CodeRedRoutes.signup, (route) => false);
+    //     }
+    //   });
+    // }
 
     // Once signed in, return the UserCredential
-    return user;
+    return authUser;
   }
 
   static Future<void> signOutFromGoogle() async {

@@ -21,7 +21,9 @@ class HalfWidthHomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, path),
+      onTap: () => this.onTap == null
+          ? Navigator.pushNamed(context, path)
+          : this.onTap(),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.445,
         height: 150,

@@ -23,30 +23,65 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  agora_rtc_engine: ^3.3.2
+  another_flushbar: ^1.10.17
   cached_network_image: ^2.5.1
   cloud_firestore: ^1.0.1
-  flutter_linkify: ^5.0.0
-  flutter_vector_icons: ^0.2.1
-  geolocator: ^7.0.1
-  google_maps_flutter: ^2.0.1
-  http: ^0.13.0
-  titled_navigation_bar: ^4.1.0
-  url_launcher: ^6.0.2
+  connectivity: ^3.0.3
+  file_picker: ^3.0.0
   firebase_auth: ^1.0.1
   firebase_core: ^1.0.1
+  firebase_messaging: ^9.0.1
+  firebase_ml_vision: ^0.11.0
+  firebase_storage: ^8.0.0
+  flutter_datetime_picker: ^1.5.0
+  flutter_linkify: ^5.0.0
+  flutter_local_notifications: ^5.0.0
+  flutter_phoenix: ^1.0.0
+  flutter_svg: null
+  flutter_vector_icons: ^0.2.1
+  geolocator: ^7.0.1
+  google_maps_cluster_manager: ^1.0.0
+  google_maps_flutter: ^2.0.1
   google_sign_in: ^4.5.9
+  http: ^0.13.1
+  image_picker: ^0.7.4
+  json_annotation: ^3.1.1
+  lottie: ^1.0.1
+  multi_image_picker: ^4.8.0
+  overflow_view: ^0.2.2
+  path_provider: ^2.0.1
+  permission_handler: ^6.1.1
+  photo_view: ^0.11.1
+  provider: ^5.0.0
+  razorpay_flutter: ^1.2.5
+  rxdart: ^0.23.1
+  shimmer: ^1.1.2
+  slide_to_act: ^2.0.1
+  timeago: ^3.0.2
+  titled_navigation_bar: ^4.1.0
+  url_launcher: ^6.0.2
+  uuid: ^3.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^1.10.1
+  json_serializable: ^3.5.1
+
 flutter:
   uses-material-design: true
 
   assets:
+    - assets/
     - assets/images/
     - assets/icons/
+    - assets/lottie/
 
   fonts:
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/CustomIcons.ttf
     - family: ProductSans
       fonts:
         - asset: assets/fonts/Product-Sans-Regular.ttf

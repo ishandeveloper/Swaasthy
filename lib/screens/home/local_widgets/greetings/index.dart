@@ -1,3 +1,4 @@
+import 'package:codered/screens/indicator.dart';
 import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class HomeGreetings extends StatelessWidget {
                   color: CodeRedColors.secondaryText,
                   fontSize: 24)),
           SizedBox(height: 5),
-          Text("Ishan",
+          Text(user.username,
               style: TextStyle(
                   color: CodeRedColors.primary,
                   fontSize: 34,

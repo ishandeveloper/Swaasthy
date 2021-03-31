@@ -1,9 +1,12 @@
+import 'package:codered/models/index.dart';
+import 'package:codered/screens/emergency/local_widgets/first_aid/index.dart';
 import 'package:flutter/material.dart';
 
 class EmergencyConfirmationSheet extends StatefulWidget {
   final Function onConfirm;
+  final Ambulance ambulance;
 
-  EmergencyConfirmationSheet({@required this.onConfirm});
+  EmergencyConfirmationSheet({@required this.onConfirm, this.ambulance});
 
   @override
   _EmergencyConfirmationSheetState createState() =>
@@ -49,7 +52,12 @@ class _EmergencyConfirmationSheetState
                   color: Colors.red,
                   padding: EdgeInsets.symmetric(vertical: 14, horizontal: 18),
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/firstaid');
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                FirstAidSteps(ambulance: widget.ambulance)));
+                    // Navigator.pushReplacementNamed(context, '/firstaid');
                   },
                   child: Text('CONFIRM LOCATION',
                       style: TextStyle(
