@@ -1,7 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codered/screens/indicator.dart';
+import 'package:codered/services/database/storage.dart';
+import 'package:codered/services/user_services.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../shared_widgets/image_picker_class.dart';
 
@@ -16,32 +21,12 @@ class _TextRecognitionState extends State<TextRecognition> {
 
   void _pickedImage(File image) {
     _image = image;
+    if (_image != null) textRecognition();
   }
 
   /// Shows image selection screen only when the model is ready to be used.
   Widget readyScreen() {
-    return Column(
-      children: [
-        ImagePickerClass(_pickedImage),
-        SizedBox(
-          height: 10,
-        ),
-        RaisedButton(
-          onPressed: textRecognition,
-          child: Text('Text Recognition'),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        // Column(
-        //   children: _labels != null
-        //       ? _labels.map((label) {
-        //           return Text("${label["label"]}");
-        //         }).toList()
-        //       : [],
-        // ),
-      ],
-    );
+    return ImagePickerClass(_pickedImage);
   }
 
   textRecognition() async {
@@ -57,6 +42,26 @@ class _TextRecognitionState extends State<TextRecognition> {
       }
     }
     print("RESULT: $result");
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('verification_requests')
+        .doc(user.uid);
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    if (documentSnapshot.exists)
+      await documentReference.update({
+        'vision_text': result.split('\n'),
+        'image_url': await uploadImage(_image),
+        'user_name': Provider.of<UserService>(context, listen: false).name,
+        'user_id': user.uid,
+        'is_verified': false
+      });
+    else
+      await documentReference.set({
+        'vision_text': result.split('\n'),
+        'image_url': await uploadImage(_image),
+        'user_name': Provider.of<UserService>(context, listen: false).name,
+        'user_id': user.uid,
+        'is_verified': false
+      });
     recognizeText.close();
   }
 
