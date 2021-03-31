@@ -24,7 +24,6 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
   List<Widget> buildActions(BuildContext context) {
     // TODO: implement buildActions
     return [IconButton(icon: Icon(Icons.clear), onPressed: () => query = "")];
-    ;
   }
 
   @override
@@ -75,6 +74,5 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
                         style: TextStyle(color: Colors.grey))
                   ])),
             ));
-    ;
   }
 }

@@ -6,6 +6,7 @@ import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../indicator.dart';
 import 'local_widgets/index.dart';
 
 class ConsultDoctor extends StatefulWidget {
@@ -28,9 +29,9 @@ class _ConsultDoctorState extends State<ConsultDoctor> {
         body: SafeArea(
           child: StreamBuilder(
             stream: ConsultHelper.getAppointmentsSnapshot(
-                userType: widget.userType,
+                userType: widget.userType, userID: user.uid
                 // userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
-                userID: "fm4kdMY8alSg7byooUH9OkO2Wik2" //TODO: ADD USER ID
+                // userID: "fm4kdMY8alSg7byooUH9OkO2Wik2"
                 ),
             builder: (context, snapshot) {
               if (!snapshot.hasData)

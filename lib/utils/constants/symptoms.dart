@@ -1127,6 +1127,7 @@ final List<Symptoms> symptoms = <Symptoms>[
 
 class Symptoms {
   final int ID;
+  // ignore: non_constant_identifier_names
   final String Name;
 
   Symptoms({this.ID, this.Name});

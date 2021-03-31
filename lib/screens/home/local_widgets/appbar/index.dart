@@ -34,6 +34,7 @@ class HomeAppBar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -58,7 +59,8 @@ class HomeAppBar extends StatelessWidget {
                     SizedBox(width: 5),
                     CircleAvatar(
                       radius: 14,
-                      backgroundImage: CachedNetworkImageProvider(
+                      backgroundImage: CachedNetworkImageProvider(user
+                              .photoURL ??
                           'https://api.hello-avatar.com/adorables/ishandeveloper'),
                     )
                   ],

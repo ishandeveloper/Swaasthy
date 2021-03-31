@@ -4,18 +4,18 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
-  User({
-    this.points,
-    this.age,
-    this.gender,
-    this.username,
-    this.email,
-    this.ip,
-    this.type,
-    this.uid,
-    this.fcmToken,
-    this.verificationStatus,
-  });
+  User(
+      {this.points,
+      this.age,
+      this.gender,
+      this.username,
+      this.email,
+      this.ip,
+      this.type,
+      this.uid,
+      this.fcmToken,
+      this.verificationStatus,
+      this.photoURL});
 
   final int points;
   final String age;
@@ -24,6 +24,7 @@ class User {
   final String gender;
   final String email;
   final String ip;
+  final String photoURL;
   final int type;
   final String fcmToken;
   final bool verificationStatus;

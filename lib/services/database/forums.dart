@@ -98,16 +98,13 @@ class ForumsHelper {
           .collection('posts')
           .doc(documentID)
           .collection('upvotes')
-          .doc(user.uid) //TODO: ADD USER ID
+          .doc(user.uid)
           .get();
 
       if (_likesData.exists) {
         List<String> _tempList =
             List.generate(likesCount - 1, (index) => "$index");
-        _likes = [
-          user.uid,
-          ..._tempList
-        ]; //TODO: ADD USER ID
+        _likes = [user.uid, ..._tempList];
       } else {
         List<String> _tempList = List.generate(likesCount, (index) => "$index");
         _likes = _tempList;

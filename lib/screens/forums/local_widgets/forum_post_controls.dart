@@ -104,9 +104,8 @@ class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
     UpvotesService _votesService =
         Provider.of<UpvotesService>(context, listen: true);
 
-    bool isVoted = _votesService
-        .getLikes(index: widget.index)
-        .contains(user.uid); //TODO: ADD USER ID;
+    bool isVoted =
+        _votesService.getLikes(index: widget.index).contains(user.uid);
 
     return ConstrainedBox(
       constraints: BoxConstraints(minWidth: 50),
@@ -117,13 +116,9 @@ class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
             GestureDetector(
               onTap: () {
                 ForumsHelper.toggleUpvote(
-                    userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
-                    postID: widget.postID,
-                    isVoted: isVoted);
+                    userID: user.uid, postID: widget.postID, isVoted: isVoted);
 
-                _votesService.updateLike(
-                    index: widget.index,
-                    uid: user.uid); //TODO: ADD USER ID
+                _votesService.updateLike(index: widget.index, uid: user.uid);
               },
               child: Icon(
                 isVoted

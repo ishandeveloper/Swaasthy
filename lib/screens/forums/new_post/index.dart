@@ -58,10 +58,10 @@ class _NewForumPostState extends State<NewForumPost> {
                 title: _titleTextController.value.text.toString(),
                 body: _plainTextController.value.text,
                 user: PostUserModel(
-                    userID: user.uid, //TODO:ADD USER ID
-                    username: 'ishandeveloper',
+                    userID: user.uid, 
+                    username: user.username,
                     userimage:
-                        'https://avatars.githubusercontent.com/u/54989142?s=460&u=dae5bd5b626e6e4ed70d23fe25d1eba5d510efc6&v=4'))));
+                        user.photoURL))));
   }
 
   @override

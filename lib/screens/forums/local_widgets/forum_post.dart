@@ -6,6 +6,7 @@ import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../indicator.dart';
 import 'index.dart';
 
 class ForumPost extends StatefulWidget {
@@ -250,10 +251,10 @@ class _NewCommentInputState extends State<NewCommentInput> {
         newcommentsheet(
           context,
           widget.index,
-          username: "himanshusharma89",
-          userThumb:
-              "https://avatars.githubusercontent.com/u/44980497?s=460&u=5b2102210b217bce36e5d9905ca780163bb8f8ff&v=4",
-          userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
+          username: user.username,
+          userThumb: user.photoURL ??
+              "https://api.hello-avatar.com/adorables/ishandeveloper",
+          userID: user.uid,
         );
       },
       child: Container(

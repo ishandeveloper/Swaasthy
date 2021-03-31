@@ -84,8 +84,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   void _paymentSuccess() async {
     await ConsultHelper.createAppointment(
       userID: user.uid,
-      username: 'Himanshu Sharma',
-      userImage: "https://avatars.githubusercontent.com/u/54989142?v=4",
+      username: user.username,
+      userImage: user.photoURL ??
+          "https://api.hello-avatar.com/adorables/ishandeveloper",
       doctorID: widget.doctor.uid,
       doctorName: widget.doctor.name,
       doctorImage: widget.doctor.image,
@@ -196,7 +197,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   void _swipeToConfirm() async {
     _initPayment();
     // await ConsultHelper.createAppointment(
-    //   userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2", //TODO:ADD USER ID,
+    //   userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
     //   username: 'Himanshu Sharma',
     //   userImage: "https://avatars.githubusercontent.com/u/54989142?v=4",
     //   doctorID: widget.doctor.uid,

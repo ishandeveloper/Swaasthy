@@ -99,7 +99,7 @@ class CodeRedApp extends StatelessWidget {
           }
         },
         child: MaterialApp(
-          title: 'Code Red',
+          title: 'Swaasthy',
           debugShowCheckedModeBanner: false,
           onGenerateRoute: CodeRedRouter.generateRoute,
           navigatorKey: CodeRedKeys.navigatorKey,
