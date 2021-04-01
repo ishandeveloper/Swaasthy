@@ -76,8 +76,8 @@ All the design/mockups for the app have been added in the `designs` directory. Y
    integrate with the flutter app, without any hassle to manage & create
    instances of our server. 
    
-  - For sign-up & authentication, we used Firebase auth.<br>
-<img src="./designs/Auth.png" width="20%"><img src="./designs/Home - Screen.png" width="20%"><img src="./designs/Disease-Map.png" width="20%"><img src="./designs/Connect with patient.png" width="20%"><img src="./designs/Consult a doctor.png" width="20%">
+  - For sign-up & authentication, we used Firebase auth. If you're a medical volunteer, we'll ask you to upload an image of your medical ID card and we're using firebase ml kit for verification.<br>
+<img src="./designs/Auth.png" width="20%"><img src="./designs/Home - Screen.png" width="20%"><img src="./designs/Disease-Map.png" width="20%"><img src="./designs/Screenshot_20210401-103126.jpg" width="20%"><img src="./designs/Consult a doctor.png" width="20%">
    
   - For storing the different types of data including user data, posts
    for the forum, ambulances, insights for the heatmap, doctors,
