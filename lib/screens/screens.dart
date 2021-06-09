@@ -31,7 +31,7 @@ import 'package:http/http.dart' as http;
 class ScreensWrapper extends StatefulWidget {
   final bool refresh;
 
-  final int userType = user.type;
+  final int? userType = user.type;
 
   ScreensWrapper({this.refresh = false});
 
@@ -42,12 +42,12 @@ class ScreensWrapper extends StatefulWidget {
 class _ScreensWrapperState extends State<ScreensWrapper> {
   /*================ VARIABLES =====================*/
 
-  PageController _pageController; // Navigation Screen Controller
+  PageController? _pageController; // Navigation Screen Controller
 
-  bool leftToRight = true; // Boolean to check for type of transition
+  bool? leftToRight = true; // Boolean to check for type of transition
 
-  String _token;
-  Stream<String> _tokenStream;
+  String? _token;
+  late Stream<String> _tokenStream;
   int _messageCount = 0;
 
 /* ================ Initialize ===================== */
@@ -67,15 +67,15 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
     FirebaseMessaging.instance
         .getInitialMessage()
-        .then((RemoteMessage message) {
+        .then((RemoteMessage? message) {
       if (message != null) {
         Navigator.pushNamed(context, CodeRedRoutes.home);
       }
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
 
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
@@ -103,7 +103,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
     sendPushMessage();
   }
 
-  void setToken(String token) {
+  void setToken(String? token) {
     print('FCM Token: $token');
     setState(() {
       _token = token;
@@ -134,7 +134,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
     }
   }
 
-  String constructFCMPayload(String token) {
+  String constructFCMPayload(String? token) {
     _messageCount++;
     return jsonEncode({
       'token': token,
@@ -205,9 +205,9 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
     int currentIndex = _service.getIndex();
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (_pageController.page.round() != currentIndex)
-        _pageController.jumpToPage(currentIndex);
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
+      if (_pageController!.page!.round() != currentIndex)
+        _pageController!.jumpToPage(currentIndex);
     });
 
     return Phoenix(
@@ -244,7 +244,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
   }
 
   void _navbarChangeHandler(ScreensWrapperService svc, index) {
-    _pageController.jumpToPage(index);
+    _pageController!.jumpToPage(index);
     svc.changeIndex(index);
     // setState(() => currentIndex = index);
   }
@@ -268,7 +268,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 class DummyScreen extends StatelessWidget {
   final String title;
 
-  DummyScreen({@required this.title});
+  DummyScreen({required this.title});
 
   @override
   Widget build(BuildContext context) {

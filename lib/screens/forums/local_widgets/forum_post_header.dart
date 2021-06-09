@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ForumPostHeader extends StatelessWidget {
-  final Timestamp timestamp;
-  final PostUserModel user;
+  final Timestamp? timestamp;
+  final PostUserModel? user;
 
   ForumPostHeader({this.user, this.timestamp});
 
@@ -18,16 +18,16 @@ class ForumPostHeader extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 18,
-            backgroundImage: CachedNetworkImageProvider(user.userimage),
+            backgroundImage: CachedNetworkImageProvider(user!.userimage!),
           ),
           SizedBox(width: 8),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(user.username,
+              Text(user!.username!,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-              Text(timeago.format(timestamp.toDate()),
+              Text(timeago.format(timestamp!.toDate()),
                   style: TextStyle(
                       color: Color.fromRGBO(0, 0, 0, 0.5), fontSize: 12))
             ],

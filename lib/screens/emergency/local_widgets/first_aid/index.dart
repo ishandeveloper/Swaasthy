@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class FirstAidSteps extends StatelessWidget {
-  final Ambulance ambulance;
+  final Ambulance? ambulance;
 
   FirstAidSteps({this.ambulance});
 
@@ -93,7 +93,7 @@ class FirstAidSteps extends StatelessWidget {
                           children: [
                             Icon(Icons.medical_services),
                             SizedBox(width: 8),
-                            Text(ambulance.vehicleNumber,
+                            Text(ambulance!.vehicleNumber!,
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w600))
                           ],
@@ -151,7 +151,7 @@ class FirstAidSteps extends StatelessWidget {
 
 class FirstResponderInstructions extends StatelessWidget {
   const FirstResponderInstructions({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

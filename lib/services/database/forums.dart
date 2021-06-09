@@ -5,8 +5,8 @@ import 'package:codered/services/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Map<String, List> likesMap = {};
-Map<String, int> commentsMap = {};
+Map<String?, List> likesMap = {};
+Map<String?, int?> commentsMap = {};
 
 class ForumsHelper {
   static Future<List<ForumPostModel>> getPosts() async {
@@ -22,7 +22,7 @@ class ForumsHelper {
 
       _postsSnapshots.forEach((snapshot) {
         _postsModel.add(ForumPostModel.getModel(
-            snapshot.data(), snapshot.id, snapshot.reference));
+            snapshot.data() as Map<String, dynamic>, snapshot.id, snapshot.reference));
       });
 
       print(_postsModel);
@@ -41,7 +41,7 @@ class ForumsHelper {
         .then((value) => value.docs.length);
   }
 
-  static addReplyToFirestore({String postID, dynamic data}) async {
+  static addReplyToFirestore({String? postID, required dynamic data}) async {
     await FirebaseFirestore.instance
         .collection('forums')
         .doc('posts')
@@ -60,7 +60,7 @@ class ForumsHelper {
 
   // This method returns limited number of first n snapshots of the forum posts collection
   static Future<QuerySnapshot> getLimitedSnapshots(int length,
-      {DocumentSnapshot lastDocument}) async {
+      {DocumentSnapshot? lastDocument}) async {
     Query _query = FirebaseFirestore.instance
         .collection('forums')
         .doc('posts')
@@ -79,12 +79,12 @@ class ForumsHelper {
     return await _query.limit(length).get();
   }
 
-  static getInteractions(String documentID, int index, int likesCount,
-      int commentsCount, BuildContext context) async {
+  static getInteractions(String? documentID, int index, int? likesCount,
+      int? commentsCount, BuildContext context) async {
     var _likesService = Provider.of<UpvotesService>(context, listen: false);
     var _commentsService = Provider.of<RepliesService>(context, listen: false);
 
-    var _likes = [];
+    List<dynamic>? _likes = [];
 
     if (likesMap.containsKey(documentID)) {
       _likes = likesMap[documentID];
@@ -103,23 +103,23 @@ class ForumsHelper {
 
       if (_likesData.exists) {
         List<String> _tempList =
-            List.generate(likesCount - 1, (index) => "$index");
+            List.generate(likesCount! - 1, (index) => "$index");
         _likes = [user.uid, ..._tempList];
       } else {
-        List<String> _tempList = List.generate(likesCount, (index) => "$index");
+        List<String> _tempList = List.generate(likesCount!, (index) => "$index");
         _likes = _tempList;
       }
 
       likesMap.addAll({documentID: _likes});
       commentsMap.addAll({documentID: commentsCount});
       _commentsService.assignCommentsCount(index, commentsCount);
-      _likesService.addLikesToList(List<String>.from(_likes), index);
+      _likesService.addLikesToList(List<String?>.from(_likes), index);
     }
     return Future.value(true);
   }
 
   static Future<List<DocumentSnapshot>> getComments(
-      String documentID, DocumentSnapshot lastDocument) async {
+      String? documentID, DocumentSnapshot? lastDocument) async {
     List<DocumentSnapshot> _commentsData;
 
     if (lastDocument != null) {
@@ -156,7 +156,7 @@ class ForumsHelper {
     return _commentsData;
   }
 
-  static toggleUpvote({String userID, String postID, bool isVoted}) async {
+  static toggleUpvote({String? userID, String? postID, required bool isVoted}) async {
     // UNLIKE
     if (isVoted) {
       await FirebaseFirestore.instance

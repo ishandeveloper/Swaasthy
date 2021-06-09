@@ -17,17 +17,17 @@ class User {
       this.verificationStatus,
       this.photoURL});
 
-  final int points;
-  final String age;
-  final String uid;
-  final String username;
-  final String gender;
-  final String email;
-  final String ip;
-  final String photoURL;
-  final int type;
-  final String fcmToken;
-  final bool verificationStatus;
+  final int? points;
+  final String? age;
+  final String? uid;
+  final String? username;
+  final String? gender;
+  final String? email;
+  final String? ip;
+  final String? photoURL;
+  final int? type;
+  final String? fcmToken;
+  final bool? verificationStatus;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

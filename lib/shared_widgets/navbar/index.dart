@@ -12,7 +12,7 @@ class NavBar extends StatefulWidget {
   final int currentIndex;
   final Function onChange;
 
-  NavBar({@required this.currentIndex, @required this.onChange});
+  NavBar({required this.currentIndex, required this.onChange});
 
   @override
   _NavBarState createState() => _NavBarState();
@@ -24,24 +24,25 @@ class _NavBarState extends State<NavBar> {
     return TitledBottomNavigationBar(
         currentIndex: this.widget.currentIndex,
         enableShadow: false,
-        onTap: this.widget.onChange,
+        onTap: this.widget.onChange as void Function(int),
         activeColor: widget.currentIndex == 3
             ? CodeRedColors.primary2
             : CodeRedColors.primary,
         items: [
           TitledNavigationBarItem(
               title: Icon(Ionicons.ios_home, color: CodeRedColors.inactive),
-              icon: Ionicons.ios_home),
+              icon: Icon(Ionicons.ios_home)),
           TitledNavigationBarItem(
-              title: Icon(Ionicons.ios_stats, color: CodeRedColors.inactive),
-              icon: Ionicons.ios_stats),
+              title:
+                  Icon(Ionicons.ios_stats_chart, color: CodeRedColors.inactive),
+              icon: Icon(Ionicons.ios_stats_chart)),
           TitledNavigationBarItem(
               title:
                   Icon(Ionicons.md_chatbubbles, color: CodeRedColors.inactive),
-              icon: Ionicons.md_chatbubbles),
+              icon: Icon(Ionicons.md_chatbubbles)),
           TitledNavigationBarItem(
               title: Icon(Ionicons.md_medkit, color: CodeRedColors.inactive),
-              icon: Ionicons.md_medkit),
+              icon: Icon(Ionicons.md_medkit)),
         ]);
   }
 }

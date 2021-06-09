@@ -10,7 +10,7 @@ class GenderPage extends StatefulWidget {
 }
 
 class _GenderPageState extends State<GenderPage> {
-  String error;
+  String? error;
   bool active = false;
 
   List<Gender> genderList = <Gender>[
@@ -18,14 +18,14 @@ class _GenderPageState extends State<GenderPage> {
     Gender(name: 'FEMALE', imgrURL: '', icon: FontAwesome.female, index: 1)
   ];
 
-  int _selectedGender;
+  int? _selectedGender;
 
   @override
   void initState() {
     super.initState();
-    if (Provider.of<UserService>(context, listen: false).gender.length > 1)
+    if (Provider.of<UserService>(context, listen: false).gender!.length > 1)
       _selectedGender = Provider.of<UserService>(context, listen: false)
-              .gender
+              .gender!
               .startsWith('m')
           ? 0
           : 1;
@@ -58,7 +58,7 @@ class _GenderPageState extends State<GenderPage> {
     ));
   }
 
-  Widget genderCard({Gender gender}) {
+  Widget genderCard({required Gender gender}) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -72,7 +72,7 @@ class _GenderPageState extends State<GenderPage> {
               boxShadow: [
                 BoxShadow(
                     offset: Offset(1, 2),
-                    color: Colors.grey[300],
+                    color: Colors.grey[300]!,
                     blurRadius: 10)
               ]),
           child: Material(
@@ -83,7 +83,7 @@ class _GenderPageState extends State<GenderPage> {
                   _selectedGender = gender.index;
                 });
                 Provider.of<UserService>(context, listen: false)
-                    .putGender(gender.name.toLowerCase());
+                    .putGender(gender.name!.toLowerCase());
                 Provider.of<UserService>(context, listen: false)
                     .updateStatus(true);
               },
@@ -102,7 +102,7 @@ class _GenderPageState extends State<GenderPage> {
                       height: 20,
                     ),
                     Text(
-                      gender.name,
+                      gender.name!,
                       style: TextStyle(
                           fontSize: 18,
                           color: _selectedGender == gender.index
@@ -121,9 +121,9 @@ class _GenderPageState extends State<GenderPage> {
 }
 
 class Gender {
-  final String name;
-  final String imgrURL;
-  final IconData icon;
-  final int index;
+  final String? name;
+  final String? imgrURL;
+  final IconData? icon;
+  final int? index;
   Gender({this.name, this.imgrURL, this.icon, this.index});
 }

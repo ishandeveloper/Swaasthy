@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class EmergencyConfirmationSheet extends StatefulWidget {
   final Function onConfirm;
-  final Ambulance ambulance;
+  final Ambulance? ambulance;
 
-  EmergencyConfirmationSheet({@required this.onConfirm, this.ambulance});
+  EmergencyConfirmationSheet({required this.onConfirm, this.ambulance});
 
   @override
   _EmergencyConfirmationSheetState createState() =>

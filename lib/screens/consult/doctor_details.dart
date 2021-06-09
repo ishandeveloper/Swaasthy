@@ -15,7 +15,7 @@ import 'local_widgets/index.dart';
 class DoctorDetailPage extends StatefulWidget {
   final Doctor doctor;
 
-  const DoctorDetailPage({Key key, @required this.doctor}) : super(key: key);
+  const DoctorDetailPage({Key? key, required this.doctor}) : super(key: key);
 
   @override
   _DoctorDetailPageState createState() => _DoctorDetailPageState();
@@ -28,13 +28,13 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
   int _currentScreenIndex = 0;
 
-  DateTime _selectedDate;
+  DateTime? _selectedDate;
 
-  Timestamp _selectedTimeSlot;
+  Timestamp? _selectedTimeSlot;
 
-  PageController _pageController;
+  PageController? _pageController;
 
-  Razorpay _razorpay;
+  late Razorpay _razorpay;
 
   @override
   void initState() {
@@ -48,10 +48,10 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
     _pageController = PageController(initialPage: 0);
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _pageController.addListener(() {
-        if (_currentScreenIndex != _pageController.page.round()) {
-          setState(() => _currentScreenIndex = _pageController.page.round());
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
+      _pageController!.addListener(() {
+        if (_currentScreenIndex != _pageController!.page!.round()) {
+          setState(() => _currentScreenIndex = _pageController!.page!.round());
         }
       });
     });
@@ -90,8 +90,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
       doctorID: widget.doctor.uid,
       doctorName: widget.doctor.name,
       doctorImage: widget.doctor.image,
-      timestamp: _selectedTimeSlot,
-      date: _selectedDate,
+      timestamp: _selectedTimeSlot!,
+      date: _selectedDate!,
     ).then((value) => print("BOOKED : ${value.toString()}"));
 
     Navigator.pushReplacementNamed(context, '/home');
@@ -101,7 +101,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   @override
   void dispose() {
     _razorpay.clear();
-    _pageController.dispose();
+    _pageController!.dispose();
     super.dispose();
   }
 
@@ -132,7 +132,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 SizedBox(height: 8),
                 Row(
                   children: [
-                    Text("${timeFormatter(_selectedTimeSlot.toDate())}",
+                    Text("${timeFormatter(_selectedTimeSlot!.toDate())}",
                         style: TextStyle(
                           fontFamily: 'ProductSans',
                           fontWeight: FontWeight.w600,
@@ -144,7 +144,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
                         )),
-                    Text("${dateFormatter(_selectedDate)}",
+                    Text("${dateFormatter(_selectedDate!)}",
                         style: TextStyle(
                           fontFamily: 'ProductSans',
                           fontWeight: FontWeight.w600,
@@ -267,7 +267,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
     // Mimick a database call
     Future.delayed(Duration(milliseconds: 800), () {
-      _pageController.animateToPage(1,
+      _pageController!.animateToPage(1,
           duration: Duration(milliseconds: 250), curve: Curves.easeIn);
 
       setState(() {
@@ -290,7 +290,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
       children: [
         _doctorDetailsContainer(),
         _bookingSlotsContainer(
-            timeslots: widget.doctor.timeslots,
+            timeslots: widget.doctor.timeslots!,
             dates: List<DateTime>.generate(7, (iterator) {
               DateTime _ = DateTime.now();
 
@@ -311,7 +311,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Dr.' + widget.doctor.name,
+                  'Dr.' + widget.doctor.name!,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 22,
@@ -330,7 +330,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       width: 4,
                     ),
                     Text(
-                      widget.doctor.details.location,
+                      widget.doctor.details.location!,
                       style: TextStyle(
                         color: CodeRedColors.icon,
                         fontSize: 14,
@@ -348,7 +348,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    widget.doctor.type + ' Specialist',
+                    widget.doctor.type! + ' Specialist',
                     style: TextStyle(
                       color: Color(0xFFFFBF11),
                       fontSize: 11,
@@ -360,7 +360,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   height: 32,
                 ),
                 Text(
-                  widget.doctor.details.description,
+                  widget.doctor.details.description!,
                   style: TextStyle(
                     color: Color(0xFF9E9E9E),
                     fontSize: 14,
@@ -407,7 +407,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   }
 
   Widget _bookingSlotsContainer(
-      {List<Timestamp> timeslots, List<DateTime> dates}) {
+      {required List<Timestamp> timeslots, required List<DateTime> dates}) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -536,7 +536,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 child: Image(
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.fitHeight,
-                  image: CachedNetworkImageProvider(widget.doctor.image),
+                  image: CachedNetworkImageProvider(widget.doctor.image!),
                 ),
               ),
             ),

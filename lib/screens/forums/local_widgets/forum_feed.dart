@@ -15,19 +15,19 @@ class ForumsFeed extends StatefulWidget {
 
 class _ForumsFeedState extends State<ForumsFeed> {
   // This variable will contain the total number of feed items available in the snapshot
-  int totalFeedItems;
+  int? totalFeedItems;
 
   // This variable contains the max number of items that should currently be displayed to the user based on scroll position
-  int feedItemsToDisplay;
+  int? feedItemsToDisplay;
 
   // This controller helps to determine scroll position of Feed
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   // This variable will hold the last fetched document snapshot, so that it can be used to query more data again
-  DocumentSnapshot _lastDocument;
+  DocumentSnapshot? _lastDocument;
 
   // This variable will hold all the fetched feed snapshots data
-  List<DocumentSnapshot> _data;
+  List<DocumentSnapshot>? _data;
 
   bool _fetchingMoreItems = false;
 
@@ -41,7 +41,7 @@ class _ForumsFeedState extends State<ForumsFeed> {
            It'll automatically cancel request for pre-existing posts and only fetch the ones
            that are not being displayed currently
   */
-  requestFeedItems(int _count, {bool refresh = false}) async {
+  requestFeedItems(int? _count, {bool refresh = false}) async {
     print("43");
     if (refresh) {
       // Delete all the existing data for comments and likes, when refreshed
@@ -63,12 +63,12 @@ class _ForumsFeedState extends State<ForumsFeed> {
 
     //  Ensures that only non-existing snapshots are being requested
     if (_data != null)
-      _count = _count - _data.length > 0
-          ? _count - _data.length
+      _count = _count! - _data!.length > 0
+          ? _count - _data!.length
           : 1; //For fetch request a minimum of 1 snapshot must be there
 
     // This will get & temporary store a limited number of snapshots
-    QuerySnapshot _ = await ForumsHelper.getLimitedSnapshots(_count,
+    QuerySnapshot _ = await ForumsHelper.getLimitedSnapshots(_count!,
         lastDocument: _lastDocument);
 
     if (_.docs.length < 3) _moreItemsAvailable = false;
@@ -77,8 +77,8 @@ class _ForumsFeedState extends State<ForumsFeed> {
     if (_data == null) {
       setState(() {
         _data = _.docs;
-        _lastDocument = _?.docs?.last;
-        feedItemsToDisplay = _?.docs?.length;
+        _lastDocument = _.docs.last;
+        feedItemsToDisplay = _.docs.length;
         _fetchingMoreItems = false;
       });
     }
@@ -90,7 +90,7 @@ class _ForumsFeedState extends State<ForumsFeed> {
       print("87");
       setState(() {
         _lastDocument = _.docs.last;
-        _data = [..._data, ..._.docs];
+        _data = [..._data!, ..._.docs];
         _fetchingMoreItems = false;
         feedItemsToDisplay = _data?.length;
       });
@@ -104,14 +104,14 @@ class _ForumsFeedState extends State<ForumsFeed> {
   determines how many items should be displayed
   */
   _scrollListener() {
-    double maxScroll = _scrollController.position.maxScrollExtent;
-    double currentScroll = _scrollController.position.pixels;
+    double maxScroll = _scrollController!.position.maxScrollExtent;
+    double currentScroll = _scrollController!.position.pixels;
     // double delta = getContextHeight(context) * 0.25;
     double delta = 1000;
 
     // If no more items are available then do not fetch more
     if (maxScroll - currentScroll <= delta && _moreItemsAvailable)
-      requestFeedItems(feedItemsToDisplay + 3);
+      requestFeedItems(feedItemsToDisplay! + 3);
   }
 
 /*
@@ -122,21 +122,21 @@ class _ForumsFeedState extends State<ForumsFeed> {
     double _height =
         getContextHeight(context) - getKeyboardHeight(context) - 400;
 
-    _height = _ + _scrollController.offset - _height;
+    _height = _ + _scrollController!.offset - _height;
 
     // To ensure this does not trigger a pull to refresh on iOS
     if (_height > 0)
-      _scrollController.animateTo(_height,
+      _scrollController!.animateTo(_height,
           duration: Duration(milliseconds: 500), curve: Curves.ease);
   }
 
   @override
   void dispose() {
     // Removes the position update listener from scroll controller
-    _scrollController.removeListener(_scrollListener);
+    _scrollController!.removeListener(_scrollListener);
 
     // Disposes the scroll controller, to free up memory resources
-    _scrollController.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
@@ -151,7 +151,7 @@ class _ForumsFeedState extends State<ForumsFeed> {
 
     // Initializes the scroll controller and adds a listener to check for scroll updates
     _scrollController = ScrollController(keepScrollOffset: true);
-    _scrollController.addListener(_scrollListener);
+    _scrollController!.addListener(_scrollListener);
 
     // This method will request feed items data initially on the start
     requestFeedItems(feedItemsToDisplay);
@@ -230,7 +230,7 @@ class _ForumsFeedState extends State<ForumsFeed> {
 
 class ForumsTitle extends StatelessWidget {
   const ForumsTitle({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -262,7 +262,7 @@ class ForumsTitle extends StatelessWidget {
 
 class ShimmeringList extends StatelessWidget {
   const ShimmeringList({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -325,7 +325,7 @@ class ShimmeringList extends StatelessWidget {
                     ),
                   );
                 }),
-            baseColor: Colors.grey[200],
-            highlightColor: Colors.grey[100]));
+            baseColor: Colors.grey[200]!,
+            highlightColor: Colors.grey[100]!));
   }
 }

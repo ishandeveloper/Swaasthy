@@ -4,19 +4,19 @@ import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
 
 class ForumPostModel {
-  final String content;
-  final String postID;
-  final String title;
-  final DocumentReference reference;
-  final ForumPostType type;
-  final PostUserModel user;
-  final String thumbnail;
-  final String body;
-  final String image;
-  final Timestamp timestamp;
+  final String? content;
+  final String? postID;
+  final String? title;
+  final DocumentReference? reference;
+  final ForumPostType? type;
+  final PostUserModel? user;
+  final String? thumbnail;
+  final String? body;
+  final String? image;
+  final Timestamp? timestamp;
 
   ForumPostModel(
-      {Key key,
+      {Key? key,
       this.postID,
       this.content,
       this.type,
@@ -29,12 +29,12 @@ class ForumPostModel {
       this.image});
 
   factory ForumPostModel.getModel(
-      Map<String, dynamic> data, String docID, DocumentReference ref) {
+      Map<String, dynamic> data, String? docID, DocumentReference? ref) {
     return ForumPostModel(
       postID: docID,
-      title: data['title'] as String,
+      title: data['title'] as String?,
       type: checkForumPostType(data['type']),
-      body: data['body'] as String,
+      body: data['body'] as String?,
       image: checkForumPostType(data['type']) == ForumPostType.singleimage
           ? data['image']
           : null,

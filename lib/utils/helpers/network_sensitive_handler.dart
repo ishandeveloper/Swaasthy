@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../index.dart';
 
 netSensitiveCall(
-    {@required BuildContext context, @required Function callback}) {
+    {required BuildContext context, required Function callback}) {
   ConnectionStatus _connectionStatus =
       Provider.of<ConnectionStatus>(context, listen: false);
 

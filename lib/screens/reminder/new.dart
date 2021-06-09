@@ -12,7 +12,7 @@ import 'package:timezone/timezone.dart' as tz;
 import '../../main.dart';
 
 class NewReminder extends StatefulWidget {
-  const NewReminder({Key key}) : super(key: key);
+  const NewReminder({Key? key}) : super(key: key);
 
   @override
   _NewReminderState createState() => _NewReminderState();

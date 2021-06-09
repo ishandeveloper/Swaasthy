@@ -16,10 +16,10 @@ class TextRecognition extends StatefulWidget {
 }
 
 class _TextRecognitionState extends State<TextRecognition> {
-  File _image;
+  File? _image;
   var result = "";
 
-  void _pickedImage(File image) {
+  void _pickedImage(File? image) {
     _image = image;
     if (_image != null) textRecognition();
   }
@@ -30,14 +30,14 @@ class _TextRecognitionState extends State<TextRecognition> {
   }
 
   textRecognition() async {
-    FirebaseVisionImage myImage = FirebaseVisionImage.fromFile(_image);
+    FirebaseVisionImage myImage = FirebaseVisionImage.fromFile(_image!);
     TextRecognizer recognizeText = FirebaseVision.instance.textRecognizer();
     VisionText readText = await recognizeText.processImage(myImage);
     result = "";
     for (TextBlock block in readText.blocks) {
       for (TextLine line in block.lines) {
         setState(() {
-          result = result + ' ' + line.text + '\n';
+          result = result + ' ' + line.text! + '\n';
         });
       }
     }
@@ -49,7 +49,7 @@ class _TextRecognitionState extends State<TextRecognition> {
     if (documentSnapshot.exists)
       await documentReference.update({
         'vision_text': result.split('\n'),
-        'image_url': await uploadImage(_image),
+        'image_url': await uploadImage(_image!),
         'user_name': Provider.of<UserService>(context, listen: false).name,
         'user_id': user.uid,
         'is_verified': false
@@ -57,7 +57,7 @@ class _TextRecognitionState extends State<TextRecognition> {
     else
       await documentReference.set({
         'vision_text': result.split('\n'),
-        'image_url': await uploadImage(_image),
+        'image_url': await uploadImage(_image!),
         'user_name': Provider.of<UserService>(context, listen: false).name,
         'user_id': user.uid,
         'is_verified': false

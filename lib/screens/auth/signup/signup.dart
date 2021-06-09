@@ -18,14 +18,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
-  Animation<double> _progressAnimation;
-  AnimationController _progressAnimcontroller;
-  PageController pageController;
+  late Animation<double> _progressAnimation;
+  late AnimationController _progressAnimcontroller;
+  PageController? pageController;
 
-  double growStepWidth, beginWidth, endWidth = 0.0;
+  double? growStepWidth, beginWidth, endWidth = 0.0;
   int totalPages = 4;
-  bool _isInitialized;
-  String name, email, password, error;
+  bool? _isInitialized;
+  String? name, email, password, error;
   int currentIndex = 0;
 
   @override
@@ -35,10 +35,10 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     pageController = PageController(initialPage: 0);
 
     /// Attach a listener which will update the state and refresh the page index
-    pageController.addListener(() {
-      if (pageController.page.round() != currentIndex) {
+    pageController!.addListener(() {
+      if (pageController!.page!.round() != currentIndex) {
         setState(() {
-          currentIndex = pageController.page.round();
+          currentIndex = pageController!.page!.round();
         });
       }
     });
@@ -56,7 +56,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
 
   @override
   void didChangeDependencies() {
-    if (this._isInitialized == null || !this._isInitialized) {
+    if (this._isInitialized == null || !this._isInitialized!) {
       var mediaQD = MediaQuery.of(context);
       var maxWidth = mediaQD.size.width;
       _setProgressAnimation(maxWidth, 1);
@@ -67,15 +67,15 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
   }
 
   void dispose() {
-    pageController.dispose();
+    pageController!.dispose();
     super.dispose();
   }
 
   _setProgressAnimation(double maxWidth, int curPageIndex) {
     setState(() {
       growStepWidth = maxWidth / totalPages;
-      beginWidth = growStepWidth * (curPageIndex - 1);
-      endWidth = growStepWidth * curPageIndex;
+      beginWidth = growStepWidth! * (curPageIndex - 1);
+      endWidth = growStepWidth! * curPageIndex;
 
       _progressAnimation = Tween<double>(begin: beginWidth, end: endWidth)
           .animate(_progressAnimcontroller);
@@ -99,7 +99,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                   color: Colors.grey[400],
                 ),
                 onPressed: () {
-                  pageController.previousPage(
+                  pageController!.previousPage(
                       duration: Duration(milliseconds: 250),
                       curve: Curves.ease);
                 },
@@ -145,9 +145,9 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                 final FocusScopeNode currentFocus = FocusScope.of(context);
                 if (!currentFocus.hasPrimaryFocus &&
                     currentFocus.focusedChild != null) {
-                  FocusManager.instance.primaryFocus.unfocus();
+                  FocusManager.instance.primaryFocus!.unfocus();
                 }
-                if (ss.active) if (pageController.hasClients) {
+                if (ss.active) if (pageController!.hasClients) {
                   if (currentIndex == totalPages - 1) {
                     user = User(
                         points: 0,
@@ -163,9 +163,9 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                         .set(user.toJson())
                         .then((value) => Navigator.pushNamedAndRemoveUntil(
                             context, CodeRedRoutes.home, (route) => false))
-                        .onError((error, stackTrace) => print(error));
+                        .onError((dynamic error, stackTrace) => print(error));
                   } else
-                    pageController.nextPage(
+                    pageController!.nextPage(
                         duration: Duration(milliseconds: 250),
                         curve: Curves.ease);
                 }
@@ -186,11 +186,11 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
 }
 
 class AnimatedProgressBar extends AnimatedWidget {
-  AnimatedProgressBar({Key key, Animation<double> animation})
+  AnimatedProgressBar({Key? key, required Animation<double> animation})
       : super(key: key, listenable: animation);
 
   Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
+    final Animation<double> animation = listenable as Animation<double>;
     return AnimatedContainer(
       height: 15.0,
       duration: Duration(milliseconds: 250),

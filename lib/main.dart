@@ -55,10 +55,10 @@ void main() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('app_icon');
 
-  final InitializationSettings initializationSettings =
-      InitializationSettings(android: initializationSettingsAndroid);
+  const InitializationSettings initializationSettings =
+      const InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String payload) async {
+      onSelectNotification: (String? payload) async {
     if (payload != null) {
       debugPrint('notification payload: $payload');
     }
@@ -71,7 +71,7 @@ void main() async {
 
 Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
-  final String timeZoneName = 'Asia/Kolkata';
+  const String timeZoneName = 'Asia/Kolkata';
   tz.setLocalLocation(tz.getLocation(timeZoneName));
 }
 
@@ -80,22 +80,24 @@ class CodeRedApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        StreamProvider<ConnectionStatus>(
+        StreamProvider<ConnectionStatus?>(
             initialData: null,
             create: (_) => ConnectionService().connectioncontroller.stream),
-        ChangeNotifierProvider(create: (_) => RepliesService()),
-        ChangeNotifierProvider(create: (_) => UpvotesService()),
-        ChangeNotifierProvider(create: (_) => ScreensWrapperService()),
-        ChangeNotifierProvider(create: (_) => UserService()),
-        ChangeNotifierProvider(create: (_) => MedicineReminderService()),
-        ChangeNotifierProvider(create: (_) => ApiMedicService())
+        ChangeNotifierProvider<ChangeNotifier>(create: (_) => RepliesService()),
+        ChangeNotifierProvider<ChangeNotifier>(create: (_) => UpvotesService()),
+        ChangeNotifierProvider<ChangeNotifier>(
+            create: (_) => ScreensWrapperService()),
+        ChangeNotifierProvider<ChangeNotifier>(create: (_) => UserService()),
+        ChangeNotifierProvider<ChangeNotifier>(
+            create: (_) => MedicineReminderService()),
+        ChangeNotifierProvider<ChangeNotifier>(create: (_) => ApiMedicService())
       ],
       child: GestureDetector(
         onTap: () {
           final FocusScopeNode currentFocus = FocusScope.of(context);
           if (!currentFocus.hasPrimaryFocus &&
               currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus.unfocus();
+            FocusManager.instance.primaryFocus!.unfocus();
           }
         },
         child: MaterialApp(
@@ -104,16 +106,18 @@ class CodeRedApp extends StatelessWidget {
           onGenerateRoute: CodeRedRouter.generateRoute,
           navigatorKey: CodeRedKeys.navigatorKey,
           theme: ThemeData(
-              pageTransitionsTheme: PageTransitionsTheme(builders: {
-                TargetPlatform.android: CupertinoPageTransitionsBuilder()
-              }),
+              pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: <TargetPlatform, PageTransitionsBuilder>{
+                    TargetPlatform.android: CupertinoPageTransitionsBuilder()
+                  }),
               textTheme: Theme.of(context).textTheme.apply(
-                  fontFamily: 'ProductSans', displayColor: Color(0xff2A2A2A))),
-          home: StreamBuilder<User>(
+                  fontFamily: 'ProductSans',
+                  displayColor: const Color(0xff2A2A2A))),
+          home: StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (context, snapshot) {
+              builder: (_, AsyncSnapshot<User?> snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
-                  User user = snapshot.data;
+                  User? user = snapshot.data;
                   if (user != null) {
                     return Indicator(
                       authUser: user,
@@ -121,7 +125,7 @@ class CodeRedApp extends StatelessWidget {
                   }
                   return LoginPage();
                 }
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }),

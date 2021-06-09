@@ -8,7 +8,7 @@ class UserNamePage extends StatefulWidget {
 }
 
 class _UserNamePageState extends State<UserNamePage> {
-  TextEditingController nameController;
+  TextEditingController? nameController;
 
   @override
   void initState() {
@@ -19,8 +19,8 @@ class _UserNamePageState extends State<UserNamePage> {
 
     Provider.of<UserService>(context, listen: false).updateStatus(false);
 
-    nameController.addListener(() {
-      if (nameController.text.length > 0) {
+    nameController!.addListener(() {
+      if (nameController!.text.length > 0) {
         Provider.of<UserService>(context, listen: false).updateStatus(true);
       } else {
         Provider.of<UserService>(context, listen: false).updateStatus(false);
@@ -30,7 +30,7 @@ class _UserNamePageState extends State<UserNamePage> {
 
   @override
   void dispose() {
-    nameController.dispose();
+    nameController!.dispose();
     super.dispose();
   }
 
@@ -50,7 +50,7 @@ class _UserNamePageState extends State<UserNamePage> {
             margin: const EdgeInsets.only(top: 30),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.grey[300])),
+                border: Border.all(color: Colors.grey[300]!)),
             child: TextField(
               controller: nameController,
               style: TextStyle(

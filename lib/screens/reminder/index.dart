@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MedicineReminder extends StatefulWidget {
-  const MedicineReminder({Key key}) : super(key: key);
+  const MedicineReminder({Key? key}) : super(key: key);
 
   @override
   _MedicineReminderState createState() => _MedicineReminderState();
@@ -90,12 +90,12 @@ class _MedicineReminderState extends State<MedicineReminder> {
                                                 color: Color(0xff828282),
                                                 fontSize: 10)),
                                         SizedBox(height: 10),
-                                        Text(_currentRecord.title,
+                                        Text(_currentRecord.title!,
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 20)),
                                         SizedBox(height: 4),
-                                        Text(_currentRecord.description,
+                                        Text(_currentRecord.description!,
                                             style: TextStyle(
                                                 color: Color(0xff828282),
                                                 fontSize: 14))
@@ -129,7 +129,7 @@ class _MedicineReminderState extends State<MedicineReminder> {
 
 class MedicineReminderAppBar extends StatelessWidget {
   const MedicineReminderAppBar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

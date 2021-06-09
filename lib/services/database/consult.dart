@@ -40,14 +40,14 @@ class ConsultHelper {
   }
 
   static Future<bool> createAppointment({
-    String userID,
-    String username,
-    String userImage,
-    String doctorID,
-    String doctorName,
-    String doctorImage,
-    Timestamp timestamp,
-    DateTime date,
+    String? userID,
+    String? username,
+    String? userImage,
+    String? doctorID,
+    String? doctorName,
+    String? doctorImage,
+    required Timestamp timestamp,
+    required DateTime date,
   }) async {
     var uuid = Uuid();
     String _appointmentID = uuid.v4();
@@ -100,7 +100,8 @@ class ConsultHelper {
     return true;
   }
 
-  static Stream getAppointmentsSnapshot({String userID, int userType = 0}) {
+  static Stream<DocumentSnapshot<Map<String, dynamic>>> getAppointmentsSnapshot(
+      {String? userID, int? userType = 0}) {
     // If user is doctor
     if (userType == 2)
       return FirebaseFirestore.instance
@@ -117,17 +118,17 @@ class ConsultHelper {
   }
 
   static Future<void> addMedicineToAppointment({
-    String medicine,
-    int course,
-    int dosage,
-    String userID,
-    String appointmentID,
+    String? medicine,
+    int? course,
+    int? dosage,
+    String? userID,
+    String? appointmentID,
   }) async {
     var _appointments = await FirebaseFirestore.instance
         .collection('appointments')
         .doc(userID)
         .get()
-        .then((data) => data.data()['appointments']);
+        .then((data) => data.data()!['appointments']);
 
     List<Map<String, dynamic>> _ = [];
 
@@ -164,13 +165,13 @@ class ConsultHelper {
         .doc(userID)
         .update({'appointments': _appointments});
 
-    String _doctorID = _updatedAppointment['doctorID'];
+    String? _doctorID = _updatedAppointment['doctorID'];
 
     var _docAppointments = await FirebaseFirestore.instance
         .collection('doctors')
         .doc(_doctorID)
         .get()
-        .then((data) => data.data()['appointments']);
+        .then((data) => data.data()!['appointments']);
 
     // Remove orignal instance of object from the array
     // Get the object

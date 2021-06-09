@@ -57,7 +57,7 @@ void openURL(String url, BuildContext context) async {
   else if (url.toString().contains('.pdf')) {
     try {
       RegExp _queryNeglector = RegExp(r"([^\?]+)(\?.*)?");
-      if (_queryNeglector.firstMatch(url.toString()).group(1) != null) {
+      if (_queryNeglector.firstMatch(url.toString())!.group(1) != null) {
         // Handle PDF
       } else {
         if (await canLaunch(url))

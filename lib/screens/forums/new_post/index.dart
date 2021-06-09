@@ -15,7 +15,7 @@ class NewForumPost extends StatefulWidget {
 class _NewForumPostState extends State<NewForumPost> {
   bool isValid = false;
 
-  Asset _selectedImage;
+  Asset? _selectedImage;
 
   TextEditingController _plainTextController = TextEditingController();
   TextEditingController _titleTextController = TextEditingController();
@@ -137,12 +137,12 @@ class _NewForumPostState extends State<NewForumPost> {
                                 maxHeight: getContextWidth(context) - 16),
                             child: FittedBox(
                               child: AssetThumb(
-                                asset: _selectedImage,
+                                asset: _selectedImage!,
                                 width: (getContextWidth(context)).toInt(),
                                 // height: (getContextWidth(context) * 0.5).toInt(),
                                 height: (getContextWidth(context) *
-                                        (_selectedImage.originalWidth /
-                                            _selectedImage.originalHeight))
+                                        (_selectedImage!.originalWidth! /
+                                            _selectedImage!.originalHeight!))
                                     .toInt(),
                               ),
                             ),
@@ -293,9 +293,9 @@ class _NewForumPostState extends State<NewForumPost> {
 }
 
 class ExpandedSheetItem extends StatelessWidget {
-  final IconData icon;
-  final Function onClick;
-  final String text;
+  final IconData? icon;
+  final Function? onClick;
+  final String? text;
   final Color iconColor;
 
   ExpandedSheetItem(
@@ -306,7 +306,7 @@ class ExpandedSheetItem extends StatelessWidget {
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
       ),
-      onPressed: this.onClick,
+      onPressed: this.onClick as void Function()?,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 16),
         child: Row(
@@ -317,7 +317,7 @@ class ExpandedSheetItem extends StatelessWidget {
               color: this.iconColor,
             ),
             SizedBox(width: 15),
-            Text(this.text,
+            Text(this.text!,
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -332,9 +332,9 @@ class ExpandedSheetItem extends StatelessWidget {
 
 class NewPostHeader extends StatelessWidget {
   const NewPostHeader({
-    Key key,
-    @required this.isValid,
-    @required this.onClick,
+    Key? key,
+    required this.isValid,
+    required this.onClick,
   }) : super(key: key);
 
   final bool isValid;
@@ -370,7 +370,7 @@ class NewPostHeader extends StatelessWidget {
           if (isValid)
             FloatingActionButton(
               mini: true,
-              onPressed: onClick,
+              onPressed: onClick as void Function()?,
               backgroundColor: CodeRedColors.primary,
               child: Icon(Icons.check),
             )

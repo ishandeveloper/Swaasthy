@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firestorage;
 
 import 'package:uuid/uuid.dart';
 
-Future<dynamic> uploadImage(File imageFile, {Asset asset}) async {
+Future<dynamic> uploadImage(File imageFile, {Asset? asset}) async {
   firestorage.UploadTask _uploadTask;
   firestorage.FirebaseStorage _storage = firestorage.FirebaseStorage.instance;
 

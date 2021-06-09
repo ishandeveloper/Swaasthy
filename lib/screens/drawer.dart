@@ -29,10 +29,10 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                   child: ListTile(
                     contentPadding: EdgeInsets.only(left: 8),
                     title: Text(
-                      user.username,
+                      user.username!,
                       style: TextStyle(fontSize: 20),
                     ),
-                    subtitle: Text(user.email,
+                    subtitle: Text(user.email!,
                     style: TextStyle(fontSize: 13),),
                   ),
                 )

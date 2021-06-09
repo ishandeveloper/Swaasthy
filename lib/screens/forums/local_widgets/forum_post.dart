@@ -10,8 +10,8 @@ import '../../indicator.dart';
 import 'index.dart';
 
 class ForumPost extends StatefulWidget {
-  final ForumPostModel data;
-  final int index;
+  final ForumPostModel? data;
+  final int? index;
 
   ForumPost({this.data, this.index});
 
@@ -27,7 +27,7 @@ class _ForumPostState extends State<ForumPost>
 
   bool isInitialFetch = true;
 
-  DocumentSnapshot lastDocument;
+  DocumentSnapshot? lastDocument;
 
   bool hasFetchedAll = false;
 
@@ -43,13 +43,13 @@ class _ForumPostState extends State<ForumPost>
     RepliesService _commentsService =
         Provider.of<RepliesService>(context, listen: false);
 
-    List<ReplyModel> _commentsList =
+    List<ReplyModel>? _commentsList =
         _commentsService.getComments(index: widget.index);
 
     if (isExpanded &&
-        _commentsService.getComments(index: widget.index).length == 0 &&
-        _commentsService.getCommentsCount(widget.index) >
-            _commentsService.getComments(index: widget.index).length) {}
+        _commentsService.getComments(index: widget.index)!.length == 0 &&
+        _commentsService.getCommentsCount(widget.index)! >
+            _commentsService.getComments(index: widget.index)!.length) {}
 
     void getComments() async {
       print("GETTING COMMENTS");
@@ -60,22 +60,22 @@ class _ForumPostState extends State<ForumPost>
       });
 
       List<DocumentSnapshot> _commentsDocuments =
-          await ForumsHelper.getComments(widget.data.postID,
+          await ForumsHelper.getComments(widget.data!.postID,
               _commentsService.getLastDocument(widget.index));
 
       print(
           "64, ${_commentsDocuments.toString()}, ${_commentsService.getLastDocument(widget.index)}");
 
       // ignore: null_aware_before_operator
-      if (_commentsDocuments?.length > 0 && _commentsDocuments != null) {
+      if (_commentsDocuments.length > 0 && _commentsDocuments != null) {
         print("NOT NULL");
 
         List<ReplyModel> _commentModels = _commentsDocuments
-            .map((e) => ReplyModel.getModel(e.data(), e.id))
+            .map((e) => ReplyModel.getModel(e.data() as Map<String, dynamic>, e.id))
             .toList();
 
         List<ReplyModel> _tempList = [];
-        _tempList.addAll(_commentsList);
+        _tempList.addAll(_commentsList!);
         _tempList.addAll(_commentModels);
 
         if (_commentsService.getLastDocument(widget.index) == null) {
@@ -107,7 +107,7 @@ class _ForumPostState extends State<ForumPost>
         });
       }
 
-      print(_commentsList.length);
+      print(_commentsList!.length);
     }
 
     if (isInitialFetch) {
@@ -128,22 +128,22 @@ class _ForumPostState extends State<ForumPost>
         children: [
           // Post Header
           ForumPostHeader(
-              user: widget.data.user, timestamp: widget.data.timestamp),
+              user: widget.data!.user, timestamp: widget.data!.timestamp),
 
-          ForumPostContent(title: widget.data.title, body: widget.data.body),
+          ForumPostContent(title: widget.data!.title, body: widget.data!.body),
 
-          if (widget.data.type == ForumPostType.singleimage)
-            ForumPostImage(image: widget.data.image),
+          if (widget.data!.type == ForumPostType.singleimage)
+            ForumPostImage(image: widget.data!.image),
 
           ForumPostControls(
-              postID: widget.data.postID,
+              postID: widget.data!.postID,
               index: this.widget.index,
               isExpanded: isExpanded,
               expandHandler: _expandHandler),
 
           NewCommentInput(
             index: this.widget.index,
-            postID: widget.data.postID,
+            postID: widget.data!.postID,
           ),
 
           AnimatedSize(
@@ -151,7 +151,7 @@ class _ForumPostState extends State<ForumPost>
             vsync: this,
             child: isExpanded
                 ? ForumPostComments(
-                    postID: widget.data.postID,
+                    postID: widget.data!.postID,
                     index: this.widget.index,
                     moreComments: getComments,
                   )
@@ -164,13 +164,13 @@ class _ForumPostState extends State<ForumPost>
 }
 
 class NewCommentInput extends StatefulWidget {
-  final int index;
-  final String postID;
+  final int? index;
+  final String? postID;
 
   const NewCommentInput({
-    Key key,
-    @required this.index,
-    @required this.postID,
+    Key? key,
+    required this.index,
+    required this.postID,
   }) : super(key: key);
 
   @override
@@ -178,9 +178,9 @@ class NewCommentInput extends StatefulWidget {
 }
 
 class ForumPostImage extends StatefulWidget {
-  final String image;
+  final String? image;
 
-  ForumPostImage({@required this.image});
+  ForumPostImage({required this.image});
 
   @override
   _ForumPostImageState createState() => _ForumPostImageState();
@@ -213,7 +213,7 @@ class _ForumPostImageState extends State<ForumPostImage>
                 maxHeight: MediaQuery.of(context).size.width,
                 minWidth: MediaQuery.of(context).size.width),
             child: CachedNetworkImage(
-              imageUrl: this.widget.image,
+              imageUrl: this.widget.image!,
               imageBuilder: (context, imageProvider) =>
                   Image(image: imageProvider),
               errorWidget: (_, ___, __) =>
@@ -232,7 +232,7 @@ class _ForumPostImageState extends State<ForumPostImage>
 }
 
 class _NewCommentInputState extends State<NewCommentInput> {
-  TextEditingController _commentTextController;
+  TextEditingController? _commentTextController;
 
   FocusNode _commentFocusNode = FocusNode();
 
@@ -281,10 +281,10 @@ class _NewCommentInputState extends State<NewCommentInput> {
 
   newcommentsheet(
     BuildContext context,
-    int index, {
-    @required String username,
-    @required String userThumb,
-    @required String userID,
+    int? index, {
+    required String? username,
+    required String userThumb,
+    required String? userID,
   }) {
     return showModalBottomSheet(
         isScrollControlled: true,
@@ -345,7 +345,7 @@ class _NewCommentInputState extends State<NewCommentInput> {
                                     Navigator.pop(context);
                                     displaySnackbar(context,
                                         "Internet Connection is required.");
-                                  } else if (_commentTextController.value.text
+                                  } else if (_commentTextController!.value.text
                                           .trim()
                                           .length ==
                                       0) {
@@ -361,7 +361,7 @@ class _NewCommentInputState extends State<NewCommentInput> {
                                                     userID: userID,
                                                     userimage: userThumb,
                                                     username: username),
-                                                body: _commentTextController
+                                                body: _commentTextController!
                                                     .value.text,
                                                 key: UniqueKey(),
                                                 timestamp: Timestamp.fromDate(
@@ -373,7 +373,7 @@ class _NewCommentInputState extends State<NewCommentInput> {
                                           'timestamp':
                                               FieldValue.serverTimestamp(),
                                           'body':
-                                              _commentTextController.value.text,
+                                              _commentTextController!.value.text,
                                           'user': {
                                             'user_id': userID,
                                             'user_name': username,
@@ -382,7 +382,7 @@ class _NewCommentInputState extends State<NewCommentInput> {
                                         });
                                   }
 
-                                  _commentTextController.clear();
+                                  _commentTextController!.clear();
                                 }),
                           )),
                     ],

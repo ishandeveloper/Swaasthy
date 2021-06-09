@@ -12,7 +12,7 @@ import '../index.dart';
 
 class HomeCardActions extends StatelessWidget {
   const HomeCardActions({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -67,17 +67,17 @@ class _MapWidgetState extends State<MapWidget> {
 
   Completer<GoogleMapController> _mapsController = Completer();
 
-  GoogleMapController _activeMapsController;
+  late GoogleMapController _activeMapsController;
 
-  CameraPosition _mapPosition;
+  CameraPosition? _mapPosition;
 
-  Position _userGeoPosition;
+  late Position _userGeoPosition;
 
-  BitmapDescriptor myLocationPin;
+  late BitmapDescriptor myLocationPin;
 
-  BitmapDescriptor ambulancePin;
+  late BitmapDescriptor ambulancePin;
 
-  List<Ambulance> _ambulancesList;
+  List<Ambulance>? _ambulancesList;
 
   void locateUserPosition() async {
     Position _position = await Geolocator.getCurrentPosition(
@@ -89,12 +89,12 @@ class _MapWidgetState extends State<MapWidget> {
 
     _mapPosition = CameraPosition(target: _latLongPosition, zoom: 14.4746);
     _activeMapsController
-        .animateCamera(CameraUpdate.newCameraPosition(_mapPosition));
+        .animateCamera(CameraUpdate.newCameraPosition(_mapPosition!));
 
     Marker marker = Marker(
       markerId: MarkerId('user_location'),
       draggable: true,
-      position: _mapPosition
+      position: _mapPosition!
           .target, //With this parameter you automatically obtain latitude and longitude
       infoWindow: InfoWindow(
         title: "Current Location",
@@ -118,7 +118,7 @@ class _MapWidgetState extends State<MapWidget> {
       Marker marker = Marker(
         markerId: MarkerId(i.toString()),
         draggable: true,
-        position: _temp[i].coordinates,
+        position: _temp[i].coordinates!,
         icon: ambulancePin,
       );
 
@@ -160,7 +160,7 @@ class _MapWidgetState extends State<MapWidget> {
                   style: TextStyle(fontSize: 18)),
             if (_ambulancesList?.length == 1)
               Text("1 ambulance in your area", style: TextStyle(fontSize: 18)),
-            if (_ambulancesList != null && _ambulancesList.length > 1)
+            if (_ambulancesList != null && _ambulancesList!.length > 1)
               Text("${_ambulancesList?.length} ambulances in your area",
                   style: TextStyle(fontSize: 18)),
             SizedBox(height: 4),

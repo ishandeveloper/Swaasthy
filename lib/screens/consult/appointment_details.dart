@@ -10,10 +10,10 @@ import '../index.dart';
 import '../indicator.dart';
 
 class AppointmentDetails extends StatelessWidget {
-  final AppointmentItem data;
-  final int userType;
+  AppointmentDetails({required this.data, required this.userType});
 
-  AppointmentDetails({@required this.data, @required this.userType});
+  final AppointmentItem? data;
+  final int? userType;
 
   void _initVideoCall(BuildContext context) async {
     // await for camera and mic permissions before pushing video page
@@ -24,7 +24,7 @@ class AppointmentDetails extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (_) => AppointmentCall(
-            appointmentID: data.id, role: ClientRole.Broadcaster),
+            appointmentID: data!.id, role: ClientRole.Broadcaster),
       ),
     );
   }
@@ -74,7 +74,7 @@ class AppointmentDetails extends StatelessWidget {
                             Text('Dr.',
                                 style: TextStyle(
                                     fontSize: 36, fontWeight: FontWeight.w500)),
-                          Text(data.doctorName,
+                          Text(data!.doctorName!,
                               style: TextStyle(
                                   fontSize: userType == 2 ? 34 : 38,
                                   fontWeight: FontWeight.w600)),
@@ -97,8 +97,7 @@ class AppointmentDetails extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text(
-                                    "Hello ${user.username?.split(" ")[0]?.toString()},",
+                                Text("Hello ${user.username?.split(" ")[0]},",
                                     style: TextStyle(fontSize: 17)),
                               ],
                             ),
@@ -128,15 +127,15 @@ class AppointmentDetails extends StatelessWidget {
 
 class AppointmentDetailsHeader extends StatelessWidget {
   const AppointmentDetailsHeader({
-    Key key,
-    @required this.data,
-    @required this.initVideoCall,
-    @required this.userType,
+    Key? key,
+    required this.data,
+    required this.initVideoCall,
+    required this.userType,
   }) : super(key: key);
 
-  final AppointmentItem data;
+  final AppointmentItem? data;
   final Function initVideoCall;
-  final int userType;
+  final int? userType;
 
   @override
   Widget build(BuildContext context) {
@@ -169,12 +168,12 @@ class AppointmentDetailsHeader extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 52),
-                    Text(dateFormatter(this.data.timestamp.toDate()),
+                    Text(dateFormatter(this.data!.timestamp!.toDate()),
                         style: TextStyle(
                           fontSize: 36,
                           color: Colors.white,
                         )),
-                    Text(specialTimeFormatter(this.data.timestamp.toDate()),
+                    Text(specialTimeFormatter(this.data!.timestamp!.toDate()),
                         style: TextStyle(
                           fontSize: 42,
                           fontWeight: FontWeight.w600,
@@ -202,11 +201,11 @@ class AppointmentDetailsHeader extends StatelessWidget {
                   height: 102,
                   padding: EdgeInsets.all(5),
                   child: Hero(
-                    tag: data.doctorID,
+                    tag: data!.doctorID!,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: Image(
-                        image: CachedNetworkImageProvider(data.doctorImage),
+                        image: CachedNetworkImageProvider(data!.doctorImage!),
                       ),
                     ),
                   ),

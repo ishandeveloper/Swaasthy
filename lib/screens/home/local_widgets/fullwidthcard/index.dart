@@ -4,22 +4,22 @@ class FullWidthHomeCard extends StatelessWidget {
   final String subText;
   final String header;
   final String imagePath;
-  final Function onTap;
+  final Function? onTap;
   final Color background;
 
   const FullWidthHomeCard({
-    @required this.subText,
-    @required this.header,
-    @required this.imagePath,
-    @required this.background,
+    required this.subText,
+    required this.header,
+    required this.imagePath,
+    required this.background,
     this.onTap,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => this.onTap(),
+      onTap: () => this.onTap!(),
       child: Container(
         width: MediaQuery.of(context).size.width * 1,
         height: 150,

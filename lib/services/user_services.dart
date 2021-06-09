@@ -4,8 +4,8 @@ import 'package:codered/screens/indicator.dart';
 import 'package:flutter/foundation.dart';
 
 class UserService with ChangeNotifier {
-  String name, age, gender = '';
-  int accountType, points;
+  String? name, age, gender = '';
+  int? accountType, points;
   bool active = false;
 
   putName(String val) {
@@ -23,7 +23,7 @@ class UserService with ChangeNotifier {
     notifyListeners();
   }
 
-  putType(int val) {
+  putType(int? val) {
     accountType = val;
     notifyListeners();
   }
@@ -35,7 +35,7 @@ class UserService with ChangeNotifier {
 
   increaseUserHeartPoints(int pnts) async {
     points = user.points;
-    points += pnts;
+    points = points! + pnts;
     await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)

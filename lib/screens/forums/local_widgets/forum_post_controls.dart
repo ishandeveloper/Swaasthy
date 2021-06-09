@@ -6,10 +6,10 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 
 class ForumPostControls extends StatefulWidget {
-  final String postID;
-  final int index;
-  final bool isExpanded;
-  final Function expandHandler;
+  final String? postID;
+  final int? index;
+  final bool? isExpanded;
+  final Function? expandHandler;
 
   ForumPostControls({
     this.postID,
@@ -45,10 +45,10 @@ class _ForumPostControlsState extends State<ForumPostControls> {
 }
 
 class ForumPostControlComments extends StatelessWidget {
-  final String postID;
-  final int index;
-  final bool isExpanded;
-  final Function expandHandler;
+  final String? postID;
+  final int? index;
+  final bool? isExpanded;
+  final Function? expandHandler;
 
   ForumPostControlComments({
     this.index,
@@ -63,13 +63,13 @@ class ForumPostControlComments extends StatelessWidget {
         Provider.of<RepliesService>(context, listen: false);
 
     return InkWell(
-      onTap: () => expandHandler(),
+      onTap: () => expandHandler!(),
       child: Container(
         margin: EdgeInsets.only(top: 0),
         child: Row(
           children: [
             Icon(
-              isExpanded ? Icons.mode_comment : Icons.mode_comment_outlined,
+              isExpanded! ? Icons.mode_comment : Icons.mode_comment_outlined,
               size: 20,
               color: CodeRedColors.icon,
             ),
@@ -88,10 +88,10 @@ class ForumPostControlComments extends StatelessWidget {
 }
 
 class ForumPostControlVotes extends StatefulWidget {
-  final String postID;
-  final int index;
+  final String? postID;
+  final int? index;
 
-  const ForumPostControlVotes({Key key, this.postID, this.index})
+  const ForumPostControlVotes({Key? key, this.postID, this.index})
       : super(key: key);
 
   @override
@@ -105,7 +105,7 @@ class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
         Provider.of<UpvotesService>(context, listen: true);
 
     bool isVoted =
-        _votesService.getLikes(index: widget.index).contains(user.uid);
+        _votesService.getLikes(index: widget.index)!.contains(user.uid);
 
     return ConstrainedBox(
       constraints: BoxConstraints(minWidth: 50),
@@ -132,7 +132,7 @@ class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
               padding: EdgeInsets.only(left: 8),
               child: Text(
                 _votesService
-                    .getLikes(index: this.widget.index)
+                    .getLikes(index: this.widget.index)!
                     .length
                     .toString(),
                 style: TextStyle(fontSize: 16),

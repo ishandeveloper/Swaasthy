@@ -1,7 +1,7 @@
 class PostUserModel {
-  final String username;
-  final String userimage;
-  final String userID;
+  final String? username;
+  final String? userimage;
+  final String? userID;
 
   PostUserModel({this.userID, this.userimage, this.username});
 

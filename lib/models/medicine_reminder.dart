@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class MedicineReminderData {
-  final String title;
-  final DateTime time;
-  final String description;
+  final String? title;
+  final DateTime? time;
+  final String? description;
 
   MedicineReminderData({this.title, this.time, this.description});
 }

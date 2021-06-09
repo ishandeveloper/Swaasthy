@@ -5,10 +5,10 @@ import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentPrescription extends StatefulWidget {
-  final AppointmentItem data;
-  final int userType;
+  final AppointmentItem? data;
+  final int? userType;
 
-  AppointmentPrescription({@required this.data, @required this.userType});
+  AppointmentPrescription({required this.data, required this.userType});
 
   @override
   _AppointmentPrescriptionState createState() =>
@@ -20,13 +20,13 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
 
   var _dosagePerDayList = List.generate(6, (index) => index);
 
-  int _courseDuration;
+  int? _courseDuration;
 
-  int _dosagePerDay;
+  int? _dosagePerDay;
 
-  AppointmentItem _appointmentdata;
+  AppointmentItem? _appointmentdata;
 
-  TextEditingController _medicineController;
+  TextEditingController? _medicineController;
   @override
   void initState() {
     super.initState();
@@ -37,12 +37,12 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
 
   @override
   void dispose() {
-    _medicineController.dispose();
+    _medicineController!.dispose();
     super.dispose();
   }
 
   void _addToAppointment(
-      {int dosage, int course, String medicine, BuildContext context}) async {
+      {int? dosage, int? course, String? medicine, required BuildContext context}) async {
     Navigator.pop(context);
 
     print("$dosage $course $medicine");
@@ -54,14 +54,14 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
         medicine: medicine,
         dosage: dosage,
         course: course,
-        userID: _appointmentdata.doctorID,
-        appointmentID: _appointmentdata.id,
+        userID: _appointmentdata!.doctorID,
+        appointmentID: _appointmentdata!.id,
       );
 
       // Prescription _newPrescription = Prescription(
       //     medicine: medicine, dailyDosage: dosage, courseDays: course);
 
-      List<Prescription> _newPrescriptionList = _appointmentdata.prescription;
+      List<Prescription> _newPrescriptionList = _appointmentdata!.prescription!;
 
       _newPrescriptionList.add(Prescription(
         medicine: medicine,
@@ -70,11 +70,11 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
       ));
 
       AppointmentItem _updatedData = AppointmentItem(
-          doctorID: _appointmentdata.doctorID,
-          doctorImage: _appointmentdata.doctorImage,
-          doctorName: _appointmentdata.doctorName,
-          timestamp: _appointmentdata.timestamp,
-          id: _appointmentdata.id,
+          doctorID: _appointmentdata!.doctorID,
+          doctorImage: _appointmentdata!.doctorImage,
+          doctorName: _appointmentdata!.doctorName,
+          timestamp: _appointmentdata!.timestamp,
+          id: _appointmentdata!.id,
           prescription: _newPrescriptionList);
 
       setState(() => _appointmentdata = _updatedData);
@@ -142,7 +142,7 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
                                         borderRadius: BorderRadius.circular(5)),
                                     hintText: 'Course Duration'),
                                 value: _courseDuration,
-                                onChanged: (e) {
+                                onChanged: (dynamic e) {
                                   print(e);
                                   setState(_courseDuration = e);
                                   FocusScope.of(context)
@@ -160,7 +160,7 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
                                         borderRadius: BorderRadius.circular(5)),
                                     hintText: 'Dosage'),
                                 value: _dosagePerDay,
-                                onChanged: (e) {
+                                onChanged: (dynamic e) {
                                   print(e);
                                   setState(_dosagePerDay = e);
                                   // FocusScope.of(context)
@@ -179,7 +179,7 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
                           dosage: _dosagePerDay,
                           context: context,
                           course: _courseDuration,
-                          medicine: _medicineController.value.text,
+                          medicine: _medicineController!.value.text,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -223,11 +223,11 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
           Expanded(
               child: SingleChildScrollView(
             child: ListView.builder(
-                itemCount: _appointmentdata.prescription?.length,
+                itemCount: _appointmentdata!.prescription?.length,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (_, index) {
-                  Prescription _pres = _appointmentdata.prescription[index];
+                  Prescription _pres = _appointmentdata!.prescription![index];
 
                   return Container(
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -235,7 +235,7 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
                         color: Color(0xFFFAFAFA),
                         boxShadow: [
                           BoxShadow(
-                              color: Colors.grey[200],
+                              color: Colors.grey[200]!,
                               blurRadius: 8,
                               offset: Offset.zero)
                         ]),
@@ -246,7 +246,7 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(_pres.medicine,
+                            Text(_pres.medicine!,
                                 style: TextStyle(fontSize: 18)),
                             SizedBox(height: 4),
                             Text('for ${_pres.courseDays} days',
@@ -279,11 +279,11 @@ class _AppointmentPrescriptionState extends State<AppointmentPrescription> {
 
 class PrescriptionHeader extends StatelessWidget {
   const PrescriptionHeader({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
-  final AppointmentItem data;
+  final AppointmentItem? data;
 
   @override
   Widget build(BuildContext context) {
@@ -324,11 +324,11 @@ class PrescriptionHeader extends StatelessWidget {
                   margin: EdgeInsets.only(right: 32),
                   padding: EdgeInsets.all(0),
                   child: Hero(
-                      tag: data.doctorID,
+                      tag: data!.doctorID!,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
                         child: Image(
-                          image: CachedNetworkImageProvider(data.doctorImage),
+                          image: CachedNetworkImageProvider(data!.doctorImage!),
                         ),
                       )),
                 ),

@@ -53,8 +53,8 @@ class _BookAppointmentState extends State<BookAppointment> {
         height: 199,
         child: Shimmer.fromColors(
           direction: ShimmerDirection.ltr,
-          baseColor: Colors.grey[200],
-          highlightColor: Colors.grey[100],
+          baseColor: Colors.grey[200]!,
+          highlightColor: Colors.grey[100]!,
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.grey[400],
@@ -122,8 +122,8 @@ class _BookAppointmentState extends State<BookAppointment> {
                   ),
                 ),
               ),
-              baseColor: Colors.grey[200],
-              highlightColor: Colors.grey[100])
+              baseColor: Colors.grey[200]!,
+              highlightColor: Colors.grey[100]!)
         ],
       );
 
@@ -183,7 +183,7 @@ class _BookAppointmentState extends State<BookAppointment> {
 
 class BookAppointmentHeader extends StatelessWidget {
   const BookAppointmentHeader({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

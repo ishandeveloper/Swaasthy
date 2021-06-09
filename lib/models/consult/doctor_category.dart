@@ -5,7 +5,7 @@ class DoctorCategory {
   final String title;
 
   DoctorCategory({
-    @required this.icon,
-    @required this.title,
+    required this.icon,
+    required this.title,
   });
 }

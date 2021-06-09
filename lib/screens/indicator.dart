@@ -5,12 +5,12 @@ import 'package:codered/models/user.dart' as usr;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-usr.User user;
+late usr.User user;
 
 class Indicator extends StatefulWidget {
-  final User authUser;
+  final User? authUser;
 
-  const Indicator({Key key, this.authUser}) : super(key: key);
+  const Indicator({Key? key, this.authUser}) : super(key: key);
   @override
   _IndicatorState createState() => _IndicatorState();
 }
@@ -28,24 +28,24 @@ class _IndicatorState extends State<Indicator> {
           FirebaseFirestore.instance.collection('users');
 
       final DocumentSnapshot value =
-          await collectionReference.doc(widget.authUser.uid).get();
+          await collectionReference.doc(widget.authUser!.uid).get();
       if (value.exists) {
-        user = usr.User.fromJson(value.data());
+        user = usr.User.fromJson(value.data() as Map<String, dynamic>);
         // setState(() {});
-        SchedulerBinding.instance.addPostFrameCallback((e) {
+        SchedulerBinding.instance!.addPostFrameCallback((e) {
           Navigator.pushNamedAndRemoveUntil(
               context, CodeRedRoutes.home, (route) => false);
         });
       } else {
         user = usr.User(
-            points: 0, email: widget.authUser.email, uid: widget.authUser.uid);
+            points: 0, email: widget.authUser!.email, uid: widget.authUser!.uid);
         // setState(() {});
         // await collectionReference
         //     .doc(widget.authUser.uid)
         //     .set(user.toJson())
         //     .then((value) => Navigator.pushNamedAndRemoveUntil(
         //         context, CodeRedRoutes.signup, (route) => false));
-        SchedulerBinding.instance.addPostFrameCallback((e) {
+        SchedulerBinding.instance!.addPostFrameCallback((e) {
           Navigator.pushNamedAndRemoveUntil(
               context, CodeRedRoutes.signup, (route) => false);
         });

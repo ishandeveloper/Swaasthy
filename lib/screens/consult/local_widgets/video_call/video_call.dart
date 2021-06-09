@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AppointmentCall extends StatefulWidget {
-  final String appointmentID;
+  final String? appointmentID;
 
   final ClientRole role;
 
-  AppointmentCall({@required this.appointmentID, @required this.role});
+  AppointmentCall({required this.appointmentID, required this.role});
 
   @override
   _AppointmentCallState createState() => _AppointmentCallState();
@@ -26,8 +26,8 @@ class _AppointmentCallState extends State<AppointmentCall> {
   final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
-  RtcEngine _engine;
-  String _token = "";
+  late RtcEngine _engine;
+  String? _token = "";
   // Dispose
   @override
   void dispose() {
@@ -63,7 +63,7 @@ class _AppointmentCallState extends State<AppointmentCall> {
     configuration.dimensions = VideoDimensions(1920, 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
     await generateNewToken();
-    await _engine.joinChannel(_token, widget.appointmentID, null, 0);
+    await _engine.joinChannel(_token, widget.appointmentID!, null, 0);
   }
 
   Future<void> generateNewToken() async {

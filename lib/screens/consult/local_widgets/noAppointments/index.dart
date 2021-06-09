@@ -2,9 +2,9 @@ import 'package:codered/utils/index.dart';
 import 'package:flutter/material.dart';
 
 class NoAppointments extends StatelessWidget {
-  final int userType;
+  final int? userType;
 
-  NoAppointments({@required this.userType});
+  NoAppointments({required this.userType});
 
   @override
   Widget build(BuildContext context) {

@@ -8,9 +8,9 @@ class AgePage extends StatefulWidget {
 }
 
 class _AgePageState extends State<AgePage> {
-  TextEditingController ageController;
+  TextEditingController? ageController;
   bool active = false;
-  String error;
+  String? error;
 
   @override
   void initState() {
@@ -20,8 +20,8 @@ class _AgePageState extends State<AgePage> {
 
     Provider.of<UserService>(context, listen: false).updateStatus(false);
 
-    ageController.addListener(() {
-      if (ageController.text.length > 0) {
+    ageController!.addListener(() {
+      if (ageController!.text.length > 0) {
         Provider.of<UserService>(context, listen: false).updateStatus(true);
       } else {
         Provider.of<UserService>(context, listen: false).updateStatus(false);
@@ -45,7 +45,7 @@ class _AgePageState extends State<AgePage> {
               margin: const EdgeInsets.only(top: 30),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: Colors.grey[300])),
+                  border: Border.all(color: Colors.grey[300]!)),
               child: TextField(
                 controller: ageController,
                 style: TextStyle(

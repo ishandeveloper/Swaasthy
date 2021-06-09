@@ -15,7 +15,7 @@ import 'package:http/http.dart' as http;
 import 'local_widgets/index.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

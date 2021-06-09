@@ -25,17 +25,17 @@ class EmergencyScreen extends StatefulWidget {
 class _EmergencyScreenState extends State<EmergencyScreen> {
   Completer<GoogleMapController> _mapsController = Completer();
 
-  GoogleMapController _activeMapsController;
+  late GoogleMapController _activeMapsController;
 
-  CameraPosition _mapPosition;
+  CameraPosition? _mapPosition;
 
-  Position _userGeoPosition;
+  late Position _userGeoPosition;
 
-  BitmapDescriptor myLocationPin;
+  late BitmapDescriptor myLocationPin;
 
-  BitmapDescriptor ambulancePin;
+  late BitmapDescriptor ambulancePin;
 
-  List<Ambulance> _ambulancesList;
+  List<Ambulance>? _ambulancesList;
 
   void locateUserPosition() async {
     Position _position = await Geolocator.getCurrentPosition(
@@ -47,12 +47,12 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
 
     _mapPosition = CameraPosition(target: _latLongPosition, zoom: 14.4746);
     _activeMapsController
-        .animateCamera(CameraUpdate.newCameraPosition(_mapPosition));
+        .animateCamera(CameraUpdate.newCameraPosition(_mapPosition!));
 
     Marker marker = Marker(
       markerId: MarkerId('user_location'),
       draggable: true,
-      position: _mapPosition
+      position: _mapPosition!
           .target, //With this parameter you automatically obtain latitude and longitude
       infoWindow: InfoWindow(
         title: "Current Location",
@@ -80,7 +80,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       Marker marker = Marker(
         markerId: MarkerId(i.toString()),
         draggable: true,
-        position: _temp[i].coordinates,
+        position: _temp[i].coordinates!,
         icon: ambulancePin,
       );
 
@@ -155,7 +155,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
               EmergencyConfirmationSheet(
                   onConfirm: () {},
                   ambulance:
-                      _ambulancesList != null ? _ambulancesList[0] : null),
+                      _ambulancesList != null ? _ambulancesList![0] : null),
             ],
           ),
         ),

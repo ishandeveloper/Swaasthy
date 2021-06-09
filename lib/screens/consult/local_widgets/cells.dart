@@ -8,9 +8,9 @@ class HDCell extends StatelessWidget {
   final Function onTap;
 
   const HDCell({
-    Key key,
-    @required this.doctor,
-    @required this.onTap,
+    Key? key,
+    required this.doctor,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -43,7 +43,7 @@ class HDCell extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    doctor.name,
+                    doctor.name!,
                     style: TextStyle(
                       fontFamily: 'ProductSans',
                       color: Colors.white,
@@ -55,7 +55,7 @@ class HDCell extends StatelessWidget {
                     height: 16,
                   ),
                   Text(
-                    doctor.type + ' Specialist',
+                    doctor.type! + ' Specialist',
                     style: TextStyle(
                       fontFamily: 'ProductSans',
                       color: Colors.white,
@@ -93,7 +93,7 @@ class HDCell extends StatelessWidget {
                   tag: doctor.uid,
                   child: Image(
                     filterQuality: FilterQuality.high,
-                    image: CachedNetworkImageProvider(doctor.image),
+                    image: CachedNetworkImageProvider(doctor.image!),
                   ),
                 ),
               ),
@@ -191,8 +191,8 @@ class TopRatedDoctorCell extends StatelessWidget {
   final Doctor doctor;
 
   const TopRatedDoctorCell({
-    Key key,
-    @required this.doctor,
+    Key? key,
+    required this.doctor,
   }) : super(key: key);
 
   /// **********************************************
@@ -236,7 +236,7 @@ class TopRatedDoctorCell extends StatelessWidget {
           color: CodeRedColors.primary2,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: CachedNetworkImageProvider(doctor.image),
+            image: CachedNetworkImageProvider(doctor.image!),
           ),
         ),
       ),
@@ -272,7 +272,7 @@ class TopRatedDoctorCell extends StatelessWidget {
           height: 10,
         ),
         Text(
-          doctor.name,
+          doctor.name!,
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,
@@ -283,7 +283,7 @@ class TopRatedDoctorCell extends StatelessWidget {
           height: 10,
         ),
         Text(
-          doctor.type + ' Specialist',
+          doctor.type! + ' Specialist',
           style: TextStyle(
             color: Color(0xFF929BB0),
             fontSize: 14,
@@ -300,9 +300,9 @@ class DetailCell extends StatelessWidget {
   final String subTitle;
 
   const DetailCell({
-    Key key,
-    @required this.title,
-    @required this.subTitle,
+    Key? key,
+    required this.title,
+    required this.subTitle,
   }) : super(key: key);
 
   /// **********************************************

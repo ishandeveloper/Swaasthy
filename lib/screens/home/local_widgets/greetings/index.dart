@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class HomeGreetings extends StatelessWidget {
   const HomeGreetings({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class HomeGreetings extends StatelessWidget {
                   color: CodeRedColors.secondaryText,
                   fontSize: 24)),
           SizedBox(height: 5),
-          Text(user.username,
+          Text(user.username!,
               style: TextStyle(
                   color: CodeRedColors.primary,
                   fontSize: 34,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -16,15 +17,15 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  ClusterManager _manager;
+  late ClusterManager _manager;
 
   Completer<GoogleMapController> _controller = Completer();
 
-  GoogleMapController _activeMapsController;
+  late GoogleMapController _activeMapsController;
 
   Set<Marker> markers = Set();
 
-  CameraPosition _mapPosition;
+  CameraPosition? _mapPosition;
 
   List<ClusterItem<Place>> items = [
     for (int i = 0; i < 10; i++)
@@ -59,7 +60,7 @@ class MapSampleState extends State<MapSample> {
 
     _mapPosition = CameraPosition(target: _latLongPosition, zoom: 14.4746);
     _activeMapsController
-        .animateCamera(CameraUpdate.newCameraPosition(_mapPosition));
+        .animateCamera(CameraUpdate.newCameraPosition(_mapPosition!));
 
     // Marker marker = Marker(
     //   markerId: MarkerId('user_location'),
@@ -138,7 +139,7 @@ class MapSampleState extends State<MapSample> {
         );
       };
 
-  Future<BitmapDescriptor> _getMarkerBitmap(int size, {String text}) async {
+  Future<BitmapDescriptor> _getMarkerBitmap(int size, {String? text}) async {
     if (kIsWeb) size = (size / 2).floor();
 
     final PictureRecorder pictureRecorder = PictureRecorder();
@@ -167,7 +168,8 @@ class MapSampleState extends State<MapSample> {
     }
 
     final img = await pictureRecorder.endRecording().toImage(size, size);
-    final data = await img.toByteData(format: ImageByteFormat.png);
+    final data =
+        await (img.toByteData(format: ImageByteFormat.png) as Future<ByteData>);
 
     return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
   }

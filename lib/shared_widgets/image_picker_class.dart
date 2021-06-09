@@ -8,19 +8,19 @@ class ImagePickerClass extends StatefulWidget {
     this.imagePickFn,
   );
 
-  final void Function(File pickedImage) imagePickFn;
+  final void Function(File? pickedImage) imagePickFn;
 
   @override
   _ImagePickerClassState createState() => _ImagePickerClassState();
 }
 
 class _ImagePickerClassState extends State<ImagePickerClass> {
-  File _image;
+  File? _image;
   Future getImagefromCamera() async {
     var image = ImagePicker();
     await image
         .getImage(source: ImageSource.camera)
-        .then((value) => _image = File(value.path));
+        .then((value) => _image = File(value!.path));
     setState(() {
       widget.imagePickFn(_image);
     });
@@ -30,7 +30,7 @@ class _ImagePickerClassState extends State<ImagePickerClass> {
     var image = ImagePicker();
     await image
         .getImage(source: ImageSource.gallery)
-        .then((value) => _image = File(value.path));
+        .then((value) => _image = File(value!.path));
     setState(() {
       widget.imagePickFn(_image);
     });
@@ -51,7 +51,7 @@ class _ImagePickerClassState extends State<ImagePickerClass> {
             child: Center(
               child: _image == null
                   ? Text("No Image is picked")
-                  : Image.file(_image),
+                  : Image.file(_image!),
             ),
           ),
         ),

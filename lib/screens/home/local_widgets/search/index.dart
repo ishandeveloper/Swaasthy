@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class HomeSearch extends StatelessWidget {
   const HomeSearch({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

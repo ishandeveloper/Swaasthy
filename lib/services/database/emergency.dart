@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/emergency/ambulance.dart';
 
 class EmergencyHelper {
-  static Future<List<Ambulance>> getAmbulance({String city}) async {
+  static Future<List<Ambulance>> getAmbulance({String? city}) async {
     if (city != null)
       return await FirebaseFirestore.instance
           .collection('ambulances')

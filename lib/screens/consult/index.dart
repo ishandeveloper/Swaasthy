@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/models/consult/appointment.dart';
 import 'package:codered/screens/index.dart';
 import 'package:codered/services/database/consult.dart';
@@ -10,9 +11,9 @@ import '../indicator.dart';
 import 'local_widgets/index.dart';
 
 class ConsultDoctor extends StatefulWidget {
-  final int userType;
+  final int? userType;
 
-  ConsultDoctor({@required this.userType});
+  ConsultDoctor({required this.userType});
 
   @override
   _ConsultDoctorState createState() => _ConsultDoctorState();
@@ -27,24 +28,26 @@ class _ConsultDoctorState extends State<ConsultDoctor> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: StreamBuilder(
+          child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             stream: ConsultHelper.getAppointmentsSnapshot(
                 userType: widget.userType, userID: user.uid
                 // userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2",
                 // userID: "fm4kdMY8alSg7byooUH9OkO2Wik2"
                 ),
-            builder: (context, snapshot) {
+            builder: (_,
+                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
+                    snapshot) {
               if (!snapshot.hasData)
                 return ShimmeringConsultPage(userType: widget.userType);
 
-              if (!snapshot.data.exists)
+              if (!snapshot.data!.exists)
                 return NoAppointments(
                   userType: widget.userType,
                 );
 
               return AppointmentsList(
                   userType: widget.userType,
-                  appointment: Appointment.getModel(snapshot.data));
+                  appointment: Appointment.getModel(snapshot.data!));
             },
           ),
         ));
@@ -53,9 +56,9 @@ class _ConsultDoctorState extends State<ConsultDoctor> {
 
 class AppointmentsList extends StatelessWidget {
   final Appointment appointment;
-  final int userType;
+  final int? userType;
 
-  AppointmentsList({@required this.appointment, @required this.userType});
+  AppointmentsList({required this.appointment, required this.userType});
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +73,9 @@ class AppointmentsList extends StatelessWidget {
               child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: appointment.appointments.length,
+                  itemCount: appointment.appointments!.length,
                   itemBuilder: (_, index) => AppointmentCard(
-                      data: appointment.appointments[index],
+                      data: appointment.appointments![index],
                       userType: this.userType)),
             ),
           )),
@@ -83,11 +86,11 @@ class AppointmentsList extends StatelessWidget {
 }
 
 class AppointmentCard extends StatelessWidget {
-  final AppointmentItem data;
+  final AppointmentItem? data;
 
-  final int userType;
+  final int? userType;
 
-  AppointmentCard({this.data, @required this.userType});
+  AppointmentCard({this.data, required this.userType});
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +100,7 @@ class AppointmentCard extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey[300],
+              color: Colors.grey[300]!,
               blurRadius: 4,
               offset: Offset(0, 0),
             )
@@ -122,7 +125,7 @@ class AppointmentCard extends StatelessWidget {
                     children: [
                       Icon(Icons.access_time, color: Colors.white, size: 32),
                       SizedBox(width: 8),
-                      Text(dateTimeFormatter(data.timestamp.toDate()),
+                      Text(dateTimeFormatter(data!.timestamp!.toDate()),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -145,11 +148,12 @@ class AppointmentCard extends StatelessWidget {
                     padding:
                         EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
                     child: Hero(
-                      tag: data.doctorID,
+                      tag: data!.doctorID!,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(50),
                           child: Image(
-                            image: CachedNetworkImageProvider(data.doctorImage),
+                            image:
+                                CachedNetworkImageProvider(data!.doctorImage!),
                           )),
                     ),
                   ),
@@ -161,8 +165,8 @@ class AppointmentCard extends StatelessWidget {
                       children: [
                         Text(
                             userType == 2
-                                ? '${data.doctorName}'
-                                : 'Dr. ${data.doctorName}',
+                                ? '${data!.doctorName}'
+                                : 'Dr. ${data!.doctorName}',
                             style: TextStyle(fontSize: 22)),
                         MaterialButton(
                           color: Colors.grey[200],
@@ -192,9 +196,9 @@ class AppointmentCard extends StatelessWidget {
 }
 
 class ShimmeringConsultPage extends StatelessWidget {
-  final int userType;
+  final int? userType;
 
-  ShimmeringConsultPage({@required this.userType});
+  ShimmeringConsultPage({required this.userType});
 
   @override
   Widget build(BuildContext context) {
@@ -223,8 +227,8 @@ class ShimmeringConsultPage extends StatelessWidget {
                   ),
                 ),
               ),
-              baseColor: Colors.grey[200],
-              highlightColor: Colors.grey[100]),
+              baseColor: Colors.grey[200]!,
+              highlightColor: Colors.grey[100]!),
         )
       ],
     ));
@@ -233,9 +237,9 @@ class ShimmeringConsultPage extends StatelessWidget {
 
 class ConsultHeader extends StatelessWidget {
   final bool action;
-  final int userType;
+  final int? userType;
 
-  const ConsultHeader({Key key, this.action = false, @required this.userType})
+  const ConsultHeader({Key? key, this.action = false, required this.userType})
       : super(key: key);
 
   @override

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 
 class TransitionWrapper extends StatefulWidget {
   final Widget child;
-  final bool ltr;
+  final bool? ltr;
   TransitionWrapper({
-    @required this.child,
-    @required this.ltr,
+    required this.child,
+    required this.ltr,
   });
 
   @override
@@ -19,9 +19,9 @@ class TransitionWrapper extends StatefulWidget {
 
 class _TransitionWrapperState extends State<TransitionWrapper>
     with TickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> transformAnimation;
-  Animation<double> opacityAnimation;
+  late AnimationController controller;
+  late Animation<double> transformAnimation;
+  late Animation<double> opacityAnimation;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _TransitionWrapperState extends State<TransitionWrapper>
         AnimationController(duration: Duration(milliseconds: 250), vsync: this)
           ..addListener(() => setState(() {}));
 
-    if (!widget.ltr) {
+    if (!widget.ltr!) {
       transformAnimation = Tween(begin: 25.0, end: 0.0).animate(controller);
     } else {
       transformAnimation = Tween(begin: -25.0, end: 0.0).animate(controller);

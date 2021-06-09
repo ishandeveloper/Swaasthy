@@ -3,10 +3,10 @@ import 'package:codered/services/apimedic_service.dart';
 import 'package:codered/utils/constants/symptoms.dart';
 import 'package:flutter/material.dart';
 
-class SearchBarDelegateService extends SearchDelegate<Symptoms> {
-  List<Symptoms> recentSuggest;
-  List<Symptoms> symptomsList;
-  List<int> symptomsId = [];
+class SearchBarDelegateService extends SearchDelegate<Symptoms?> {
+  late List<Symptoms> recentSuggest;
+  late List<Symptoms> symptomsList;
+  List<int?> symptomsId = [];
   SearchBarDelegateService() {
     symptomsList = symptoms;
     recentSuggest = [
@@ -50,13 +50,13 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
         ? recentSuggest
         : symptomsList
             .where((input) =>
-                input.Name.toUpperCase().startsWith(query.toUpperCase()))
+                input.Name!.toUpperCase().startsWith(query.toUpperCase()))
             .toList();
     return ListView.builder(
         itemCount: suggestionList.length,
         itemBuilder: (context, index) => ListTile(
               onTap: () async {
-                query = suggestionList[index].Name;
+                query = suggestionList[index].Name!;
                 symptomsId.add(suggestionList[index].ID);
                 showResults(context);
                 recentSuggest.insert(0, suggestionList[index]);
@@ -64,13 +64,13 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
               title: RichText(
                   text: TextSpan(
                       text:
-                          suggestionList[index].Name.substring(0, query.length),
+                          suggestionList[index].Name!.substring(0, query.length),
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                       children: [
                     TextSpan(
                         text:
-                            suggestionList[index].Name.substring(query.length),
+                            suggestionList[index].Name!.substring(query.length),
                         style: TextStyle(color: Colors.grey))
                   ])),
             ));

@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Ambulance {
-  final String city;
-  final String assignID;
-  final LatLng coordinates;
-  final bool isAvailable;
-  final String vehicleNumber;
+  final String? city;
+  final String? assignID;
+  final LatLng? coordinates;
+  final bool? isAvailable;
+  final String? vehicleNumber;
 
   Ambulance({
     this.assignID,

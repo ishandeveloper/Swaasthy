@@ -10,7 +10,7 @@ class AccountType extends StatefulWidget {
 }
 
 class _AccountTypeState extends State<AccountType> {
-  int accountType;
+  int? accountType;
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class _AccountTypeState extends State<AccountType> {
                 value: value,
                 groupValue: accountType,
                 activeColor: CodeRedColors.primary,
-                onChanged: (val) {
+                onChanged: (dynamic val) {
                   setState(() {
                     accountType = val;
                     Provider.of<UserService>(context, listen: false)

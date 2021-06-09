@@ -8,12 +8,12 @@ import 'package:photo_view/photo_view_gallery.dart';
 
 class ImageGalleryView extends StatefulWidget {
   // Accepts a list of image urls
-  final List<String> images;
+  final List<String?> images;
 
   // Accepts the current index of the image
   final int currentIndex;
 
-  ImageGalleryView({@required this.images, this.currentIndex = 0});
+  ImageGalleryView({required this.images, this.currentIndex = 0});
 
   @override
   _ImageGalleryViewState createState() => _ImageGalleryViewState();
@@ -21,7 +21,7 @@ class ImageGalleryView extends StatefulWidget {
 
 class _ImageGalleryViewState extends State<ImageGalleryView> {
   // Tracks the current index of the focused gallery image
-  int _current;
+  int? _current;
 
   @override
   void initState() {
@@ -109,7 +109,7 @@ class _ImageGalleryViewState extends State<ImageGalleryView> {
   PhotoViewGalleryPageOptions buildGalleryImage(
       BuildContext context, int index) {
     return PhotoViewGalleryPageOptions(
-      imageProvider: CachedNetworkImageProvider(widget.images[index]),
+      imageProvider: CachedNetworkImageProvider(widget.images[index]!),
       initialScale: PhotoViewComputedScale.contained,
       minScale: PhotoViewComputedScale.contained,
       maxScale: PhotoViewComputedScale.covered * 3,
@@ -119,7 +119,7 @@ class _ImageGalleryViewState extends State<ImageGalleryView> {
 
 class GalleryBackButton extends StatelessWidget {
   const GalleryBackButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

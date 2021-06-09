@@ -8,7 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class DiagnosisReport extends StatefulWidget {
-  final List<int> symptoms;
+  final List<int?>? symptoms;
   DiagnosisReport({this.symptoms});
   @override
   _DiagnosisReportState createState() => _DiagnosisReportState();
@@ -28,7 +28,7 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: ApiMedicService().getInfo(widget.symptoms),
-        builder: (context, snapshot) {
+        builder: (context, AsyncSnapshot<DiagnosisResult> snapshot) {
           //TODO: Check here
           print(snapshot.data);
           if (snapshot.hasData)
@@ -63,12 +63,12 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                             boxShadow: [
                               BoxShadow(
                                   offset: Offset(0, -3),
-                                  color: Colors.grey[300],
+                                  color: Colors.grey[300]!,
                                   blurRadius: 5)
                             ]),
                         child: PageView(
                           controller: pageController,
-                          children: snapshot.data.diagnosisResult
+                          children: snapshot.data!.diagnosisResult!
                               .sublist(0, 1)
                               .map((e) => pageView(e))
                               .toList(),
@@ -79,7 +79,6 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                           onPageChanged: (value) {
                             currentIndex = value;
                             setState(() {});
-                            return currentIndex;
                           },
                         ),
                       ),
