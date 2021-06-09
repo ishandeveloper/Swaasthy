@@ -31,8 +31,7 @@ dependencies:
   file_picker: ^3.0.0
   firebase_auth: ^1.0.1
   firebase_core: ^1.0.1
-  firebase_messaging: ^9.0.1
-  firebase_ml_vision: ^0.11.0
+  firebase_messaging: ^10.0.1
   firebase_storage: ^8.0.0
   flutter_datetime_picker: ^1.5.0
   flutter_linkify: ^5.0.0
@@ -43,6 +42,7 @@ dependencies:
   geolocator: ^7.0.1
   google_maps_cluster_manager: ^1.0.0
   google_maps_flutter: ^2.0.1
+  google_ml_kit: ^0.6.0
   google_sign_in: ^4.5.9
   http: ^0.13.1
   image_picker: ^0.7.4

@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codered/screens/indicator.dart';
 import 'package:codered/services/database/storage.dart';
 import 'package:codered/services/user_services.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:provider/provider.dart';
 
 import '../shared_widgets/image_picker_class.dart';
@@ -30,11 +30,12 @@ class _TextRecognitionState extends State<TextRecognition> {
   }
 
   textRecognition() async {
-    FirebaseVisionImage myImage = FirebaseVisionImage.fromFile(_image);
-    TextRecognizer recognizeText = FirebaseVision.instance.textRecognizer();
-    VisionText readText = await recognizeText.processImage(myImage);
+    final textDetector = GoogleMlKit.vision.textDetector();
+    final RecognisedText recognisedText =
+        await textDetector.processImage(InputImage.fromFile(_image));
+
     result = "";
-    for (TextBlock block in readText.blocks) {
+    for (TextBlock block in recognisedText.blocks) {
       for (TextLine line in block.lines) {
         setState(() {
           result = result + ' ' + line.text + '\n';
@@ -62,7 +63,7 @@ class _TextRecognitionState extends State<TextRecognition> {
         'user_id': user.uid,
         'is_verified': false
       });
-    recognizeText.close();
+    textDetector.close();
   }
 
   /// Shows different screens based on the state of the custom model.
