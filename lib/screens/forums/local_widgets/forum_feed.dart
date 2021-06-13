@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/services/database/forums.dart';
-import 'package:codered/utils/index.dart';
+import '../../../services/database/forums.dart';
+import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'index.dart';
 
 class ForumsFeed extends StatefulWidget {
-  ForumsFeed({bool refresh = false});
+  const ForumsFeed({bool refresh = false, Key key}) : super(key: key);
 
   @override
   _ForumsFeedState createState() => _ForumsFeedState();
@@ -41,8 +41,8 @@ class _ForumsFeedState extends State<ForumsFeed> {
            It'll automatically cancel request for pre-existing posts and only fetch the ones
            that are not being displayed currently
   */
-  requestFeedItems(int _count, {bool refresh = false}) async {
-    print("43");
+  Future<void> requestFeedItems(int _count, {bool refresh = false}) async {
+    print('43');
     if (refresh) {
       // Delete all the existing data for comments and likes, when refreshed
 
@@ -68,7 +68,7 @@ class _ForumsFeedState extends State<ForumsFeed> {
           : 1; //For fetch request a minimum of 1 snapshot must be there
 
     // This will get & temporary store a limited number of snapshots
-    QuerySnapshot _ = await ForumsHelper.getLimitedSnapshots(_count,
+    final _ = await ForumsHelper.getLimitedSnapshots(_count,
         lastDocument: _lastDocument);
 
     if (_.docs.length < 3) _moreItemsAvailable = false;
@@ -87,7 +87,7 @@ class _ForumsFeedState extends State<ForumsFeed> {
     else if (_data != null &&
         _.docs.length > 0 &&
         _.docs.last != _lastDocument) {
-      print("87");
+      print('87');
       setState(() {
         _lastDocument = _.docs.last;
         _data = [..._data, ..._.docs];
@@ -103,11 +103,11 @@ class _ForumsFeedState extends State<ForumsFeed> {
   This function listens to the updates of user's scroll position and
   determines how many items should be displayed
   */
-  _scrollListener() {
-    double maxScroll = _scrollController.position.maxScrollExtent;
-    double currentScroll = _scrollController.position.pixels;
+  void _scrollListener() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
     // double delta = getContextHeight(context) * 0.25;
-    double delta = 1000;
+    const delta = 1000;
 
     // If no more items are available then do not fetch more
     if (maxScroll - currentScroll <= delta && _moreItemsAvailable)
@@ -119,15 +119,14 @@ class _ForumsFeedState extends State<ForumsFeed> {
   scrolls the feed listview to the desired height
 */
   void scrollToComment(double _) {
-    double _height =
-        getContextHeight(context) - getKeyboardHeight(context) - 400;
+    var _height = getContextHeight(context) - getKeyboardHeight(context) - 400;
 
     _height = _ + _scrollController.offset - _height;
 
     // To ensure this does not trigger a pull to refresh on iOS
     if (_height > 0)
       _scrollController.animateTo(_height,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
 
   @override
@@ -157,12 +156,12 @@ class _ForumsFeedState extends State<ForumsFeed> {
     requestFeedItems(feedItemsToDisplay);
   }
 
-  requestInteractionSnapshots(
+  Future<dynamic> requestInteractionSnapshots(
       AsyncSnapshot snapshot, BuildContext context) async {
-    int _items = snapshot.data.length;
+    final int _items = snapshot.data.length;
 
-    for (int i = 0; i < _items; i++) {
-      await ForumsHelper.getInteractions(
+    for (var i = 0; i < _items; i++) {
+      ForumsHelper.getInteractions(
           snapshot.data[i].id,
           i,
           snapshot.data[i].data()['upvotes_count'],
@@ -199,26 +198,27 @@ class _ForumsFeedState extends State<ForumsFeed> {
               onRefresh: () => requestFeedItems(5, refresh: true),
               child: SingleChildScrollView(
                 controller: _scrollController,
-                key: PageStorageKey('FORUMS'),
+                key: const PageStorageKey('FORUMS'),
                 child: Column(
                   children: [
-                    SizedBox(height: 24),
-                    ForumsTitle(),
+                    const SizedBox(height: 24),
+                    const ForumsTitle(),
                     // If no data is found in Firestore or is still loading
                     if (!snapshot.hasData)
-                      ShimmeringList()
+                      const ShimmeringList()
                     else
                       FutureBuilder(
                           future:
                               requestInteractionSnapshots(snapshot, context),
                           builder: (_, intSnapshot) {
-                            if (!intSnapshot.hasData) return ShimmeringList();
+                            if (!intSnapshot.hasData)
+                              return const ShimmeringList();
 
                             return ForumFeedView(
                                 onScroll: scrollToComment, snapshot: snapshot);
                           }),
 
-                    Padding(padding: const EdgeInsets.only(bottom: 20))
+                    const Padding(padding: EdgeInsets.only(bottom: 20))
                   ],
                 ),
               ));
@@ -236,11 +236,11 @@ class ForumsTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 16, right: 16, bottom: 32),
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 32),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             'Forums',
             style: TextStyle(
               fontSize: 28,
@@ -252,7 +252,7 @@ class ForumsTitle extends StatelessWidget {
             mini: true,
             onPressed: () => Navigator.pushNamed(context, '/newpost'),
             backgroundColor: CodeRedColors.primary,
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           )
         ],
       ),
@@ -278,7 +278,7 @@ class ShimmeringList extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (_, index) {
                   return Container(
-                    margin: EdgeInsets.symmetric(vertical: 15),
+                    margin: const EdgeInsets.symmetric(vertical: 15),
                     child: Column(
                       children: [
                         Row(
@@ -299,13 +299,13 @@ class ShimmeringList extends StatelessWidget {
                                   height: 10,
                                   color: Colors.grey[400],
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Container(
                                   width: getContextWidth(context) - 100,
                                   height: 10,
                                   color: Colors.grey[400],
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Container(
                                   width: getContextWidth(context) - 100,
                                   height: 10,
@@ -315,7 +315,7 @@ class ShimmeringList extends StatelessWidget {
                             )
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Container(
                           height: 300,
                           width: getContextWidth(context) - 32,

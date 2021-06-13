@@ -4,19 +4,19 @@
 */
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/index.dart';
+import '../models/index.dart';
 import 'package:flutter/material.dart';
 
 class RepliesService with ChangeNotifier {
   // int _max = 0;
   // List<List<ReplyModel>> _comments = [];
-  Map<int, List<ReplyModel>> _comments = {};
-  Map<int, int> _commentsCount = {};
-  Map<int, DocumentSnapshot> _lastDocument = {};
+  final Map<int, List<ReplyModel>> _comments = {};
+  final Map<int, int> _commentsCount = {};
+  final Map<int, DocumentSnapshot> _lastDocument = {};
 
   void addCommentList(comments, int index) {
     var _tempComments = [];
-    for (var comment in comments) {
+    for (final comment in comments) {
       _tempComments.add(ReplyModel.getModel(comment.data(), comment.id));
     }
     _tempComments = List<ReplyModel>.from(_tempComments);
@@ -37,7 +37,7 @@ class RepliesService with ChangeNotifier {
   }
 
   void updateComment({@required int index, @required ReplyModel comment}) {
-    print("UPDATE COMMENT CALLED");
+    print('UPDATE COMMENT CALLED');
 
     if (_comments[index] != null) {
       _comments[index].insert(0, comment);
@@ -55,11 +55,11 @@ class RepliesService with ChangeNotifier {
     @required String text,
     @required String commentID,
   }) {
-    int _index = _comments[index].indexWhere((e) => e.docID == commentID);
+    final _index = _comments[index].indexWhere((e) => e.docID == commentID);
 
-    ReplyModel _tempModel = _comments[index][_index];
+    final _tempModel = _comments[index][_index];
 
-    ReplyModel _newModel = ReplyModel.getModel({
+    final _newModel = ReplyModel.getModel({
       'body': text,
       'user': {
         'user_name': _tempModel.user.username,
@@ -83,8 +83,8 @@ class RepliesService with ChangeNotifier {
   }
 
   void updateCommentsList({@required int index, @required comments}) {
-    List<ReplyModel> _tempComments = [];
-    for (var comment in comments) {
+    final _tempComments = <ReplyModel>[];
+    for (final comment in comments) {
       _tempComments.add(ReplyModel.getModel(comment.data(), comment.id));
     }
     _comments[index].insertAll(
@@ -100,7 +100,7 @@ class RepliesService with ChangeNotifier {
   }
 
   void addCommentsCount(int index) {
-    print("UPDATE COMMENT COUNT CALLED");
+    print('UPDATE COMMENT COUNT CALLED');
 
     _commentsCount[index] = _commentsCount[index] + 1;
     notifyListeners();

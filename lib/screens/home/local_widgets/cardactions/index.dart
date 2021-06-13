@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:codered/models/index.dart';
-import 'package:codered/services/index.dart';
-import 'package:codered/utils/index.dart';
+import '../../../../models/index.dart';
+import '../../../../services/index.dart';
+import '../../../../utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,15 +17,14 @@ class HomeCardActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreensWrapperService _service =
-        Provider.of<ScreensWrapperService>(context, listen: false);
+    final _service = Provider.of<ScreensWrapperService>(context, listen: false);
 
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            HalfWidthHomeCard(
+            const HalfWidthHomeCard(
                 background: CodeRedColors.medicineCard,
                 header: 'Reminder',
                 subText: 'Medicine',
@@ -40,7 +39,7 @@ class HomeCardActions extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         FullWidthHomeCard(
           subText: 'Consult a',
           header: 'Doctor',
@@ -48,24 +47,25 @@ class HomeCardActions extends StatelessWidget {
           imagePath: 'assets/images/doctor.png',
           background: Colors.white,
         ),
-        MapWidget()
+        const MapWidget()
       ],
     );
   }
 }
 
 class MapWidget extends StatefulWidget {
+  const MapWidget({Key key}) : super(key: key);
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
 
 class _MapWidgetState extends State<MapWidget> {
-  static final CameraPosition _initialMapPosition = CameraPosition(
+  static const CameraPosition _initialMapPosition = CameraPosition(
     target: LatLng(30.51571185, 76.65919461679499),
     zoom: 14.4746,
   );
 
-  Completer<GoogleMapController> _mapsController = Completer();
+  final Completer<GoogleMapController> _mapsController = Completer();
 
   GoogleMapController _activeMapsController;
 
@@ -80,42 +80,42 @@ class _MapWidgetState extends State<MapWidget> {
   List<Ambulance> _ambulancesList;
 
   void locateUserPosition() async {
-    Position _position = await Geolocator.getCurrentPosition(
+    final _position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.lowest);
     _userGeoPosition = _position;
 
-    LatLng _latLongPosition =
+    final _latLongPosition =
         LatLng(_userGeoPosition.latitude, _userGeoPosition.longitude);
 
     _mapPosition = CameraPosition(target: _latLongPosition, zoom: 14.4746);
     _activeMapsController
         .animateCamera(CameraUpdate.newCameraPosition(_mapPosition));
 
-    Marker marker = Marker(
-      markerId: MarkerId('user_location'),
+    final marker = Marker(
+      markerId: const MarkerId('user_location'),
       draggable: true,
       position: _mapPosition
           .target, //With this parameter you automatically obtain latitude and longitude
-      infoWindow: InfoWindow(
-        title: "Current Location",
+      infoWindow: const InfoWindow(
+        title: 'Current Location',
       ),
       icon: myLocationPin,
     );
 
     setState(() {
       _mapPosition = _mapPosition;
-      markers[MarkerId('user_location')] = marker;
+      markers[const MarkerId('user_location')] = marker;
     });
   }
 
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   void getAmbulanceLocations() async {
-    List<Ambulance> _temp = await EmergencyHelper.getAmbulance();
+    final _temp = await EmergencyHelper.getAmbulance();
     setState(() => _ambulancesList = _temp);
 
-    for (int i = 0; i < _temp.length; i++) {
-      Marker marker = Marker(
+    for (var i = 0; i < _temp.length; i++) {
+      final marker = Marker(
         markerId: MarkerId(i.toString()),
         draggable: true,
         position: _temp[i].coordinates,
@@ -130,13 +130,15 @@ class _MapWidgetState extends State<MapWidget> {
   void initState() {
     super.initState();
 
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(64, 64)),
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(size: Size(64, 64)),
             'assets/icons/pin-2-128.png')
         .then((d) {
       myLocationPin = d;
     });
 
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(64, 64)),
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(size: Size(64, 64)),
             'assets/icons/ambulance-172.png')
         .then((d) {
       ambulancePin = d;
@@ -154,20 +156,21 @@ class _MapWidgetState extends State<MapWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             if (_ambulancesList == null)
-              Text("Looking for ambulances in your area..",
+              const Text('Looking for ambulances in your area..',
                   style: TextStyle(fontSize: 18)),
             if (_ambulancesList?.length == 1)
-              Text("1 ambulance in your area", style: TextStyle(fontSize: 18)),
-            if (_ambulancesList != null && _ambulancesList.length > 1)
-              Text("${_ambulancesList?.length} ambulances in your area",
+              const Text('1 ambulance in your area',
                   style: TextStyle(fontSize: 18)),
-            SizedBox(height: 4),
+            if (_ambulancesList != null && _ambulancesList.length > 1)
+              Text('${_ambulancesList?.length} ambulances in your area',
+                  style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 4),
             Container(
                 width: getContextWidth(context) * 1,
                 height: 150,
-                decoration: BoxDecoration(boxShadow: [
+                decoration: BoxDecoration(boxShadow: const [
                   BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       blurRadius: 6,
@@ -179,18 +182,18 @@ class _MapWidgetState extends State<MapWidget> {
                   zoomGesturesEnabled: true,
                   buildingsEnabled: false,
                   trafficEnabled: false,
-                  minMaxZoomPreference: MinMaxZoomPreference(12, 16),
+                  minMaxZoomPreference: const MinMaxZoomPreference(12, 16),
                   mapToolbarEnabled: false,
                   myLocationButtonEnabled: true,
                   initialCameraPosition: _initialMapPosition,
                   onCameraMove: (e) {
-                    Marker marker = Marker(
-                      markerId: MarkerId('user_location'),
+                    final marker = Marker(
+                      markerId: const MarkerId('user_location'),
                       draggable: true,
                       position: e
                           .target, //With this parameter you automatically obtain latitude and longitude
-                      infoWindow: InfoWindow(
-                        title: "Your Location",
+                      infoWindow: const InfoWindow(
+                        title: 'Your Location',
                         snippet: 'Drag or move to change',
                       ),
                       icon: myLocationPin,
@@ -198,7 +201,7 @@ class _MapWidgetState extends State<MapWidget> {
 
                     setState(() {
                       _mapPosition = e;
-                      markers[MarkerId('user_location')] = marker;
+                      markers[const MarkerId('user_location')] = marker;
                     });
                   },
                   markers: Set<Marker>.of(markers.values),
@@ -210,7 +213,7 @@ class _MapWidgetState extends State<MapWidget> {
 
                     getAmbulanceLocations();
                   },
-                  padding: EdgeInsets.only(bottom: 300),
+                  padding: const EdgeInsets.only(bottom: 300),
                 )),
           ],
         ),

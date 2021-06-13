@@ -1,8 +1,8 @@
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codered/models/consult/appointment.dart';
-import 'package:codered/utils/constants/colors.dart';
-import 'package:codered/utils/helpers/interactions.dart';
+import '../../models/consult/appointment.dart';
+import '../../utils/constants/colors.dart';
+import '../../utils/helpers/interactions.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -13,7 +13,9 @@ class AppointmentDetails extends StatelessWidget {
   final AppointmentItem data;
   final int userType;
 
-  AppointmentDetails({@required this.data, @required this.userType});
+  const AppointmentDetails(
+      {@required this.data, @required this.userType, Key key})
+      : super(key: key);
 
   void _initVideoCall(BuildContext context) async {
     // await for camera and mic permissions before pushing video page
@@ -34,7 +36,7 @@ class AppointmentDetails extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: Container(
         height: 72,
-        padding: EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -43,9 +45,10 @@ class AppointmentDetails extends StatelessWidget {
                 onPressed: () => _initVideoCall(context),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50)),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 color: CodeRedColors.primary2Accent,
-                child: Text('Join appointment',
+                child: const Text('Join appointment',
                     style: TextStyle(color: Colors.white, fontSize: 18)),
               ),
             )
@@ -57,7 +60,7 @@ class AppointmentDetails extends StatelessWidget {
         children: [
           AppointmentDetailsHeader(
               data: data, initVideoCall: _initVideoCall, userType: userType),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -69,9 +72,9 @@ class AppointmentDetails extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (userType == 2) SizedBox(height: 16),
+                          if (userType == 2) const SizedBox(height: 16),
                           if (userType != 2)
-                            Text('Dr.',
+                            const Text('Dr.',
                                 style: TextStyle(
                                     fontSize: 36, fontWeight: FontWeight.w500)),
                           Text(data.doctorName,
@@ -80,18 +83,18 @@ class AppointmentDetails extends StatelessWidget {
                                   fontWeight: FontWeight.w600)),
                         ]),
                   ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: Color(0xFFd4faff),
                             border: Border(
                                 left: BorderSide(
                                     color: Color(0xFF1ddef2), width: 2))),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
                         width: getContextWidth(context) * 0.7,
                         child: Wrap(
                           children: [
@@ -99,13 +102,13 @@ class AppointmentDetails extends StatelessWidget {
                               children: [
                                 Text(
                                     "Hello ${user.username?.split(" ")[0]?.toString()},",
-                                    style: TextStyle(fontSize: 17)),
+                                    style: const TextStyle(fontSize: 17)),
                               ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 8.0),
                               child: Text(
-                                  "I might need to take a look at your diabetic reports, during the appointment, please keep them handy if possible."),
+                                  'I might need to take a look at your diabetic reports, during the appointment, please keep them handy if possible.'),
                             )
                           ],
                         ),
@@ -145,8 +148,8 @@ class AppointmentDetailsHeader extends StatelessWidget {
         Column(
           children: [
             Container(
-              padding: EdgeInsets.only(top: 8, bottom: 72),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.only(top: 8, bottom: 72),
+              decoration: const BoxDecoration(
                   color: CodeRedColors.primary2,
                   borderRadius:
                       BorderRadius.only(bottomRight: Radius.circular(120))),
@@ -158,9 +161,9 @@ class AppointmentDetailsHeader extends StatelessWidget {
                       children: [
                         IconButton(
                             color: Colors.white,
-                            icon: Icon(Icons.arrow_back),
+                            icon: const Icon(Icons.arrow_back),
                             onPressed: () => Navigator.pop(context)),
-                        Text(
+                        const Text(
                           'Appointment Details',
                           style: TextStyle(
                               color: Color.fromRGBO(255, 255, 255, 0.9),
@@ -168,14 +171,14 @@ class AppointmentDetailsHeader extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(height: 52),
-                    Text(dateFormatter(this.data.timestamp.toDate()),
-                        style: TextStyle(
+                    const SizedBox(height: 52),
+                    Text(dateFormatter(data.timestamp.toDate()),
+                        style: const TextStyle(
                           fontSize: 36,
                           color: Colors.white,
                         )),
-                    Text(specialTimeFormatter(this.data.timestamp.toDate()),
-                        style: TextStyle(
+                    Text(specialTimeFormatter(data.timestamp.toDate()),
+                        style: const TextStyle(
                           fontSize: 42,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
@@ -184,7 +187,7 @@ class AppointmentDetailsHeader extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 54)
+            const SizedBox(height: 54)
           ],
         ),
         Positioned(
@@ -196,11 +199,12 @@ class AppointmentDetailsHeader extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xFFFAFAFA), width: 5),
+                      border:
+                          Border.all(color: const Color(0xFFFAFAFA), width: 5),
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(50)),
                   height: 102,
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   child: Hero(
                     tag: data.doctorID,
                     child: ClipRRect(
@@ -216,18 +220,20 @@ class AppointmentDetailsHeader extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Color(0xFFFAFAFA), width: 5),
+                      border:
+                          Border.all(color: const Color(0xFFFAFAFA), width: 5),
                     ),
                     child: MaterialButton(
-                      shape: CircleBorder(),
+                      shape: const CircleBorder(),
                       onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => AppointmentPrescription(
                                   data: data, userType: userType))),
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                       color: CodeRedColors.primary2,
-                      child: Icon(Icons.list, color: Colors.white, size: 32),
+                      child:
+                          const Icon(Icons.list, color: Colors.white, size: 32),
                     ),
                   ),
                 )

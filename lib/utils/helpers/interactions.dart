@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codered/utils/constants/colors.dart';
+import '../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,7 +38,7 @@ ImageProvider getImage(String url) {
 // Takes text and maxLines as parameter and returns a boolean, about whether
 // text exceeds maxLines or not
 bool doesExceedsMaxLines(BuildContext context, String text, int maxLines) {
-  final span = TextSpan(text: text, style: TextStyle(fontSize: 16));
+  final span = TextSpan(text: text, style: const TextStyle(fontSize: 16));
 
   final tp = TextPainter(
       text: span, maxLines: maxLines, textDirection: TextDirection.ltr);
@@ -53,10 +53,10 @@ void openURL(String url, BuildContext context) async {
   // If PDF then open PDF Preview
   if (url.toString().endsWith('.pdf'))
     //HandlePDF
-    print("PDF");
+    print('PDF');
   else if (url.toString().contains('.pdf')) {
     try {
-      RegExp _queryNeglector = RegExp(r"([^\?]+)(\?.*)?");
+      final _queryNeglector = RegExp(r'([^\?]+)(\?.*)?');
       if (_queryNeglector.firstMatch(url.toString()).group(1) != null) {
         // Handle PDF
       } else {
@@ -106,11 +106,11 @@ void displaySnackbar(BuildContext context, String message) {
         const SizedBox(width: 10),
         Flexible(
             child: Text(message,
-                style: TextStyle(color: Colors.white, fontSize: 14))),
+                style: const TextStyle(color: Colors.white, fontSize: 14))),
       ],
     ),
     backgroundColor: CodeRedColors.primary,
-    duration: Duration(seconds: 2),
+    duration: const Duration(seconds: 2),
   )..show(context);
 }
 
@@ -119,7 +119,7 @@ Future<File> getImageFileFromAssets(Asset asset) async {
   final byteData = await asset.getByteData();
 
   final tempFile =
-      File("${(await getTemporaryDirectory()).path}/${asset.name}");
+      File('${(await getTemporaryDirectory()).path}/${asset.name}');
   final file = await tempFile.writeAsBytes(
     byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
   );
@@ -130,100 +130,100 @@ Future<File> getImageFileFromAssets(Asset asset) async {
 String monthFormatter(int month) {
   switch (month) {
     case 1:
-      return "Jan";
+      return 'Jan';
     case 2:
-      return "Feb";
+      return 'Feb';
     case 3:
-      return "Mar";
+      return 'Mar';
     case 4:
-      return "Apr";
+      return 'Apr';
     case 5:
-      return "May";
+      return 'May';
     case 6:
-      return "Jun";
+      return 'Jun';
     case 7:
-      return "Jul";
+      return 'Jul';
     case 8:
-      return "Aug";
+      return 'Aug';
     case 9:
-      return "Sep";
+      return 'Sep';
     case 10:
-      return "Oct";
+      return 'Oct';
     case 11:
-      return "Nov";
+      return 'Nov';
     case 12:
-      return "Dec";
+      return 'Dec';
       break;
     default:
-      return "";
+      return '';
   }
 }
 
 String dayFormatter(int day) {
   switch (day) {
     case 1:
-      return "Mon";
+      return 'Mon';
     case 2:
-      return "Tue";
+      return 'Tue';
     case 3:
-      return "Wed";
+      return 'Wed';
     case 4:
-      return "Thu";
+      return 'Thu';
     case 5:
-      return "Fri";
+      return 'Fri';
     case 6:
-      return "Sat";
+      return 'Sat';
     case 7:
-      return "Sun";
+      return 'Sun';
     default:
-      return "";
+      return '';
   }
 }
 
 String dateFormatter(DateTime date) {
-  return "${dayFormatter(date.weekday)}, ${date.day} ${monthFormatter(date.month)}";
+  return '${dayFormatter(date.weekday)}, ${date.day} ${monthFormatter(date.month)}';
 }
 
 String timeFormatter(DateTime time) {
   if (time.hour < 10) {
     if (time.minute < 10) {
-      return "0${time.hour}:0${time.minute} AM";
+      return '0${time.hour}:0${time.minute} AM';
     }
-    return "0${time.hour}:${time.minute} AM";
+    return '0${time.hour}:${time.minute} AM';
   } else if (time.hour > 12) {
     if (time.minute < 10) {
-      if ((time.hour - 12) > 9) return "${time.hour - 12}:0${time.minute} PM";
-      return "0${time.hour - 12}:0${time.minute} PM";
+      if ((time.hour - 12) > 9) return '${time.hour - 12}:0${time.minute} PM';
+      return '0${time.hour - 12}:0${time.minute} PM';
     }
-    return "${time.hour - 12}:${time.minute} PM";
+    return '${time.hour - 12}:${time.minute} PM';
   } else {
     if (time.minute < 10) {
-      return "${time.hour}:0${time.minute} AM";
+      return '${time.hour}:0${time.minute} AM';
     }
-    return "${time.hour}:${time.minute} AM";
+    return '${time.hour}:${time.minute} AM';
   }
 }
 
 String specialTimeFormatter(DateTime time) {
   if (time.hour < 10) {
     if (time.minute < 10) {
-      return "${time.hour}:0${time.minute} AM";
+      return '${time.hour}:0${time.minute} AM';
     }
-    return "${time.hour}:${time.minute} AM";
+    return '${time.hour}:${time.minute} AM';
   } else if (time.hour > 12) {
     if (time.minute < 10) {
-      if ((time.hour - 12) > 9) return "${time.hour - 12}:0${time.minute} PM";
-      return "${time.hour - 12}:0${time.minute} PM";
+      if ((time.hour - 12) > 9) return '${time.hour - 12}:0${time.minute} PM';
+      return '${time.hour - 12}:0${time.minute} PM';
     }
-    return "${time.hour - 12}:${time.minute} PM";
+    return '${time.hour - 12}:${time.minute} PM';
   } else {
     if (time.minute < 10) {
-      return "${time.hour}:0${time.minute} AM";
+      return '${time.hour}:0${time.minute} AM';
     }
-    return "${time.hour}:${time.minute} AM";
+    return '${time.hour}:${time.minute} AM';
   }
 }
 
 String dateTimeFormatter(DateTime date) {
-  return "${dateFormatter(date)} at ${timeFormatter(date)}";
+  return '${dateFormatter(date)} at ${timeFormatter(date)}';
 }

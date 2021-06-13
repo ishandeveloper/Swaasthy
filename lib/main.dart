@@ -1,9 +1,9 @@
-import 'package:codered/models/medicine_reminder.dart';
-import 'package:codered/screens/indicator.dart';
-import 'package:codered/services/apimedic_service.dart';
+import 'models/medicine_reminder.dart';
+import 'screens/indicator.dart';
+import 'services/apimedic_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:codered/services/user_services.dart';
+import 'services/user_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'models/received_notification.dart';
@@ -11,7 +11,7 @@ import 'models/received_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:codered/services/index.dart';
+import 'services/index.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -26,8 +26,9 @@ import 'package:timezone/timezone.dart' as tz;
 ///
 /// To verify things are working, check out the native platform logs.
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
+  // If you're going to use other Firebase services in the background,
+  // such as Firestore, make sure you call `initializeApp`
+  // before using other Firebase services.
   await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
 }
@@ -52,10 +53,10 @@ void main() async {
   await Firebase.initializeApp();
   await _configureLocalTimeZone();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  const AndroidInitializationSettings initializationSettingsAndroid =
+  const initializationSettingsAndroid =
       AndroidInitializationSettings('app_icon');
 
-  final InitializationSettings initializationSettings =
+  const initializationSettings =
       InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String payload) async {
@@ -66,16 +67,17 @@ void main() async {
       UserService().increaseUserHeartPoints(10);
     }
   });
-  runApp(CodeRedApp());
+  runApp(const CodeRedApp());
 }
 
 Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
-  final String timeZoneName = 'Asia/Kolkata';
+  const timeZoneName = 'Asia/Kolkata';
   tz.setLocalLocation(tz.getLocation(timeZoneName));
 }
 
 class CodeRedApp extends StatelessWidget {
+  const CodeRedApp({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -92,7 +94,7 @@ class CodeRedApp extends StatelessWidget {
       ],
       child: GestureDetector(
         onTap: () {
-          final FocusScopeNode currentFocus = FocusScope.of(context);
+          final currentFocus = FocusScope.of(context);
           if (!currentFocus.hasPrimaryFocus &&
               currentFocus.focusedChild != null) {
             FocusManager.instance.primaryFocus.unfocus();
@@ -104,24 +106,25 @@ class CodeRedApp extends StatelessWidget {
           onGenerateRoute: CodeRedRouter.generateRoute,
           navigatorKey: CodeRedKeys.navigatorKey,
           theme: ThemeData(
-              pageTransitionsTheme: PageTransitionsTheme(builders: {
+              pageTransitionsTheme: const PageTransitionsTheme(builders: {
                 TargetPlatform.android: CupertinoPageTransitionsBuilder()
               }),
               textTheme: Theme.of(context).textTheme.apply(
-                  fontFamily: 'ProductSans', displayColor: Color(0xff2A2A2A))),
+                  fontFamily: 'ProductSans',
+                  displayColor: const Color(0xff2A2A2A))),
           home: StreamBuilder<User>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
-                  User user = snapshot.data;
+                  final user = snapshot.data;
                   if (user != null) {
                     return Indicator(
                       authUser: user,
                     );
                   }
-                  return LoginPage();
+                  return const LoginPage();
                 }
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }),

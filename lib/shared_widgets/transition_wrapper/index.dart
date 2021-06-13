@@ -8,10 +8,8 @@ import 'package:flutter/material.dart';
 class TransitionWrapper extends StatefulWidget {
   final Widget child;
   final bool ltr;
-  TransitionWrapper({
-    @required this.child,
-    @required this.ltr,
-  });
+  const TransitionWrapper({@required this.child, @required this.ltr, Key key})
+      : super(key: key);
 
   @override
   _TransitionWrapperState createState() => _TransitionWrapperState();
@@ -26,9 +24,9 @@ class _TransitionWrapperState extends State<TransitionWrapper>
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(duration: Duration(milliseconds: 250), vsync: this)
-          ..addListener(() => setState(() {}));
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 250), vsync: this)
+      ..addListener(() => setState(() {}));
 
     if (!widget.ltr) {
       transformAnimation = Tween(begin: 25.0, end: 0.0).animate(controller);

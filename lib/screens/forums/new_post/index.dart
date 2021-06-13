@@ -1,5 +1,5 @@
-import 'package:codered/models/index.dart';
-import 'package:codered/utils/index.dart';
+import '../../../models/index.dart';
+import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -8,6 +8,7 @@ import '../../index.dart';
 import '../../indicator.dart';
 
 class NewForumPost extends StatefulWidget {
+  const NewForumPost({Key key}) : super(key: key);
   @override
   _NewForumPostState createState() => _NewForumPostState();
 }
@@ -17,10 +18,10 @@ class _NewForumPostState extends State<NewForumPost> {
 
   Asset _selectedImage;
 
-  TextEditingController _plainTextController = TextEditingController();
-  TextEditingController _titleTextController = TextEditingController();
+  final TextEditingController _plainTextController = TextEditingController();
+  final TextEditingController _titleTextController = TextEditingController();
 
-  _plainTextHandler(_) {
+  void _plainTextHandler(_) {
     // If User is not allowed to post, and updated string is not empty,
     // Then allow the user to post
 
@@ -31,7 +32,7 @@ class _NewForumPostState extends State<NewForumPost> {
         !isValid) setState(() => isValid = true);
   }
 
-  _titleTextHandler(_) {
+  void _titleTextHandler(_) {
     // If User is not allowed to post, and updated string is not empty,
     // Then allow the user to post
 
@@ -58,10 +59,9 @@ class _NewForumPostState extends State<NewForumPost> {
                 title: _titleTextController.value.text.toString(),
                 body: _plainTextController.value.text,
                 user: PostUserModel(
-                    userID: user.uid, 
+                    userID: user.uid,
                     username: user.username,
-                    userimage:
-                        user.photoURL))));
+                    userimage: user.photoURL))));
   }
 
   @override
@@ -80,7 +80,8 @@ class _NewForumPostState extends State<NewForumPost> {
               children: [
                 NewPostHeader(isValid: isValid, onClick: _postSubmitHandler),
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                     child: TextField(
                       maxLines: 1,
                       minLines: 1,
@@ -91,7 +92,7 @@ class _NewForumPostState extends State<NewForumPost> {
                       onChanged: _titleTextHandler,
                       controller: _titleTextController,
                       decoration: const InputDecoration(
-                          hintText: "Give it a title..",
+                          hintText: 'Give it a title..',
                           hintStyle: TextStyle(color: Colors.black),
                           border: InputBorder.none),
                     )),
@@ -106,7 +107,7 @@ class _NewForumPostState extends State<NewForumPost> {
                               getKeyboardHeight(context) -
                               260),
                   child: Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           left: 16, right: 16, bottom: 8, top: 0),
                       child: TextField(
                         // If Post Is Single Image, Multi Image, Link
@@ -130,21 +131,19 @@ class _NewForumPostState extends State<NewForumPost> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6),
-                        child: Container(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxWidth: getContextWidth(context) - 16,
-                                maxHeight: getContextWidth(context) - 16),
-                            child: FittedBox(
-                              child: AssetThumb(
-                                asset: _selectedImage,
-                                width: (getContextWidth(context)).toInt(),
-                                // height: (getContextWidth(context) * 0.5).toInt(),
-                                height: (getContextWidth(context) *
-                                        (_selectedImage.originalWidth /
-                                            _selectedImage.originalHeight))
-                                    .toInt(),
-                              ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxWidth: getContextWidth(context) - 16,
+                              maxHeight: getContextWidth(context) - 16),
+                          child: FittedBox(
+                            child: AssetThumb(
+                              asset: _selectedImage,
+                              width: (getContextWidth(context)).toInt(),
+                              // height: (getContextWidth(context) * 0.5).toInt(),
+                              height: (getContextWidth(context) *
+                                      (_selectedImage.originalWidth /
+                                          _selectedImage.originalHeight))
+                                  .toInt(),
                             ),
                           ),
                         ),
@@ -155,12 +154,12 @@ class _NewForumPostState extends State<NewForumPost> {
                           child: FloatingActionButton(
                             onPressed: () =>
                                 setState(() => _selectedImage = null),
-                            child: Icon(Icons.close,
+                            child: const Icon(Icons.close,
                                 size: 20, color: Colors.black),
                             splashColor: Colors.white,
                             mini: true,
                             backgroundColor:
-                                Color.fromRGBO(255, 255, 255, 0.75),
+                                const Color.fromRGBO(255, 255, 255, 0.75),
                           ))
                     ],
                   )
@@ -175,7 +174,7 @@ class _NewForumPostState extends State<NewForumPost> {
   Container _buildBottomSheet() {
     if ((getKeyboardHeight(context) == 0)) {
       return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Color(0xffFFFFFF),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25), topRight: Radius.circular(25)),
@@ -185,36 +184,35 @@ class _NewForumPostState extends State<NewForumPost> {
                   blurRadius: 3,
                   spreadRadius: 0.1)
             ]),
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           ExpandedSheetItem(
             icon: Icons.camera_alt,
             iconColor: Colors.blue,
             onClick: () => _pickImage(),
-            text: "Image",
+            text: 'Image',
           ),
           ExpandedSheetItem(
             icon: Icons.videocam,
             iconColor: Colors.red,
             onClick: () => _pickVideo(),
-            text: "Video",
+            text: 'Video',
           ),
         ]),
       );
     }
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Color(0xffFFFFFF),
           borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(10),
-              topRight: const Radius.circular(10)),
+              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           boxShadow: [
             BoxShadow(
                 color: Color.fromRGBO(0, 0, 0, 0.25),
                 blurRadius: 1,
                 spreadRadius: 0.1)
           ]),
-      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -222,11 +220,12 @@ class _NewForumPostState extends State<NewForumPost> {
             children: [
               IconButton(
                   padding: EdgeInsets.zero,
-                  icon: Icon(Icons.camera_alt, size: 24, color: Colors.blue),
+                  icon: const Icon(Icons.camera_alt,
+                      size: 24, color: Colors.blue),
                   onPressed: () => _pickImage()),
               IconButton(
                   padding: EdgeInsets.zero,
-                  icon: Icon(Icons.videocam, size: 28, color: Colors.red),
+                  icon: const Icon(Icons.videocam, size: 28, color: Colors.red),
                   onPressed: () => _pickVideo()),
             ],
           ),
@@ -243,21 +242,21 @@ class _NewForumPostState extends State<NewForumPost> {
   void _pickImage() async {
     // if (hasShownDiscardedAlert) hasShownDiscardedAlert = false;
 
-    List<Asset> _selection = [];
+    var _selection = <Asset>[];
     // bool _areImagesDiscarded = false;
     try {
       _selection = await MultiImagePicker.pickImages(
           maxImages: 1,
           enableCamera: true,
-          materialOptions: MaterialOptions(
-            actionBarTitle: "Choose Image",
+          materialOptions: const MaterialOptions(
+            actionBarTitle: 'Choose Image',
             useDetailsView: false,
-            actionBarColor: "#EE466E",
-            statusBarColor: "#EE466E",
-            selectCircleStrokeColor: "#000000",
+            actionBarColor: '#EE466E',
+            statusBarColor: '#EE466E',
+            selectCircleStrokeColor: '#000000',
           ));
     } on Exception catch (e) {
-      print("[!] : $e");
+      print('[!] : $e');
     }
 
     if (_selection.length > 0) {
@@ -298,26 +297,31 @@ class ExpandedSheetItem extends StatelessWidget {
   final String text;
   final Color iconColor;
 
-  ExpandedSheetItem(
-      {this.icon, this.onClick, this.text, this.iconColor = Colors.black});
+  const ExpandedSheetItem(
+      {this.icon,
+      this.onClick,
+      this.text,
+      this.iconColor = Colors.black,
+      Key key})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
       ),
-      onPressed: this.onClick,
+      onPressed: onClick,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 16),
+        margin: const EdgeInsets.symmetric(vertical: 16),
         child: Row(
           children: [
             Icon(
-              this.icon,
+              icon,
               size: 24,
-              color: this.iconColor,
+              color: iconColor,
             ),
-            SizedBox(width: 15),
-            Text(this.text,
+            const SizedBox(width: 15),
+            Text(text,
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -344,7 +348,7 @@ class NewPostHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 32),
+      padding: const EdgeInsets.only(bottom: 32),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -354,10 +358,10 @@ class NewPostHeader extends StatelessWidget {
                   color: CodeRedColors.icon,
                   iconSize: 24,
                   splashRadius: 20,
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () => Navigator.pop(context)),
-              SizedBox(width: 8),
-              Text(
+              const SizedBox(width: 8),
+              const Text(
                 'New Post',
                 style: TextStyle(
                   fontSize: 28,
@@ -372,7 +376,7 @@ class NewPostHeader extends StatelessWidget {
               mini: true,
               onPressed: onClick,
               backgroundColor: CodeRedColors.primary,
-              child: Icon(Icons.check),
+              child: const Icon(Icons.check),
             )
         ],
       ),

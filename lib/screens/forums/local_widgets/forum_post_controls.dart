@@ -1,6 +1,6 @@
-import 'package:codered/screens/indicator.dart';
-import 'package:codered/services/index.dart';
-import 'package:codered/utils/index.dart';
+import '../../indicator.dart';
+import '../../../services/index.dart';
+import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
@@ -11,12 +11,9 @@ class ForumPostControls extends StatefulWidget {
   final bool isExpanded;
   final Function expandHandler;
 
-  ForumPostControls({
-    this.postID,
-    this.index,
-    this.expandHandler,
-    this.isExpanded,
-  });
+  const ForumPostControls(
+      {this.postID, this.index, this.expandHandler, this.isExpanded, Key key})
+      : super(key: key);
 
   @override
   _ForumPostControlsState createState() => _ForumPostControlsState();
@@ -26,15 +23,14 @@ class _ForumPostControlsState extends State<ForumPostControls> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
       child: Row(
         children: [
-          ForumPostControlVotes(
-              postID: this.widget.postID, index: this.widget.index),
-          SizedBox(width: 12),
+          ForumPostControlVotes(postID: widget.postID, index: widget.index),
+          const SizedBox(width: 12),
           ForumPostControlComments(
-            postID: this.widget.postID,
-            index: this.widget.index,
+            postID: widget.postID,
+            index: widget.index,
             isExpanded: widget.isExpanded,
             expandHandler: widget.expandHandler,
           ),
@@ -50,22 +46,19 @@ class ForumPostControlComments extends StatelessWidget {
   final bool isExpanded;
   final Function expandHandler;
 
-  ForumPostControlComments({
-    this.index,
-    this.postID,
-    this.expandHandler,
-    this.isExpanded,
-  });
+  const ForumPostControlComments(
+      {this.index, this.postID, this.expandHandler, this.isExpanded, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    RepliesService _commentsService =
+    final _commentsService =
         Provider.of<RepliesService>(context, listen: false);
 
     return InkWell(
       onTap: () => expandHandler(),
       child: Container(
-        margin: EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(top: 0),
         child: Row(
           children: [
             Icon(
@@ -74,10 +67,10 @@ class ForumPostControlComments extends StatelessWidget {
               color: CodeRedColors.icon,
             ),
             Container(
-              padding: EdgeInsets.only(left: 6),
+              padding: const EdgeInsets.only(left: 6),
               child: Text(
-                _commentsService.getCommentsCount(this.index).toString(),
-                style: TextStyle(fontSize: 16),
+                _commentsService.getCommentsCount(index).toString(),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ],
@@ -101,16 +94,15 @@ class ForumPostControlVotes extends StatefulWidget {
 class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
   @override
   Widget build(BuildContext context) {
-    UpvotesService _votesService =
-        Provider.of<UpvotesService>(context, listen: true);
+    final _votesService = Provider.of<UpvotesService>(context, listen: true);
 
-    bool isVoted =
+    final isVoted =
         _votesService.getLikes(index: widget.index).contains(user.uid);
 
     return ConstrainedBox(
-      constraints: BoxConstraints(minWidth: 50),
+      constraints: const BoxConstraints(minWidth: 50),
       child: Container(
-        margin: EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(top: 0),
         child: Row(
           children: [
             GestureDetector(
@@ -129,13 +121,10 @@ class _ForumPostControlVotesState extends State<ForumPostControlVotes> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(left: 8),
               child: Text(
-                _votesService
-                    .getLikes(index: this.widget.index)
-                    .length
-                    .toString(),
-                style: TextStyle(fontSize: 16),
+                _votesService.getLikes(index: widget.index).length.toString(),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ],

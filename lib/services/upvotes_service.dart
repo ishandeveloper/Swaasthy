@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 
 class UpvotesService with ChangeNotifier {
-  Map<int, List<String>> _likes = {};
+  final Map<int, List<String>> _likes = {};
 
   void addLikesToList(List<String> likes, int index) {
     if (!_likes.containsKey(index)) {
@@ -23,7 +23,7 @@ class UpvotesService with ChangeNotifier {
   }
 
   void updateLike({@required int index, @required String uid}) {
-    print("UPDATE LIKE CALLED");
+    print('UPDATE LIKE CALLED');
     if (_likes[index].contains(uid)) {
       _likes[index].remove(uid);
     } else {

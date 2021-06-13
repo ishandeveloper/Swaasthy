@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codered/models/index.dart';
-import 'package:codered/services/index.dart';
-import 'package:codered/utils/constants/colors.dart';
+import '../../../services/index.dart';
+import '../../../utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,25 +21,27 @@ class ForumPostComments extends StatefulWidget {
 class _ForumPostCommentsState extends State<ForumPostComments> {
   @override
   Widget build(BuildContext context) {
-    RepliesService _commentsService =
+    final _commentsService =
         Provider.of<RepliesService>(context, listen: false);
 
-    List<ReplyModel> _replies =
-        _commentsService.getComments(index: widget.index);
+    final _replies = _commentsService.getComments(index: widget.index);
 
     return Column(
       children: [
         ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: _replies?.length,
           itemBuilder: (BuildContext context, index) {
-            ReplyModel _reply = _replies[index];
+            final _reply = _replies[index];
 
             return Container(
-              color: index % 2 != 0 ? Color(0xffF5F5F5) : Color(0xffFFFFFF),
-              padding: EdgeInsets.only(top: 6, left: 12, right: 6, bottom: 6),
-              margin: EdgeInsets.only(top: 4, bottom: 4),
+              color: index % 2 != 0
+                  ? const Color(0xffF5F5F5)
+                  : const Color(0xffFFFFFF),
+              padding:
+                  const EdgeInsets.only(top: 6, left: 12, right: 6, bottom: 6),
+              margin: const EdgeInsets.only(top: 4, bottom: 4),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -49,7 +50,7 @@ class _ForumPostCommentsState extends State<ForumPostComments> {
                     backgroundImage:
                         CachedNetworkImageProvider(_reply.user.userimage),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,15 +58,16 @@ class _ForumPostCommentsState extends State<ForumPostComments> {
                         Row(
                           children: [
                             Text(_reply.user.username,
-                                style: TextStyle(fontWeight: FontWeight.w600)),
-                            SizedBox(width: 4),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600)),
+                            const SizedBox(width: 4),
                             Text(_reply.body),
                           ],
                         ),
                         Text(
                           timeago.format(_reply.timestamp.toDate()),
                           textAlign: TextAlign.left,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12, color: CodeRedColors.icon),
                         )
                       ],
@@ -84,8 +86,8 @@ class _ForumPostCommentsState extends State<ForumPostComments> {
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                         primary: CodeRedColors.primary),
-                    onPressed: this.widget.moreComments,
-                    child: Text('View more comments'),
+                    onPressed: widget.moreComments,
+                    child: const Text('View more comments'),
                   ),
                 ),
               ],

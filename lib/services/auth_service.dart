@@ -4,10 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 class Authentication {
   static Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    final googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth =
+    final googleAuth =
         await googleUser.authentication;
 
     // Create a new credential
@@ -16,7 +16,7 @@ class Authentication {
       idToken: googleAuth.idToken,
     );
 
-    var authUser = await FirebaseAuth.instance.signInWithCredential(credential);
+    final authUser = await FirebaseAuth.instance.signInWithCredential(credential);
 
     // if (authUser != null) {
     //   CollectionReference collectionReference =

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:codered/models/diagnosis.dart';
+import '../models/diagnosis.dart';
 
-import 'package:codered/screens/indicator.dart';
+import '../screens/indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,8 +21,8 @@ class ApiMedicService with ChangeNotifier {
     });
   }
 
-  Future<DiagnosisResult> getInfo(List<int> symptoms) async {
-    uriUpdate(symptoms).then((value) async => await http
+  Future<dynamic> getInfo(List<int> symptoms) async {
+    uriUpdate(symptoms).then((value) async => http
             .get(
           Uri.parse(value),
         )

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/forums/posts.dart';
-import 'package:codered/screens/indicator.dart';
-import 'package:codered/services/index.dart';
+import '../../models/forums/posts.dart';
+import '../../screens/indicator.dart';
+import '../index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,15 +10,15 @@ Map<String, int> commentsMap = {};
 
 class ForumsHelper {
   static Future<List<ForumPostModel>> getPosts() async {
-    return await FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection('forums')
         .doc('posts')
         .collection('posts')
         .get()
         .then((data) {
-      List<QueryDocumentSnapshot> _postsSnapshots = data.docs;
+      final _postsSnapshots = data.docs;
 
-      List<ForumPostModel> _postsModel = [];
+      final _postsModel = <ForumPostModel>[];
 
       _postsSnapshots.forEach((snapshot) {
         _postsModel.add(ForumPostModel.getModel(
@@ -41,7 +41,7 @@ class ForumsHelper {
         .then((value) => value.docs.length);
   }
 
-  static addReplyToFirestore({String postID, dynamic data}) async {
+  static void addReplyToFirestore({String postID, data}) async {
     await FirebaseFirestore.instance
         .collection('forums')
         .doc('posts')
@@ -61,7 +61,7 @@ class ForumsHelper {
   // This method returns limited number of first n snapshots of the forum posts collection
   static Future<QuerySnapshot> getLimitedSnapshots(int length,
       {DocumentSnapshot lastDocument}) async {
-    Query _query = FirebaseFirestore.instance
+    var _query = FirebaseFirestore.instance
         .collection('forums')
         .doc('posts')
         .collection('posts')
@@ -76,13 +76,13 @@ class ForumsHelper {
           .orderBy('create_ts', descending: true)
           .startAfterDocument(lastDocument);
 
-    return await _query.limit(length).get();
+    return _query.limit(length).get();
   }
 
-  static getInteractions(String documentID, int index, int likesCount,
+  static void getInteractions(String documentID, int index, int likesCount,
       int commentsCount, BuildContext context) async {
-    var _likesService = Provider.of<UpvotesService>(context, listen: false);
-    var _commentsService = Provider.of<RepliesService>(context, listen: false);
+    final _likesService = Provider.of<UpvotesService>(context, listen: false);
+    final _commentsService = Provider.of<RepliesService>(context, listen: false);
 
     var _likes = [];
 
@@ -92,7 +92,7 @@ class ForumsHelper {
 
     if (!commentsMap.containsKey(documentID) ||
         !likesMap.containsKey(documentID)) {
-      var _likesData = await FirebaseFirestore.instance
+      final _likesData = await FirebaseFirestore.instance
           .collection('forums')
           .doc('posts')
           .collection('posts')
@@ -102,11 +102,11 @@ class ForumsHelper {
           .get();
 
       if (_likesData.exists) {
-        List<String> _tempList =
-            List.generate(likesCount - 1, (index) => "$index");
+        final _tempList =
+            List<String>.generate(likesCount - 1, (index) => '$index');
         _likes = [user.uid, ..._tempList];
       } else {
-        List<String> _tempList = List.generate(likesCount, (index) => "$index");
+        final _tempList = List<String>.generate(likesCount, (index) => '$index');
         _likes = _tempList;
       }
 
@@ -151,12 +151,12 @@ class ForumsHelper {
           .then((_) => _.docs);
     }
 
-    print("156 : ${_commentsData.toString()}");
+    print('156 : ${_commentsData.toString()}');
 
     return _commentsData;
   }
 
-  static toggleUpvote({String userID, String postID, bool isVoted}) async {
+  static void toggleUpvote({String userID, String postID, bool isVoted}) async {
     // UNLIKE
     if (isVoted) {
       await FirebaseFirestore.instance
@@ -195,7 +195,7 @@ class ForumsHelper {
     }
   }
 
-  static resetInteractions() {
+  static void resetInteractions() {
     likesMap = {};
     commentsMap = {};
   }

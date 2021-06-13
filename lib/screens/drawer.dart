@@ -1,11 +1,12 @@
-import 'package:codered/screens/indicator.dart';
-import 'package:codered/services/auth_service.dart';
-import 'package:codered/utils/constants/colors.dart';
+import 'indicator.dart';
+import '../services/auth_service.dart';
+import '../utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../services/router/routes.dart';
 
 class HomeScreenDrawer extends StatefulWidget {
+  const HomeScreenDrawer({Key key}) : super(key: key);
   @override
   _HomeScreenDrawerState createState() => _HomeScreenDrawerState();
 }
@@ -22,18 +23,20 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 30,
                 ),
                 Flexible(
                   child: ListTile(
-                    contentPadding: EdgeInsets.only(left: 8),
+                    contentPadding: const EdgeInsets.only(left: 8),
                     title: Text(
                       user.username,
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
-                    subtitle: Text(user.email,
-                    style: TextStyle(fontSize: 13),),
+                    subtitle: Text(
+                      user.email,
+                      style: const TextStyle(fontSize: 13),
+                    ),
                   ),
                 )
               ],
@@ -52,7 +55,7 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
               )),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(Icons.favorite, size: 30, color: Colors.white),
                   SizedBox(
                     width: 10,
@@ -71,9 +74,9 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                   Navigator.pushNamedAndRemoveUntil(
                       context, CodeRedRoutes.login, (route) => false));
             },
-            leading: Icon(Icons.person_outline),
-            title: Text('Anonymous Mode'),
-            subtitle: Text('Hides your identity on forums'),
+            leading: const Icon(Icons.person_outline),
+            title: const Text('Anonymous Mode'),
+            subtitle: const Text('Hides your identity on forums'),
             trailing: Switch(
                 value: isAnonyous,
                 onChanged: (val) {
@@ -89,9 +92,9 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                   Navigator.pushNamedAndRemoveUntil(
                       context, CodeRedRoutes.login, (route) => false));
             },
-            leading: Icon(Icons.login_outlined),
-            title: Text('Log Out'),
-            subtitle: Text('from your current google account'),
+            leading: const Icon(Icons.login_outlined),
+            title: const Text('Log Out'),
+            subtitle: const Text('from your current google account'),
           )
         ],
       ),

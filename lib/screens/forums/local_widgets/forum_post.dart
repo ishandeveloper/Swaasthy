@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/index.dart';
-import 'package:codered/services/index.dart';
-import 'package:codered/utils/index.dart';
+import '../../../models/index.dart';
+import '../../../services/index.dart';
+import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +13,7 @@ class ForumPost extends StatefulWidget {
   final ForumPostModel data;
   final int index;
 
-  ForumPost({this.data, this.index});
+  const ForumPost({this.data, this.index, Key key}) : super(key: key);
 
   @override
   _ForumPostState createState() => _ForumPostState();
@@ -40,11 +40,10 @@ class _ForumPostState extends State<ForumPost>
 
   @override
   Widget build(BuildContext context) {
-    RepliesService _commentsService =
+    final _commentsService =
         Provider.of<RepliesService>(context, listen: false);
 
-    List<ReplyModel> _commentsList =
-        _commentsService.getComments(index: widget.index);
+    final _commentsList = _commentsService.getComments(index: widget.index);
 
     if (isExpanded &&
         _commentsService.getComments(index: widget.index).length == 0 &&
@@ -52,29 +51,28 @@ class _ForumPostState extends State<ForumPost>
             _commentsService.getComments(index: widget.index).length) {}
 
     void getComments() async {
-      print("GETTING COMMENTS");
+      print('GETTING COMMENTS');
 
       setState(() {
         isLoadingComments = true;
         isInitialFetch = false;
       });
 
-      List<DocumentSnapshot> _commentsDocuments =
-          await ForumsHelper.getComments(widget.data.postID,
-              _commentsService.getLastDocument(widget.index));
+      final _commentsDocuments = await ForumsHelper.getComments(
+          widget.data.postID, _commentsService.getLastDocument(widget.index));
 
       print(
-          "64, ${_commentsDocuments.toString()}, ${_commentsService.getLastDocument(widget.index)}");
+          '64, ${_commentsDocuments.toString()}, ${_commentsService.getLastDocument(widget.index)}');
 
       // ignore: null_aware_before_operator
       if (_commentsDocuments?.length > 0 && _commentsDocuments != null) {
-        print("NOT NULL");
+        print('NOT NULL');
 
-        List<ReplyModel> _commentModels = _commentsDocuments
+        final _commentModels = _commentsDocuments
             .map((e) => ReplyModel.getModel(e.data(), e.id))
             .toList();
 
-        List<ReplyModel> _tempList = [];
+        final _tempList = <ReplyModel>[];
         _tempList.addAll(_commentsList);
         _tempList.addAll(_commentModels);
 
@@ -85,7 +83,7 @@ class _ForumPostState extends State<ForumPost>
               index: widget.index, comments: _commentsDocuments);
         }
 
-        print("LAST : ${_commentsDocuments.length}");
+        print('LAST : ${_commentsDocuments.length}');
 
         setState(() {
           try {
@@ -115,14 +113,14 @@ class _ForumPostState extends State<ForumPost>
     }
 
     return Container(
-      decoration: BoxDecoration(color: Color(0xffFAFAFA), boxShadow: [
+      decoration: const BoxDecoration(color: Color(0xffFAFAFA), boxShadow: [
         BoxShadow(
             offset: Offset(0, 2),
             color: Color.fromRGBO(0, 0, 0, 0.1),
             blurRadius: 3)
       ]),
-      margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -137,22 +135,22 @@ class _ForumPostState extends State<ForumPost>
 
           ForumPostControls(
               postID: widget.data.postID,
-              index: this.widget.index,
+              index: widget.index,
               isExpanded: isExpanded,
               expandHandler: _expandHandler),
 
           NewCommentInput(
-            index: this.widget.index,
+            index: widget.index,
             postID: widget.data.postID,
           ),
 
           AnimatedSize(
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             vsync: this,
             child: isExpanded
                 ? ForumPostComments(
                     postID: widget.data.postID,
-                    index: this.widget.index,
+                    index: widget.index,
                     moreComments: getComments,
                   )
                 : Container(),
@@ -180,7 +178,7 @@ class NewCommentInput extends StatefulWidget {
 class ForumPostImage extends StatefulWidget {
   final String image;
 
-  ForumPostImage({@required this.image});
+  const ForumPostImage({@required this.image, Key key}) : super(key: key);
 
   @override
   _ForumPostImageState createState() => _ForumPostImageState();
@@ -198,14 +196,14 @@ class _ForumPostImageState extends State<ForumPostImage>
         context: context,
         builder: (_) => Container(
             color: Colors.black,
-            padding: EdgeInsets.only(top: 40),
+            padding: const EdgeInsets.only(top: 40),
             child: ImageGalleryView(
               images: [widget.image],
             )),
       ),
       child: AnimatedSize(
         vsync: this,
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         child: Wrap(children: [
           ConstrainedBox(
             constraints: BoxConstraints(
@@ -213,12 +211,12 @@ class _ForumPostImageState extends State<ForumPostImage>
                 maxHeight: MediaQuery.of(context).size.width,
                 minWidth: MediaQuery.of(context).size.width),
             child: CachedNetworkImage(
-              imageUrl: this.widget.image,
+              imageUrl: widget.image,
               imageBuilder: (context, imageProvider) =>
                   Image(image: imageProvider),
               errorWidget: (_, ___, __) =>
-                  Center(child: Icon(Icons.error_outline)),
-              placeholder: (context, url) => Center(
+                  const Center(child: Icon(Icons.error_outline)),
+              placeholder: (context, url) => const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation(CodeRedColors.primary),
                 ),
@@ -234,7 +232,7 @@ class _ForumPostImageState extends State<ForumPostImage>
 class _NewCommentInputState extends State<NewCommentInput> {
   TextEditingController _commentTextController;
 
-  FocusNode _commentFocusNode = FocusNode();
+  final FocusNode _commentFocusNode = FocusNode();
 
   bool isValid = false;
 
@@ -253,15 +251,15 @@ class _NewCommentInputState extends State<NewCommentInput> {
           widget.index,
           username: user.username,
           userThumb: user.photoURL ??
-              "https://api.hello-avatar.com/adorables/ishandeveloper",
+              'https://api.hello-avatar.com/adorables/ishandeveloper',
           userID: user.uid,
         );
       },
       child: Container(
-        color: Color(0xffeeeeee),
+        color: const Color(0xffeeeeee),
         child: Row(
           children: [
-            Expanded(
+            const Expanded(
               child: TextField(
                   autofocus: false,
                   enabled: false,
@@ -269,7 +267,7 @@ class _NewCommentInputState extends State<NewCommentInput> {
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 10),
                       border: InputBorder.none,
-                      hintText: "Write your reply...",
+                      hintText: 'Write your reply...',
                       hintStyle:
                           TextStyle(fontSize: 14, color: CodeRedColors.text))),
             ),
@@ -279,7 +277,7 @@ class _NewCommentInputState extends State<NewCommentInput> {
     );
   }
 
-  newcommentsheet(
+  Future<dynamic> newcommentsheet(
     BuildContext context,
     int index, {
     @required String username,
@@ -290,7 +288,7 @@ class _NewCommentInputState extends State<NewCommentInput> {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          ConnectionStatus _connectionStatus =
+          final _connectionStatus =
               Provider.of<ConnectionStatus>(context, listen: true);
 
           return Container(
@@ -308,33 +306,32 @@ class _NewCommentInputState extends State<NewCommentInput> {
                             controller: _commentTextController,
                             focusNode: _commentFocusNode,
                             textCapitalization: TextCapitalization.sentences,
-                            style:
-                                TextStyle(color: CodeRedColors.secondaryText),
-                            decoration: InputDecoration(
+                            style: const TextStyle(
+                                color: CodeRedColors.secondaryText),
+                            decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(left: 10),
                                 border: InputBorder.none,
-                                hintText: "Write your reply...",
+                                hintText: 'Write your reply...',
                                 hintStyle: TextStyle(
                                     fontSize: 14,
                                     color: CodeRedColors.secondaryText))),
                       ),
+                      Center(
+                          child: IconButton(
+                              icon: Icon(Icons.keyboard_hide,
+                                  color: Colors.grey[600]),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                FocusScope.of(context).unfocus();
+                              })),
+                      const SizedBox(width: 5),
                       Container(
-                          child: Center(
-                              child: IconButton(
-                                  icon: Icon(Icons.keyboard_hide,
-                                      color: Colors.grey[600]),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    FocusScope.of(context).unfocus();
-                                  }))),
-                      SizedBox(width: 5),
-                      Container(
-                          padding: EdgeInsets.all(2.5),
+                          padding: const EdgeInsets.all(2.5),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100)),
                           child: Center(
                             child: IconButton(
-                                icon: Icon(Icons.send,
+                                icon: const Icon(Icons.send,
                                     color: CodeRedColors.primary),
                                 color: Colors.white,
                                 onPressed: () async {
@@ -344,7 +341,7 @@ class _NewCommentInputState extends State<NewCommentInput> {
                                       ConnectionStatus.Offline) {
                                     Navigator.pop(context);
                                     displaySnackbar(context,
-                                        "Internet Connection is required.");
+                                        'Internet Connection is required.');
                                   } else if (_commentTextController.value.text
                                           .trim()
                                           .length ==

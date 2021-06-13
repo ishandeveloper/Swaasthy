@@ -1,10 +1,11 @@
-import 'package:codered/screens/text_recognition.dart';
-import 'package:codered/services/user_services.dart';
-import 'package:codered/utils/constants/colors.dart';
+import '../../text_recognition.dart';
+import '../../../services/user_services.dart';
+import '../../../utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountType extends StatefulWidget {
+  const AccountType({Key key}) : super(key: key);
   @override
   _AccountTypeState createState() => _AccountTypeState();
 }
@@ -30,8 +31,8 @@ class _AccountTypeState extends State<AccountType> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Are you a medical volunteer?",
+                const Text(
+                  'Are you a medical volunteer?',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Container(
@@ -57,7 +58,7 @@ class _AccountTypeState extends State<AccountType> {
   Widget chooseAccount(String text, int value) {
     return Expanded(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 6),
+        margin: const EdgeInsets.symmetric(horizontal: 6),
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: Colors.grey[200]),
@@ -75,7 +76,7 @@ class _AccountTypeState extends State<AccountType> {
                   });
                 }),
             Text(text),
-            SizedBox(width: 4)
+            const SizedBox(width: 4)
           ],
         ),
       ),

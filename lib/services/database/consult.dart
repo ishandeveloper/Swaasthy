@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/index.dart';
+import '../../models/index.dart';
 import 'package:uuid/uuid.dart';
 
 class ConsultHelper {
   static Future<List<Doctor>> getHeroDoctors() async {
-    return await FirebaseFirestore.instance
+    return  FirebaseFirestore.instance
         .collection('doctors')
-        .where("hero", isEqualTo: true)
+        .where('hero', isEqualTo: true)
         .get()
         .then((e) {
-      var _docs = e.docs;
-      List<Doctor> _doctors = [];
+      final _docs = e.docs;
+      final _doctors = <Doctor>[];
 
       _docs.forEach((e) {
-        Doctor _ = Doctor.getModel(e.data(), e.id);
+        final _ = Doctor.getModel(e.data(), e.id);
         _doctors.add(_);
       });
 
@@ -22,16 +22,16 @@ class ConsultHelper {
   }
 
   static Future<List<Doctor>> getTopRatedDoctors() async {
-    return await FirebaseFirestore.instance
+    return  FirebaseFirestore.instance
         .collection('doctors')
-        .where("hero", isEqualTo: false)
+        .where('hero', isEqualTo: false)
         .get()
         .then((e) {
-      var _docs = e.docs;
-      List<Doctor> _doctors = [];
+      final _docs = e.docs;
+      final _doctors = <Doctor>[];
 
       _docs.forEach((e) {
-        Doctor _ = Doctor.getModel(e.data(), e.id);
+        final _ = Doctor.getModel(e.data(), e.id);
         _doctors.add(_);
       });
 
@@ -49,13 +49,13 @@ class ConsultHelper {
     Timestamp timestamp,
     DateTime date,
   }) async {
-    var uuid = Uuid();
-    String _appointmentID = uuid.v4();
+    const uuid = Uuid();
+    final _appointmentID = uuid.v4();
     // Calculate Final Timestamp
-    Timestamp _timestamp = Timestamp.fromDate(DateTime(date.year, date.month,
+    final _timestamp = Timestamp.fromDate(DateTime(date.year, date.month,
         date.day, timestamp.toDate().hour, timestamp.toDate().minute, 0));
 
-    var _appointmentList = [
+    final _appointmentList = [
       {
         'timestamp': _timestamp,
         'doctorID': doctorID,
@@ -81,7 +81,7 @@ class ConsultHelper {
         _.reference.set({'appointments': _appointmentList});
     });
 
-    var _appointmentDoctor = {
+    final _appointmentDoctor = {
       'timestamp': _timestamp,
       'doctorID': userID,
       'doctor_name': username,
@@ -123,16 +123,16 @@ class ConsultHelper {
     String userID,
     String appointmentID,
   }) async {
-    var _appointments = await FirebaseFirestore.instance
+    final _appointments = await FirebaseFirestore.instance
         .collection('appointments')
         .doc(userID)
         .get()
         .then((data) => data.data()['appointments']);
 
-    List<Map<String, dynamic>> _ = [];
+    final _ = <Map<String, dynamic>>[];
 
     // Get the object
-    var _appointmentToBeUpdated = _appointments[
+    final _appointmentToBeUpdated = _appointments[
         _appointments.indexWhere((e) => e['id'] == appointmentID)];
 
     // Remove orignal instance of object from the array
@@ -140,14 +140,14 @@ class ConsultHelper {
         .removeAt(_appointments.indexWhere((e) => e['id'] == appointmentID));
 
     // Get the current prescription list
-    var _newPrescriptionList = _appointmentToBeUpdated['prescription'];
+    final _newPrescriptionList = _appointmentToBeUpdated['prescription'];
 
     // Modify/Update the current prescription list
     _newPrescriptionList
         .add({'name': medicine, 'daily': dosage, 'period': course});
 
     // Update the object
-    var _updatedAppointment = {
+    final _updatedAppointment = {
       'timestamp': _appointmentToBeUpdated['timestamp'],
       'doctorID': _appointmentToBeUpdated['doctorID'],
       'doctor_name': _appointmentToBeUpdated['doctor_name'],
@@ -164,9 +164,9 @@ class ConsultHelper {
         .doc(userID)
         .update({'appointments': _appointments});
 
-    String _doctorID = _updatedAppointment['doctorID'];
+    final String _doctorID = _updatedAppointment['doctorID'];
 
-    var _docAppointments = await FirebaseFirestore.instance
+    final _docAppointments = await FirebaseFirestore.instance
         .collection('doctors')
         .doc(_doctorID)
         .get()
@@ -174,18 +174,18 @@ class ConsultHelper {
 
     // Remove orignal instance of object from the array
     // Get the object
-    var _docAppointmentToBeUpdated = _docAppointments
+    final _docAppointmentToBeUpdated = _docAppointments
         .removeAt(_docAppointments.indexWhere((e) => e['id'] == appointmentID));
 
     // Get the current prescription list
-    var _newDocPrescriptionList = _docAppointmentToBeUpdated['prescription'];
+    final _newDocPrescriptionList = _docAppointmentToBeUpdated['prescription'];
 
     // Modify/Update the current prescription list
     _newPrescriptionList
         .add({'name': medicine, 'daily': dosage, 'period': course});
 
     // Update the object
-    var _docUpdatedAppointment = {
+    final _docUpdatedAppointment = {
       'timestamp': _docAppointmentToBeUpdated['timestamp'],
       'doctorID': _docAppointmentToBeUpdated['doctorID'],
       'doctor_name': _docAppointmentToBeUpdated['doctor_name'],

@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codered/models/consult/appointment.dart';
-import 'package:codered/screens/index.dart';
-import 'package:codered/services/database/consult.dart';
-import 'package:codered/utils/index.dart';
+import '../../models/consult/appointment.dart';
+import '../index.dart';
+import '../../services/database/consult.dart';
+import '../../utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -12,7 +12,7 @@ import 'local_widgets/index.dart';
 class ConsultDoctor extends StatefulWidget {
   final int userType;
 
-  ConsultDoctor({@required this.userType});
+  const ConsultDoctor({@required this.userType, Key key}) : super(key: key);
 
   @override
   _ConsultDoctorState createState() => _ConsultDoctorState();
@@ -55,7 +55,9 @@ class AppointmentsList extends StatelessWidget {
   final Appointment appointment;
   final int userType;
 
-  AppointmentsList({@required this.appointment, @required this.userType});
+  const AppointmentsList(
+      {@required this.appointment, @required this.userType, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,16 +67,13 @@ class AppointmentsList extends StatelessWidget {
         Expanded(
           child: SingleChildScrollView(
               child: Container(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: appointment.appointments.length,
-                  itemBuilder: (_, index) => AppointmentCard(
-                      data: appointment.appointments[index],
-                      userType: this.userType)),
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: appointment.appointments.length,
+                itemBuilder: (_, index) => AppointmentCard(
+                    data: appointment.appointments[index], userType: userType)),
           )),
         ),
       ],
@@ -87,19 +86,20 @@ class AppointmentCard extends StatelessWidget {
 
   final int userType;
 
-  AppointmentCard({this.data, @required this.userType});
+  const AppointmentCard({this.data, @required this.userType, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
             BoxShadow(
               color: Colors.grey[300],
               blurRadius: 4,
-              offset: Offset(0, 0),
+              offset: const Offset(0, 0),
             )
           ],
           borderRadius: BorderRadius.circular(5)),
@@ -109,21 +109,22 @@ class AppointmentCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: BoxDecoration(color: CodeRedColors.primary2),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              decoration: const BoxDecoration(color: CodeRedColors.primary2),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Appointment Details',
+                  const Text('Appointment Details',
                       style:
                           TextStyle(color: Color.fromRGBO(255, 255, 255, 0.9))),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
-                      Icon(Icons.access_time, color: Colors.white, size: 32),
-                      SizedBox(width: 8),
+                      const Icon(Icons.access_time,
+                          color: Colors.white, size: 32),
+                      const SizedBox(width: 8),
                       Text(dateTimeFormatter(data.timestamp.toDate()),
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w600))
@@ -133,7 +134,7 @@ class AppointmentCard extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -142,8 +143,8 @@ class AppointmentCard extends StatelessWidget {
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(50)),
                     height: 102,
-                    padding:
-                        EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
+                    padding: const EdgeInsets.only(
+                        top: 5, left: 5, right: 5, bottom: 5),
                     child: Hero(
                       tag: data.doctorID,
                       child: ClipRRect(
@@ -153,9 +154,9 @@ class AppointmentCard extends StatelessWidget {
                           )),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Container(
-                    margin: EdgeInsets.only(top: 12),
+                    margin: const EdgeInsets.only(top: 12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -163,7 +164,7 @@ class AppointmentCard extends StatelessWidget {
                             userType == 2
                                 ? '${data.doctorName}'
                                 : 'Dr. ${data.doctorName}',
-                            style: TextStyle(fontSize: 22)),
+                            style: const TextStyle(fontSize: 22)),
                         MaterialButton(
                           color: Colors.grey[200],
                           shape: RoundedRectangleBorder(
@@ -174,9 +175,9 @@ class AppointmentCard extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (_) => AppointmentDetails(
                                         data: data,
-                                        userType: this.userType,
+                                        userType: userType,
                                       ))),
-                          child: Text('View details'),
+                          child: const Text('View details'),
                         )
                       ],
                     ),
@@ -194,40 +195,41 @@ class AppointmentCard extends StatelessWidget {
 class ShimmeringConsultPage extends StatelessWidget {
   final int userType;
 
-  ShimmeringConsultPage({@required this.userType});
+  const ShimmeringConsultPage({@required this.userType, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
+    return Column(
       children: [
-        ConsultHeader(userType: userType),
-        SizedBox(height: 24),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Shimmer.fromColors(
-              child: ListView.separated(
-                primary: false,
-                shrinkWrap: true,
-                itemCount: 2,
-                separatorBuilder: (BuildContext context, int index) => Divider(
-                  thickness: 32,
-                  color: Colors.transparent,
-                ),
-                itemBuilder: (BuildContext context, int index) => Container(
-                  height: 172,
-                  width: getContextWidth(context) - 32,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
+    ConsultHeader(userType: userType),
+    const SizedBox(height: 24),
+    Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Shimmer.fromColors(
+          child: ListView.separated(
+            primary: false,
+            shrinkWrap: true,
+            itemCount: 2,
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(
+              thickness: 32,
+              color: Colors.transparent,
+            ),
+            itemBuilder: (BuildContext context, int index) => Container(
+              height: 172,
+              width: getContextWidth(context) - 32,
+              decoration: BoxDecoration(
+                color: Colors.grey[400],
+                borderRadius: BorderRadius.circular(5),
               ),
-              baseColor: Colors.grey[200],
-              highlightColor: Colors.grey[100]),
-        )
+            ),
+          ),
+          baseColor: Colors.grey[200],
+          highlightColor: Colors.grey[100]),
+    )
       ],
-    ));
+    );
   }
 }
 
@@ -241,11 +243,11 @@ class ConsultHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 16),
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             'Consult a doctor',
             style: TextStyle(
               fontSize: 28,
@@ -254,13 +256,13 @@ class ConsultHeader extends StatelessWidget {
             ),
           ),
           AnimatedOpacity(
-            opacity: this.action && this.userType != 2 ? 1 : 0,
-            duration: Duration(milliseconds: 400),
+            opacity: action && userType != 2 ? 1 : 0,
+            duration: const Duration(milliseconds: 400),
             child: FloatingActionButton(
               mini: true,
               onPressed: () => Navigator.pushNamed(context, '/bookdoctor'),
               backgroundColor: CodeRedColors.primary2,
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
           )
         ],

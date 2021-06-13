@@ -4,8 +4,8 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
-import 'package:codered/utils/constants/keys.dart';
-import 'package:codered/utils/index.dart';
+import '../../../../utils/constants/keys.dart';
+import '../../../../utils/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
@@ -15,7 +15,9 @@ class AppointmentCall extends StatefulWidget {
 
   final ClientRole role;
 
-  AppointmentCall({@required this.appointmentID, @required this.role});
+  const AppointmentCall(
+      {@required this.appointmentID, @required this.role, Key key})
+      : super(key: key);
 
   @override
   _AppointmentCallState createState() => _AppointmentCallState();
@@ -27,7 +29,7 @@ class _AppointmentCallState extends State<AppointmentCall> {
   final _infoStrings = <String>[];
   bool muted = false;
   RtcEngine _engine;
-  String _token = "";
+  String _token = '';
   // Dispose
   @override
   void dispose() {
@@ -59,7 +61,7 @@ class _AppointmentCallState extends State<AppointmentCall> {
     await _initAgoraRtcEngine();
     _addAgoraEventHandlers();
     await _engine.enableWebSdkInteroperability(true);
-    VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
+    final configuration = VideoEncoderConfiguration();
     configuration.dimensions = VideoDimensions(1920, 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
     await generateNewToken();
@@ -69,9 +71,9 @@ class _AppointmentCallState extends State<AppointmentCall> {
   Future<void> generateNewToken() async {
     await http
         .get(Uri.parse(
-            "https://solutionchallengeapi.vercel.app/api?appointment=${widget.appointmentID}"))
+            'https://solutionchallengeapi.vercel.app/api?appointment=${widget.appointmentID}'))
         .then((res) {
-      print("NEW-TOKEN : ${res.body}");
+      print('NEW-TOKEN : ${res.body}');
 
       setState(() => _token = jsonDecode(res.body)['token']);
     });
@@ -124,7 +126,7 @@ class _AppointmentCallState extends State<AppointmentCall> {
 
   /// Helper function to get list of native views
   List<Widget> _getRenderViews() {
-    final List<StatefulWidget> list = [];
+    final list = <StatefulWidget>[];
     if (widget.role == ClientRole.Broadcaster) {
       list.add(RtcLocalView.SurfaceView());
     }
@@ -152,34 +154,30 @@ class _AppointmentCallState extends State<AppointmentCall> {
     final views = _getRenderViews();
     switch (views.length) {
       case 1:
-        return Container(
-            child: Column(
+        return Column(
           children: <Widget>[_videoView(views[0])],
-        ));
+        );
       case 2:
-        return Container(
-            child: Column(
+        return Column(
           children: <Widget>[
-            _expandedVideoRow([views[0]]),
-            _expandedVideoRow([views[1]])
+        _expandedVideoRow([views[0]]),
+        _expandedVideoRow([views[1]])
           ],
-        ));
+        );
       case 3:
-        return Container(
-            child: Column(
+        return Column(
           children: <Widget>[
-            _expandedVideoRow(views.sublist(0, 2)),
-            _expandedVideoRow(views.sublist(2, 3))
+        _expandedVideoRow(views.sublist(0, 2)),
+        _expandedVideoRow(views.sublist(2, 3))
           ],
-        ));
+        );
       case 4:
-        return Container(
-            child: Column(
+        return Column(
           children: <Widget>[
-            _expandedVideoRow(views.sublist(0, 2)),
-            _expandedVideoRow(views.sublist(2, 4))
+        _expandedVideoRow(views.sublist(0, 2)),
+        _expandedVideoRow(views.sublist(2, 4))
           ],
-        ));
+        );
       default:
     }
     return Container();
@@ -201,31 +199,31 @@ class _AppointmentCallState extends State<AppointmentCall> {
               color: muted ? Colors.white : CodeRedColors.primary2,
               size: 20.0,
             ),
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
             elevation: 2.0,
             fillColor: muted ? CodeRedColors.primary2 : Colors.white,
             padding: const EdgeInsets.all(12.0),
           ),
           RawMaterialButton(
             onPressed: () => _onCallEnd(context),
-            child: Icon(
+            child: const Icon(
               Icons.call_end,
               color: Colors.white,
               size: 36.0,
             ),
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
             elevation: 2.0,
             fillColor: CodeRedColors.primary,
             padding: const EdgeInsets.all(15.0),
           ),
           RawMaterialButton(
             onPressed: _onSwitchCamera,
-            child: Icon(
+            child: const Icon(
               Icons.switch_camera,
               color: CodeRedColors.primary2,
               size: 20.0,
             ),
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
             elevation: 2.0,
             fillColor: Colors.white,
             padding: const EdgeInsets.all(12.0),

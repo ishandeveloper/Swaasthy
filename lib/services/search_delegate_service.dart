@@ -1,6 +1,5 @@
-import 'package:codered/screens/diagnosis.dart';
-import 'package:codered/services/apimedic_service.dart';
-import 'package:codered/utils/constants/symptoms.dart';
+import '../screens/diagnosis.dart';
+import '../utils/constants/symptoms.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarDelegateService extends SearchDelegate<Symptoms> {
@@ -12,18 +11,20 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
     recentSuggest = [
       Symptoms(
         ID: 187,
-        Name: "Wound",
+        Name: 'Wound',
       ),
       Symptoms(
         ID: 22,
-        Name: "Weight loss",
+        Name: 'Weight loss',
       )
     ];
   }
   @override
   List<Widget> buildActions(BuildContext context) {
     // TODO: implement buildActions
-    return [IconButton(icon: Icon(Icons.clear), onPressed: () => query = "")];
+    return [
+      IconButton(icon: const Icon(Icons.clear), onPressed: () => query = '')
+    ];
   }
 
   @override
@@ -65,13 +66,13 @@ class SearchBarDelegateService extends SearchDelegate<Symptoms> {
                   text: TextSpan(
                       text:
                           suggestionList[index].Name.substring(0, query.length),
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                       children: [
                     TextSpan(
                         text:
                             suggestionList[index].Name.substring(query.length),
-                        style: TextStyle(color: Colors.grey))
+                        style: const TextStyle(color: Colors.grey))
                   ])),
             ));
   }

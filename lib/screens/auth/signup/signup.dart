@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/user.dart';
-import 'package:codered/screens/auth/signup/gender.dart';
-import 'package:codered/screens/indicator.dart';
-import 'package:codered/services/router/routes.dart';
-import 'package:codered/services/user_services.dart';
-import 'package:codered/utils/constants/colors.dart';
+import '../../../models/user.dart';
+import 'gender.dart';
+import '../../indicator.dart';
+import '../../../services/router/routes.dart';
+import '../../../services/user_services.dart';
+import '../../../utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +13,7 @@ import 'username.dart';
 import 'account_type.dart';
 
 class SignUp extends StatefulWidget {
+  const SignUp({Key key}) : super(key: key);
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -44,7 +45,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     });
 
     _progressAnimcontroller = AnimationController(
-      duration: Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
       vsync: this,
     );
 
@@ -56,22 +57,23 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
 
   @override
   void didChangeDependencies() {
-    if (this._isInitialized == null || !this._isInitialized) {
-      var mediaQD = MediaQuery.of(context);
-      var maxWidth = mediaQD.size.width;
+    if (_isInitialized == null || !_isInitialized) {
+      final mediaQD = MediaQuery.of(context);
+      final maxWidth = mediaQD.size.width;
       _setProgressAnimation(maxWidth, 1);
-      this._isInitialized = true;
+      _isInitialized = true;
     }
 
     super.didChangeDependencies();
   }
 
+  @override
   void dispose() {
     pageController.dispose();
     super.dispose();
   }
 
-  _setProgressAnimation(double maxWidth, int curPageIndex) {
+  void _setProgressAnimation(double maxWidth, int curPageIndex) {
     setState(() {
       growStepWidth = maxWidth / totalPages;
       beginWidth = growStepWidth * (curPageIndex - 1);
@@ -86,8 +88,8 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var mediaQD = MediaQuery.of(context);
-    var maxWidth = mediaQD.size.width;
+    final mediaQD = MediaQuery.of(context);
+    final maxWidth = mediaQD.size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -100,7 +102,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                 ),
                 onPressed: () {
                   pageController.previousPage(
-                      duration: Duration(milliseconds: 250),
+                      duration: const Duration(milliseconds: 250),
                       curve: Curves.ease);
                 },
               )
@@ -127,8 +129,13 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
           // _progressAnimcontroller.reset(); //reset the animation first
           _setProgressAnimation(maxWidth, i + 1);
         },
-        physics: NeverScrollableScrollPhysics(),
-        children: [UserNamePage(), AgePage(), GenderPage(), AccountType()],
+        physics: const NeverScrollableScrollPhysics(),
+        children: const [
+          UserNamePage(),
+          AgePage(),
+          GenderPage(),
+          AccountType()
+        ],
       ),
       floatingActionButton:
           Consumer<UserService>(builder: (context, ss, child) {
@@ -142,7 +149,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
             color: Colors.transparent,
             child: InkWell(
               onTap: () async {
-                final FocusScopeNode currentFocus = FocusScope.of(context);
+                final currentFocus = FocusScope.of(context);
                 if (!currentFocus.hasPrimaryFocus &&
                     currentFocus.focusedChild != null) {
                   FocusManager.instance.primaryFocus.unfocus();
@@ -166,14 +173,14 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
                         .onError((error, stackTrace) => print(error));
                   } else
                     pageController.nextPage(
-                        duration: Duration(milliseconds: 250),
+                        duration: const Duration(milliseconds: 250),
                         curve: Curves.ease);
                 }
               },
               child: Center(
                 child: Text(
                   currentIndex == totalPages - 1 ? 'Finish' : 'NEXT',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),
@@ -186,14 +193,15 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
 }
 
 class AnimatedProgressBar extends AnimatedWidget {
-  AnimatedProgressBar({Key key, Animation<double> animation})
+  const AnimatedProgressBar({Key key, Animation<double> animation})
       : super(key: key, listenable: animation);
 
+  @override
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
     return AnimatedContainer(
       height: 15.0,
-      duration: Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
       curve: Curves.ease,
       width: animation.value,
       decoration: BoxDecoration(

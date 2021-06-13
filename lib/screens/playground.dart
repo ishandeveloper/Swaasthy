@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Playground extends StatefulWidget {
+  const Playground({Key key}) : super(key: key);
   @override
   _PlaygroundState createState() => _PlaygroundState();
 }
@@ -14,9 +15,9 @@ class _PlaygroundState extends State<Playground> {
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
             MaterialButton(
-              child: Text("PRESS ME TO TEST"),
+              child: const Text('PRESS ME TO TEST'),
               onPressed: () async {
                 // await ConsultHelper.getAppointments(
                 //         userID: "qUOmsgFAwKPHaBSAWTnLah7sjMd2")
@@ -26,7 +27,7 @@ class _PlaygroundState extends State<Playground> {
               },
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
               child: Text(data.toString()),
             )
           ],

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codered/models/index.dart';
-import 'package:codered/utils/index.dart';
+import '../../../models/index.dart';
+import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
 
 class HDCell extends StatelessWidget {
@@ -33,7 +33,7 @@ class HDCell extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Dr.',
                     style: TextStyle(
                       fontFamily: 'ProductSans',
@@ -44,19 +44,19 @@ class HDCell extends StatelessWidget {
                   ),
                   Text(
                     doctor.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'ProductSans',
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Text(
                     doctor.type + ' Specialist',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'ProductSans',
                       color: Colors.white,
                       fontSize: 14,
@@ -72,12 +72,12 @@ class HDCell extends StatelessWidget {
               child: Container(
                 width: 77,
                 height: 54,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: CodeRedColors.primary2Accent,
                   borderRadius:
                       BorderRadius.only(topRight: Radius.circular(32)),
                 ),
-                child: Icon(
+                child: const Icon(
                   CustomIcons.arrow_right,
                   color: Colors.white,
                   size: 18,
@@ -121,7 +121,7 @@ class HDCell extends StatelessWidget {
 //       width: 100,
 //       height: 100,
 //       clipBehavior: Clip.hardEdge,
-//       padding: EdgeInsets.only(top: 14),
+//       padding: const .only(top: 14),
 //       decoration: BoxDecoration(
 //         color: Color(0xFFEDFDFA),
 //         borderRadius: BorderRadius.circular(16),
@@ -140,7 +140,7 @@ class HDCell extends StatelessWidget {
 //                   size: 24,
 //                   color: Color(0xFF00C6AD),
 //                 ),
-//                 SizedBox(
+//                 const SizedBox(
 //                   height: 8,
 //                 ),
 //                 Text(
@@ -202,14 +202,14 @@ class TopRatedDoctorCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 3),
-            color: Color(0XFF404B63).withOpacity(0.1),
+            offset: const Offset(0, 3),
+            color: const Color(0XFF404B63).withOpacity(0.1),
             blurRadius: 10,
           ),
         ],
@@ -218,7 +218,7 @@ class TopRatedDoctorCell extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _imageSection(),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           _detailsSection(),
         ],
       ),
@@ -252,39 +252,39 @@ class TopRatedDoctorCell extends StatelessWidget {
           children: [
             Text(
               doctor.rating.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFF929BB0),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
-            Icon(
+            const Icon(
               CustomIcons.star,
               color: Color(0xFFFFBB23),
               size: 14,
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(
           doctor.name,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(
           doctor.type + ' Specialist',
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF929BB0),
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -315,7 +315,7 @@ class DetailCell extends StatelessWidget {
       width: 100,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Color(0xFFEDFDFA),
+        color: const Color(0xFFEDFDFA),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Stack(
@@ -326,7 +326,7 @@ class DetailCell extends StatelessWidget {
             child: Container(
               width: 61,
               height: 31,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xFFE1F7F4),
                 borderRadius: BorderRadius.only(topRight: Radius.circular(16)),
               ),
@@ -339,18 +339,18 @@ class DetailCell extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFF00C6AD),
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Text(
                   subTitle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFF696969),
                     fontSize: 14,
                     fontWeight: FontWeight.w600,

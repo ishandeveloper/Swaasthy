@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../index.dart';
 
-netSensitiveCall(
+void netSensitiveCall(
     {@required BuildContext context, @required Function callback}) {
-  ConnectionStatus _connectionStatus =
+  final _connectionStatus =
       Provider.of<ConnectionStatus>(context, listen: false);
 
   // If no internet is available then display a message

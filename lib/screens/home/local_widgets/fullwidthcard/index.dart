@@ -19,16 +19,16 @@ class FullWidthHomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => this.onTap(),
+      onTap: () => onTap(),
       child: Container(
         width: MediaQuery.of(context).size.width * 1,
         height: 150,
-        decoration: BoxDecoration(boxShadow: [
+        decoration: BoxDecoration(boxShadow:const  [
           BoxShadow(
               color: Color.fromRGBO(0, 0, 0, 0.1),
               blurRadius: 6,
               offset: Offset(0, 2))
-        ], borderRadius: BorderRadius.circular(8), color: this.background),
+        ], borderRadius: BorderRadius.circular(8), color: background),
         child: Stack(
           children: [
             Positioned(
@@ -40,7 +40,7 @@ class FullWidthHomeCard extends StatelessWidget {
                     width: 175,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(this.imagePath))))),
+                            image: AssetImage(imagePath))))),
             Positioned(
                 top: 12,
                 left: 32,
@@ -49,8 +49,8 @@ class FullWidthHomeCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(this.subText, style: TextStyle(fontSize: 22)),
-                    Text(this.header, style: TextStyle(fontSize: 31)),
+                    Text(subText, style:const  TextStyle(fontSize: 22)),
+                    Text(header, style: const TextStyle(fontSize: 31)),
                   ],
                 )),
           ],

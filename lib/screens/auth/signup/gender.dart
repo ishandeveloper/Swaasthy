@@ -1,10 +1,11 @@
-import 'package:codered/services/user_services.dart';
-import 'package:codered/utils/constants/colors.dart';
+import '../../../services/user_services.dart';
+import '../../../utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 
 class GenderPage extends StatefulWidget {
+  const GenderPage({Key key}) : super(key: key);
   @override
   _GenderPageState createState() => _GenderPageState();
 }
@@ -42,7 +43,7 @@ class _GenderPageState extends State<GenderPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "What's your gender?",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -71,7 +72,7 @@ class _GenderPageState extends State<GenderPage> {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                    offset: Offset(1, 2),
+                    offset: const Offset(1, 2),
                     color: Colors.grey[300],
                     blurRadius: 10)
               ]),
@@ -98,7 +99,7 @@ class _GenderPageState extends State<GenderPage> {
                           ? Colors.white
                           : Colors.black,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(

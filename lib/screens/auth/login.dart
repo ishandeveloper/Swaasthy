@@ -1,9 +1,10 @@
-import 'package:codered/services/auth_service.dart';
+import '../../services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/constants/colors.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key key}) : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -18,30 +19,29 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Flexible(
+            const Flexible(
                 flex: 4,
                 fit: FlexFit.tight,
                 // child: Lottie.asset('assets/lottie/auth.json'),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 84.0, top: 96, right: 84),
+                  padding: EdgeInsets.only(left: 84.0, top: 96, right: 84),
                   child: Image(image: AssetImage('assets/images/swaasthy.png')),
                 )),
-            Text(
+            const Text(
               'Swaasthy',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text(
+            const Text(
               'The health assistant you deserve',
               style: TextStyle(
                 fontSize: 18,
                 height: 1.5,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.65,
               height: MediaQuery.of(context).size.height * 0.065,
@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     if (loader) ...[
-                      Center(
+                      const Center(
                         child: CircularProgressIndicator(),
                       )
                     ] else ...[
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 30,
                         width: 30,
                       ),
-                      Text(
+                      const Text(
                         'Sign in with Google',
                         style: TextStyle(
                           color: Colors.white,
@@ -93,16 +93,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            Spacer(),
-            Text(
+            const Spacer(),
+            const Text(
               '© Swaasthy solutions 2021.',
             ),
-            Text(
+            const Text(
               'Powered by ❤ from community',
               style: TextStyle(
                   fontSize: 16, fontWeight: FontWeight.bold, height: 1.5),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

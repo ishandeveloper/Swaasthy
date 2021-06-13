@@ -6,15 +6,15 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/received_notification.dart';
-import 'package:codered/models/user.dart';
-import 'package:codered/screens/indicator.dart';
-import 'package:codered/services/apimedic_service.dart';
-import 'package:codered/services/index.dart';
-import 'package:codered/services/router/routes.dart';
-import 'package:codered/services/user_services.dart';
-import 'package:codered/shared_widgets/index.dart';
-import 'package:codered/utils/index.dart';
+import '../models/received_notification.dart';
+import '../models/user.dart';
+import 'indicator.dart';
+import '../services/apimedic_service.dart';
+import '../services/index.dart';
+import '../services/router/routes.dart';
+import '../services/user_services.dart';
+import '../shared_widgets/index.dart';
+import '../utils/index.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
@@ -33,7 +33,7 @@ class ScreensWrapper extends StatefulWidget {
 
   final int userType = user.type;
 
-  ScreensWrapper({this.refresh = false});
+  ScreensWrapper({this.refresh = false, Key key}) : super(key: key);
 
   @override
   _ScreensWrapperState createState() => _ScreensWrapperState();
@@ -74,8 +74,8 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
+      final notification = message.notification;
+      final android = message.notification?.android;
 
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
@@ -95,7 +95,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       print('A new onMessageOpenedApp event was published!');
-      await UserService().increaseUserHeartPoints(50);
+      UserService().increaseUserHeartPoints(50);
       Navigator.pushNamed(context, CodeRedRoutes.home);
     });
 
@@ -176,11 +176,10 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
     });
   }
 
-  getUserIp() async {
-    http.Response response =
+  void getUserIp() async {
+    final response =
         await http.get(Uri.parse('https://worldtimeapi.org/api/ip'));
     if (response.statusCode == 200) {
-
       user = User(
           points: user.points,
           age: user.age,
@@ -200,10 +199,9 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    ScreensWrapperService _service =
-        Provider.of<ScreensWrapperService>(context, listen: true);
+    final _service = Provider.of<ScreensWrapperService>(context, listen: true);
 
-    int currentIndex = _service.getIndex();
+    final currentIndex = _service.getIndex();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (_pageController.page.round() != currentIndex)
@@ -222,12 +220,12 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
                             currentIndex: currentIndex,
                             onChange: (e) => _navbarChangeHandler(_service, e)),
                     body: PageView(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         controller: _pageController,
                         onPageChanged: (e) => _pageChangeHandler(_service, e),
                         children: [
                           TransitionWrapper(
-                              ltr: leftToRight, child: HomeScreen()),
+                              ltr: leftToRight, child: const HomeScreen()),
                           TransitionWrapper(
                               ltr: leftToRight, child: StatsScreen()),
                           TransitionWrapper(
@@ -268,7 +266,7 @@ class _ScreensWrapperState extends State<ScreensWrapper> {
 class DummyScreen extends StatelessWidget {
   final String title;
 
-  DummyScreen({@required this.title});
+  const DummyScreen({@required this.title, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@
 */
 import 'dart:async';
 
-import 'package:codered/utils/index.dart';
+import '../utils/index.dart';
 import 'package:connectivity/connectivity.dart';
 
 class ConnectionService {
@@ -15,7 +15,7 @@ class ConnectionService {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult res) {
       // Convert ConnectivityResult to ConnectionStatus
 
-      ConnectionStatus _status = getStatus(res);
+      final _status = getStatus(res);
 
       // Broadcast over stream
       connectioncontroller.add(_status);

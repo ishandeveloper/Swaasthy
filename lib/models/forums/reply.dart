@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/forums/post_user.dart';
+import 'post_user.dart';
 import 'package:flutter/material.dart';
 
 class ReplyModel {

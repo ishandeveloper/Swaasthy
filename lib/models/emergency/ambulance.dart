@@ -17,7 +17,7 @@ class Ambulance {
   });
 
   factory Ambulance.getModel(Map<String, dynamic> data) {
-    GeoPoint _ = data['coordinates'] as GeoPoint;
+    final _ = data['coordinates'] as GeoPoint;
 
     return Ambulance(
       assignID: data['assigned_to'],

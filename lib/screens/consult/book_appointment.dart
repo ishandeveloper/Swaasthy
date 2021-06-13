@@ -1,6 +1,6 @@
-import 'package:codered/models/index.dart';
-import 'package:codered/services/index.dart';
-import 'package:codered/utils/index.dart';
+import '../../models/index.dart';
+import '../../services/index.dart';
+import '../../utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -8,6 +8,7 @@ import '../index.dart';
 import 'local_widgets/index.dart';
 
 class BookAppointment extends StatefulWidget {
+  const BookAppointment({Key key}) : super(key: key);
   @override
   _BookAppointmentState createState() => _BookAppointmentState();
 }
@@ -20,7 +21,7 @@ class _BookAppointmentState extends State<BookAppointment> {
   /// ACTIONS
   /// **********************************************
 
-  _onCellTap(Doctor doctor) {
+  void _onCellTap(Doctor doctor) {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -37,12 +38,12 @@ class _BookAppointmentState extends State<BookAppointment> {
   }
 
   void getHeroDoctors() async {
-    List<Doctor> _ = await ConsultHelper.getHeroDoctors();
+    final _ = await ConsultHelper.getHeroDoctors();
     setState(() => _hDoctors = _);
   }
 
   void getTopRatedDoctors() async {
-    List<Doctor> _ = await ConsultHelper.getTopRatedDoctors();
+    final _ = await ConsultHelper.getTopRatedDoctors();
     setState(() => _trDoctors = _);
   }
 
@@ -71,10 +72,10 @@ class _BookAppointmentState extends State<BookAppointment> {
         primary: false,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         itemCount: _hDoctors.length,
         separatorBuilder: (BuildContext context, int index) =>
-            Divider(indent: 16),
+            const Divider(indent: 16),
         itemBuilder: (BuildContext context, int index) => HDCell(
           doctor: _hDoctors[index],
           onTap: () => _onCellTap(_hDoctors[index]),
@@ -89,7 +90,7 @@ class _BookAppointmentState extends State<BookAppointment> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Top Rated Doctors',
             style: TextStyle(
               color: Colors.black,
@@ -97,7 +98,7 @@ class _BookAppointmentState extends State<BookAppointment> {
               fontWeight: FontWeight.w400,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 32,
           ),
           Shimmer.fromColors(
@@ -105,7 +106,8 @@ class _BookAppointmentState extends State<BookAppointment> {
                 primary: false,
                 shrinkWrap: true,
                 itemCount: 5,
-                separatorBuilder: (BuildContext context, int index) => Divider(
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(
                   thickness: 16,
                   color: Colors.transparent,
                 ),
@@ -130,7 +132,7 @@ class _BookAppointmentState extends State<BookAppointment> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Top Rated Doctors',
           style: TextStyle(
             color: Colors.black,
@@ -138,14 +140,14 @@ class _BookAppointmentState extends State<BookAppointment> {
             fontWeight: FontWeight.w400,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 32,
         ),
         ListView.separated(
           primary: false,
           shrinkWrap: true,
           itemCount: _trDoctors.length,
-          separatorBuilder: (BuildContext context, int index) => Divider(
+          separatorBuilder: (BuildContext context, int index) => const Divider(
             thickness: 16,
             color: Colors.transparent,
           ),
@@ -160,7 +162,7 @@ class _BookAppointmentState extends State<BookAppointment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(72),
         child: SafeArea(child: BookAppointmentHeader()),
       ),
@@ -169,9 +171,9 @@ class _BookAppointmentState extends State<BookAppointment> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             _hDoctorsSection(),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: _trDoctorsSection(),
             ),
           ]),
@@ -189,7 +191,7 @@ class BookAppointmentHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 16, top: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -199,10 +201,10 @@ class BookAppointmentHeader extends StatelessWidget {
                   color: CodeRedColors.icon,
                   iconSize: 24,
                   splashRadius: 20,
-                  icon: Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context)),
-              SizedBox(width: 8),
-              Text(
+              const SizedBox(width: 8),
+              const Text(
                 'Choose a doctor',
                 style: TextStyle(
                   fontSize: 28,

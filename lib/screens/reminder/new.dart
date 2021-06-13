@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:codered/models/medicine_reminder.dart';
-import 'package:codered/utils/constants/colors.dart';
-import 'package:codered/utils/helpers/interactions.dart';
+import '../../models/medicine_reminder.dart';
+import '../../utils/constants/colors.dart';
+import '../../utils/helpers/interactions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -38,26 +38,27 @@ class _NewReminderState extends State<NewReminder> {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: InkWell(
             onTap: () => Navigator.pop(context),
-            child: Container(
+            child: const SizedBox(
                 width: 32,
                 height: 32,
-                child:
-                    Icon(Icons.arrow_back_ios, size: 16, color: Colors.black))),
-        title: Text(
+                child:  Icon(Icons.arrow_back_ios,
+                    size: 16, color: Colors.black))),
+        title: const Text(
           'NEW REMINDER',
           style: TextStyle(fontFamily: 'ProductSans', color: Colors.black),
         ),
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+        padding:
+            const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,9 +71,9 @@ class _NewReminderState extends State<NewReminder> {
                   borderRadius: BorderRadius.circular(10)),
               child: TextFormField(
                 controller: medicineNameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: 'Enter Medicine Name',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
                     border: InputBorder.none),
               ),
             ),
@@ -97,7 +98,7 @@ class _NewReminderState extends State<NewReminder> {
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text('Time'), Text(time)],
+                  children: [const Text('Time'), Text(time)],
                 ),
               ),
             ),
@@ -111,50 +112,50 @@ class _NewReminderState extends State<NewReminder> {
               child: TextFormField(
                 controller: daysController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: 'Enter Number Of Days Of Prescription',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
                     border: InputBorder.none),
               ),
             ),
             SizedBox(height: height * 0.02),
             if (medicineNameController.text.length > 1 &&
                 daysController.text.length > 0) ...[
-              Text("Medicine Reminder details",
+              const Text('Medicine Reminder details',
                   style: TextStyle(
                     fontSize: 14,
                     color: CodeRedColors.secondaryText,
                     fontFamily: 'ProductSans',
                   )),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   Text(medicineNameController.text,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'ProductSans',
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
                       )),
-                  Text(" on ",
+                  const Text(' on ',
                       style: TextStyle(
                         fontFamily: 'ProductSans',
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       )),
                   Text(time,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'ProductSans',
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
                       )),
-                  Text(" for ",
+                  const Text(' for ',
                       style: TextStyle(
                         fontFamily: 'ProductSans',
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       )),
                   Text('${daysController.text} days.',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'ProductSans',
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
@@ -162,7 +163,7 @@ class _NewReminderState extends State<NewReminder> {
                 ],
               ),
             ],
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -179,8 +180,8 @@ class _NewReminderState extends State<NewReminder> {
                     .then((value) => Navigator.pop(context));
               },
               child: loader
-                  ? Center(child: CircularProgressIndicator())
-                  : Text(
+                  ? const Center(child: CircularProgressIndicator())
+                  : const Text(
                       'CONFIRM',
                       style: TextStyle(fontSize: 18),
                     ))),
@@ -189,7 +190,7 @@ class _NewReminderState extends State<NewReminder> {
   }
 
   Future<bool> _scheduleMedicineNotification() async {
-    return await flutterLocalNotificationsPlugin
+    return  flutterLocalNotificationsPlugin
         .zonedSchedule(
             0,
             'weekly scheduled notification title',
@@ -212,13 +213,13 @@ class _NewReminderState extends State<NewReminder> {
   }
 
   tz.TZDateTime _nextInstanceMedicine() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    int hr = int.parse(time.split(':')[0]);
-    int min = int.parse(time.split(':')[1].split(' ')[0]);
+    final now = tz.TZDateTime.now(tz.local);
+    final hr = int.parse(time.split(':')[0]);
+    final min = int.parse(time.split(':')[1].split(' ')[0]);
     debugPrint(hr.toString() + ' ' + min.toString());
-    tz.TZDateTime scheduledDate =
+    var scheduledDate =
         tz.TZDateTime(tz.local, now.year, now.month, now.day, hr, min);
-    for (int i = 0; i < int.parse(daysController.text); i++) {
+    for (var i = 0; i < int.parse(daysController.text); i++) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
       Provider.of<MedicineReminderService>(context, listen: false).updateList(
           MedicineReminderData(

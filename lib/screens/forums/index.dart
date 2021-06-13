@@ -4,7 +4,7 @@ import 'local_widgets/index.dart';
 
 class ForumsScreen extends StatelessWidget {
   final bool refresh;
-  ForumsScreen({@required this.refresh});
+  const ForumsScreen({@required this.refresh, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

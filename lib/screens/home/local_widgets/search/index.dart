@@ -1,5 +1,5 @@
-import 'package:codered/services/search_delegate_service.dart';
-import 'package:codered/utils/index.dart';
+import '../../../../services/search_delegate_service.dart';
+import '../../../../utils/index.dart';
 import 'package:flutter/material.dart';
 
 class HomeSearch extends StatelessWidget {
@@ -12,13 +12,13 @@ class HomeSearch extends StatelessWidget {
     return Container(
       color: CodeRedColors.inputFields,
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      padding:const  EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: GestureDetector(
         onTap: () {
           showSearch(context: context, delegate: SearchBarDelegateService());
         },
         child: Row(
-          children: [
+          children: const [
             Icon(Icons.search, color: CodeRedColors.icon),
             SizedBox(width: 6),
             Text(

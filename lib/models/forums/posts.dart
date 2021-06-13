@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/forums/post_user.dart';
-import 'package:codered/utils/index.dart';
+import 'post_user.dart';
+import '../../utils/index.dart';
 import 'package:flutter/material.dart';
 
 class ForumPostModel {

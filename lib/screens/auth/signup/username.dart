@@ -1,8 +1,9 @@
-import 'package:codered/services/user_services.dart';
+import '../../../services/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserNamePage extends StatefulWidget {
+  const UserNamePage({Key key}) : super(key: key);
   @override
   _UserNamePageState createState() => _UserNamePageState();
 }
@@ -42,8 +43,8 @@ class _UserNamePageState extends State<UserNamePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Create Your User Name",
+          const Text(
+            'Create Your User Name',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Container(
@@ -53,7 +54,7 @@ class _UserNamePageState extends State<UserNamePage> {
                 border: Border.all(color: Colors.grey[300])),
             child: TextField(
               controller: nameController,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
               ),
               onChanged: (value) {
@@ -62,9 +63,9 @@ class _UserNamePageState extends State<UserNamePage> {
                       .putName(value);
                 });
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(10),
+                  contentPadding: EdgeInsets.all(10),
                   isDense: true),
             ),
           )

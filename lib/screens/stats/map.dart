@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:codered/models/places.dart';
+import '../../models/places.dart';
 
 class MapSample extends StatefulWidget {
-  static final CameraPosition _initialCameraPosition =
+  const MapSample({Key key}) : super(key: key);
+  static const CameraPosition _initialCameraPosition =
       CameraPosition(target: LatLng(20.593684, 78.96288), zoom: 12);
   @override
   State<MapSample> createState() => MapSampleState();
@@ -18,7 +19,7 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
   ClusterManager _manager;
 
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
 
   GoogleMapController _activeMapsController;
 
@@ -52,10 +53,10 @@ class MapSampleState extends State<MapSample> {
   }
 
   void getUserPosition() async {
-    Position position = await Geolocator.getCurrentPosition(
+    final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    LatLng _latLongPosition = LatLng(position.latitude, position.longitude);
+    final _latLongPosition = LatLng(position.latitude, position.longitude);
 
     _mapPosition = CameraPosition(target: _latLongPosition, zoom: 14.4746);
     _activeMapsController
@@ -141,17 +142,17 @@ class MapSampleState extends State<MapSample> {
   Future<BitmapDescriptor> _getMarkerBitmap(int size, {String text}) async {
     if (kIsWeb) size = (size / 2).floor();
 
-    final PictureRecorder pictureRecorder = PictureRecorder();
-    final Canvas canvas = Canvas(pictureRecorder);
-    final Paint paint1 = Paint()..color = Colors.orange;
-    final Paint paint2 = Paint()..color = Colors.white;
+    final pictureRecorder = PictureRecorder();
+    final canvas = Canvas(pictureRecorder);
+    final paint1 = Paint()..color = Colors.orange;
+    final paint2 = Paint()..color = Colors.white;
 
     canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
     canvas.drawCircle(Offset(size / 2, size / 2), size / 2.2, paint2);
     canvas.drawCircle(Offset(size / 2, size / 2), size / 2.8, paint1);
 
     if (text != null) {
-      TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
+      final painter = TextPainter(textDirection: TextDirection.ltr);
       painter.text = TextSpan(
         text: text,
         style: TextStyle(

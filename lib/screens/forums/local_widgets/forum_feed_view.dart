@@ -1,4 +1,4 @@
-import 'package:codered/models/forums/posts.dart';
+import '../../../models/forums/posts.dart';
 import 'package:flutter/material.dart';
 
 import 'index.dart';
@@ -8,7 +8,7 @@ class ForumFeedView extends StatefulWidget {
   final ScrollController scrollController;
   final Function onScroll;
 
-  ForumFeedView({
+  const ForumFeedView({
     this.snapshot,
     this.scrollController,
     this.onScroll,
@@ -23,11 +23,12 @@ class _ForumFeedViewState extends State<ForumFeedView> {
   Widget build(BuildContext context) {
     return ListView.separated(
         separatorBuilder: (_, __) => const Divider(thickness: 5, height: 5),
-        itemCount: this.widget.snapshot.data.length,
+        itemCount: widget.snapshot.data.length,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (_, index) {
-          if (!widget.snapshot.hasData) return CircularProgressIndicator();
+          if (!widget.snapshot.hasData)
+            return const CircularProgressIndicator();
 
           return ForumPost(
               index: index,

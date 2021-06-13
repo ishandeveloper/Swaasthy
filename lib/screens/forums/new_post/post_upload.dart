@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/forums/post_user.dart';
-import 'package:codered/services/database/storage.dart';
-import 'package:codered/services/index.dart';
-import 'package:codered/utils/index.dart';
+import '../../../models/forums/post_user.dart';
+import '../../../services/database/storage.dart';
+import '../../../services/index.dart';
+import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:lottie/lottie.dart';
@@ -16,12 +14,13 @@ class PostUpload extends StatefulWidget {
   final Asset image;
   final PostUserModel user;
 
-  PostUpload({
-    @required this.body,
-    @required this.title,
-    @required this.image,
-    @required this.user,
-  });
+  const PostUpload(
+      {@required this.body,
+      @required this.title,
+      @required this.image,
+      @required this.user,
+      Key key})
+      : super(key: key);
 
   @override
   _PostUploadState createState() => _PostUploadState();
@@ -30,7 +29,7 @@ class PostUpload extends StatefulWidget {
 class _PostUploadState extends State<PostUpload> with TickerProviderStateMixin {
   AnimationController _controller;
 
-  bool _error = false;
+  final bool _error = false;
 
   @override
   void initState() {
@@ -40,7 +39,7 @@ class _PostUploadState extends State<PostUpload> with TickerProviderStateMixin {
   }
 
   void _addDocToFirestore() async {
-    print("ADDING POST TO FIREBASE");
+    print('ADDING POST TO FIREBASE');
 
     if (widget?.image == null) {
       FirebaseFirestore.instance
@@ -66,7 +65,7 @@ class _PostUploadState extends State<PostUpload> with TickerProviderStateMixin {
         Phoenix.rebirth(context);
       });
     } else {
-      File _ = await getImageFileFromAssets(widget.image);
+      final _ = await getImageFileFromAssets(widget.image);
 
       await FirebaseFirestore.instance
           .collection('forums')
@@ -103,7 +102,7 @@ class _PostUploadState extends State<PostUpload> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFAFAFA),
+      backgroundColor: const Color(0xffFAFAFA),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +114,7 @@ class _PostUploadState extends State<PostUpload> with TickerProviderStateMixin {
                 width: getContextWidth(context) * 1,
                 controller: _controller, onLoaded: (_) {
               _controller
-                ..duration = Duration(milliseconds: 2500)
+                ..duration = const Duration(milliseconds: 2500)
                 ..forward();
             })
           else
@@ -123,10 +122,10 @@ class _PostUploadState extends State<PostUpload> with TickerProviderStateMixin {
                 width: getContextWidth(context) * 1,
                 controller: _controller, onLoaded: (_) {
               _controller
-                ..duration = Duration(milliseconds: 1200)
+                ..duration = const Duration(milliseconds: 1200)
                 ..repeat();
             }),
-          Text("Posting..", style: TextStyle(fontSize: 18))
+          const Text('Posting..', style: TextStyle(fontSize: 18))
         ],
       ),
     );

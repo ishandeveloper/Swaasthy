@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/user.dart';
-import 'package:codered/screens/indicator.dart';
+import '../models/user.dart';
+import '../screens/indicator.dart';
 import 'package:flutter/foundation.dart';
 
 class UserService with ChangeNotifier {
@@ -8,32 +8,32 @@ class UserService with ChangeNotifier {
   int accountType, points;
   bool active = false;
 
-  putName(String val) {
+  void putName(String val) {
     name = val;
     notifyListeners();
   }
 
-  putAge(String val) {
+  void putAge(String val) {
     age = val;
     notifyListeners();
   }
 
-  putGender(String val) {
+  void putGender(String val) {
     gender = val;
     notifyListeners();
   }
 
-  putType(int val) {
+  void putType(int val) {
     accountType = val;
     notifyListeners();
   }
 
-  updateStatus(bool status) {
+  void updateStatus(bool status) {
     active = status;
     notifyListeners();
   }
 
-  increaseUserHeartPoints(int pnts) async {
+  void increaseUserHeartPoints(int pnts) async {
     points = user.points;
     points += pnts;
     await FirebaseFirestore.instance

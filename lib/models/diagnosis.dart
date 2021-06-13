@@ -4,9 +4,9 @@ class DiagnosisResult {
   DiagnosisResult({this.diagnosisResult});
 
   factory DiagnosisResult.fromJSON(List<dynamic> parsedJson) {
-    DiagnosisResult diagnosisResult = DiagnosisResult(
+    final diagnosisResult = DiagnosisResult(
         diagnosisResult: parsedJson.map((e) => Diagnosis.fromJSON(e)).toList());
-    print("Checking " + diagnosisResult.diagnosisResult[1].name);
+    print('Checking ' + diagnosisResult.diagnosisResult[1].name);
     return diagnosisResult;
   }
 }
@@ -22,7 +22,7 @@ class Diagnosis {
   factory Diagnosis.fromJSON(Map<dynamic, dynamic> parsedJson) {
     return Diagnosis(
       name: parsedJson['Issue']['Name'],
-      accuracy: parsedJson["Issue"]['Accuracy'],
+      accuracy: parsedJson['Issue']['Accuracy'],
       alsoKnownAs: parsedJson['Issue']['ProfName'],
       specialist: parsedJson['Specialisation'][1]['Name'],
     );

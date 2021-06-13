@@ -1,8 +1,9 @@
-import 'package:codered/services/user_services.dart';
+import '../../../services/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AgePage extends StatefulWidget {
+  const AgePage({Key key}) : super(key: key);
   @override
   _AgePageState createState() => _AgePageState();
 }
@@ -39,7 +40,7 @@ class _AgePageState extends State<AgePage> {
           children: [
             Text(
               "What's your age, ${Provider.of<UserService>(context, listen: false).name ?? ''} ?",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
               margin: const EdgeInsets.only(top: 30),
@@ -48,7 +49,7 @@ class _AgePageState extends State<AgePage> {
                   border: Border.all(color: Colors.grey[300])),
               child: TextField(
                 controller: ageController,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                 ),
                 onChanged: (value) {
@@ -59,22 +60,22 @@ class _AgePageState extends State<AgePage> {
                   });
                 },
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: const EdgeInsets.all(10),
+                    contentPadding: EdgeInsets.all(10),
                     isDense: true),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
               error ?? '',
-              style: TextStyle(fontSize: 16, color: Colors.red),
+              style: const TextStyle(fontSize: 16, color: Colors.red),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(6)),
@@ -86,12 +87,12 @@ class _AgePageState extends State<AgePage> {
                     color: Colors.grey[800],
                     size: 22,
                   ),
-                  SizedBox(width: 6),
+                  const SizedBox(width: 6),
                   Expanded(
                       child: Wrap(
                     children: [
-                      Text(
-                          "This data will only be used for symptom based disease diagnose purposes and we would never share this with anyone. Promise.")
+                      const Text(
+                          'This data will only be used for symptom based disease diagnose purposes and we would never share this with anyone. Promise.')
                     ],
                   ))
                 ],

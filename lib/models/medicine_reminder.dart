@@ -9,8 +9,7 @@ class MedicineReminderData {
 }
 
 class MedicineReminderService with ChangeNotifier {
-  List<MedicineReminderData> medicineReminderList =
-      <MedicineReminderData>[
+  List<MedicineReminderData> medicineReminderList = <MedicineReminderData>[
     MedicineReminderData(
       time: DateTime.now(),
       title: 'Diabetes Tablets',
@@ -18,7 +17,7 @@ class MedicineReminderService with ChangeNotifier {
     ),
   ];
 
-  updateList(MedicineReminderData medicineReminderData) {
+  void updateList(MedicineReminderData medicineReminderData) {
     medicineReminderList.add(medicineReminderData);
     notifyListeners();
   }

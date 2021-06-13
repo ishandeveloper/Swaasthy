@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/services/router/routes.dart';
+import '../services/router/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:codered/models/user.dart' as usr;
+import '../models/user.dart' as usr;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -22,13 +22,12 @@ class _IndicatorState extends State<Indicator> {
     checkUserExistance();
   }
 
-  checkUserExistance() async {
+  void checkUserExistance() async {
     if (widget.authUser != null) {
-      CollectionReference collectionReference =
+      final collectionReference =
           FirebaseFirestore.instance.collection('users');
 
-      final DocumentSnapshot value =
-          await collectionReference.doc(widget.authUser.uid).get();
+      final value = await collectionReference.doc(widget.authUser.uid).get();
       if (value.exists) {
         user = usr.User.fromJson(value.data());
         // setState(() {});
@@ -55,7 +54,7 @@ class _IndicatorState extends State<Indicator> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: Center(
       child: CircularProgressIndicator(),
     ));

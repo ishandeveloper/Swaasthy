@@ -6,7 +6,7 @@ class Appointment {
   Appointment({this.appointments});
 
   factory Appointment.getModel(DocumentSnapshot data) {
-    List<AppointmentItem> _ = [];
+    final _ = <AppointmentItem>[];
 
     data['appointments']?.forEach((e) {
       _.add(AppointmentItem.getModel(e));
@@ -34,7 +34,7 @@ class AppointmentItem {
   });
 
   factory AppointmentItem.getModel(Map<String, dynamic> data) {
-    List<Prescription> _ = [];
+    final _ = <Prescription>[];
 
     data['prescription']?.forEach((e) {
       _.add(Prescription(

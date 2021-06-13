@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/screens/indicator.dart';
-import 'package:codered/services/database/storage.dart';
-import 'package:codered/services/user_services.dart';
+import 'indicator.dart';
+import '../services/database/storage.dart';
+import '../services/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:provider/provider.dart';
@@ -11,13 +11,14 @@ import 'package:provider/provider.dart';
 import '../shared_widgets/image_picker_class.dart';
 
 class TextRecognition extends StatefulWidget {
+  const TextRecognition({Key key}) : super(key: key);
   @override
   _TextRecognitionState createState() => _TextRecognitionState();
 }
 
 class _TextRecognitionState extends State<TextRecognition> {
   File _image;
-  var result = "";
+  var result = '';
 
   void _pickedImage(File image) {
     _image = image;
@@ -29,24 +30,24 @@ class _TextRecognitionState extends State<TextRecognition> {
     return ImagePickerClass(_pickedImage);
   }
 
-  textRecognition() async {
+  void textRecognition() async {
     final textDetector = GoogleMlKit.vision.textDetector();
-    final RecognisedText recognisedText =
+    final recognisedText =
         await textDetector.processImage(InputImage.fromFile(_image));
 
-    result = "";
-    for (TextBlock block in recognisedText.blocks) {
-      for (TextLine line in block.lines) {
+    result = '';
+    for (final block in recognisedText.blocks) {
+      for (final line in block.lines) {
         setState(() {
           result = result + ' ' + line.text + '\n';
         });
       }
     }
-    print("RESULT: $result");
-    DocumentReference documentReference = FirebaseFirestore.instance
+    print('RESULT: $result');
+    final documentReference = FirebaseFirestore.instance
         .collection('verification_requests')
         .doc(user.uid);
-    DocumentSnapshot documentSnapshot = await documentReference.get();
+    final documentSnapshot = await documentReference.get();
     if (documentSnapshot.exists)
       await documentReference.update({
         'vision_text': result.split('\n'),
@@ -67,6 +68,7 @@ class _TextRecognitionState extends State<TextRecognition> {
   }
 
   /// Shows different screens based on the state of the custom model.
+  @override
   Widget build(BuildContext context) {
     return Scaffold(body: readyScreen());
   }

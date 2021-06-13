@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerClass extends StatefulWidget {
-  ImagePickerClass(
-    this.imagePickFn,
-  );
+  const ImagePickerClass(this.imagePickFn, {Key key}) : super(key: key);
 
   final void Function(File pickedImage) imagePickFn;
 
@@ -17,7 +15,7 @@ class ImagePickerClass extends StatefulWidget {
 class _ImagePickerClassState extends State<ImagePickerClass> {
   File _image;
   Future getImagefromCamera() async {
-    var image = ImagePicker();
+    final image = ImagePicker();
     await image
         .getImage(source: ImageSource.camera)
         .then((value) => _image = File(value.path));
@@ -27,7 +25,7 @@ class _ImagePickerClassState extends State<ImagePickerClass> {
   }
 
   Future getImagefromGallery() async {
-    var image = ImagePicker();
+    final image = ImagePicker();
     await image
         .getImage(source: ImageSource.gallery)
         .then((value) => _image = File(value.path));
@@ -50,7 +48,7 @@ class _ImagePickerClassState extends State<ImagePickerClass> {
                 borderRadius: BorderRadius.circular(22)),
             child: Center(
               child: _image == null
-                  ? Text("No Image is picked")
+                  ? const Text('No Image is picked')
                   : Image.file(_image),
             ),
           ),
@@ -61,12 +59,12 @@ class _ImagePickerClassState extends State<ImagePickerClass> {
             FloatingActionButton(
               onPressed: getImagefromCamera,
               heroTag: 'camera',
-              child: Icon(Icons.add_a_photo),
+              child: const Icon(Icons.add_a_photo),
             ),
             FloatingActionButton(
               onPressed: getImagefromGallery,
               heroTag: 'gallery',
-              child: Icon(Icons.camera_alt),
+              child: const Icon(Icons.camera_alt),
             )
           ],
         )

@@ -30,8 +30,8 @@ enum ForumPostType {
 
 */
 
-checkForumPostType(int type) {
-  int _type = type;
+dynamic checkForumPostType(int type) {
+  final _type = type;
 
   switch (_type) {
 

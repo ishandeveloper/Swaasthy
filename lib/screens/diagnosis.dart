@@ -1,15 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codered/models/diagnosis.dart';
-import 'package:codered/services/apimedic_service.dart';
-import 'package:codered/utils/constants/colors.dart';
+import '../models/diagnosis.dart';
+import '../services/apimedic_service.dart';
+import '../utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 
 class DiagnosisReport extends StatefulWidget {
   final List<int> symptoms;
-  DiagnosisReport({this.symptoms});
+  const DiagnosisReport({this.symptoms, Key key}) : super(key: key);
   @override
   _DiagnosisReportState createState() => _DiagnosisReportState();
 }
@@ -19,7 +17,7 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
   int currentIndex = 0;
 
   Future<GeoPoint> getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
+    final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     return GeoPoint(position.latitude, position.longitude);
   }
@@ -43,7 +41,7 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Diagnosis Result',
                             style: TextStyle(
                               fontSize: 25,
@@ -62,7 +60,7 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                  offset: Offset(0, -3),
+                                  offset: const Offset(0, -3),
                                   color: Colors.grey[300],
                                   blurRadius: 5)
                             ]),
@@ -90,49 +88,49 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Container(
+                              SizedBox(
                                   height: 38,
                                   width: 38,
                                   child: currentIndex == 0
                                       ? FloatingActionButton(
                                           backgroundColor: Colors.grey[400],
-                                          child: Icon(
+                                          child: const Icon(
                                               Icons.arrow_forward_ios_rounded,
                                               size: 15,
                                               color: Colors.black),
                                           onPressed: () {
                                             if (pageController.hasClients) {
                                               pageController.animateToPage(1,
-                                                  duration: Duration(
+                                                  duration: const Duration(
                                                       milliseconds: 200),
                                                   curve: Curves.ease);
                                             }
                                           })
-                                      : SizedBox()),
+                                      : const SizedBox()),
                               Chip(
                                 label: Text('result ${currentIndex + 1} of 2'),
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 10),
                               ),
-                              Container(
+                              SizedBox(
                                   height: 38,
                                   width: 38,
                                   child: currentIndex == 1
                                       ? FloatingActionButton(
                                           backgroundColor: Colors.grey,
-                                          child: Icon(
+                                          child: const Icon(
                                               Icons.arrow_back_ios_rounded,
                                               size: 15,
                                               color: Colors.black),
                                           onPressed: () {
                                             if (pageController.hasClients) {
                                               pageController.animateToPage(0,
-                                                  duration: Duration(
+                                                  duration: const Duration(
                                                       milliseconds: 200),
                                                   curve: Curves.ease);
                                             }
                                           })
-                                      : SizedBox())
+                                      : const SizedBox())
                             ],
                           ),
                         ),
@@ -150,7 +148,7 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
+                          const Flexible(
                             flex: 2,
                             fit: FlexFit.tight,
                             child: Text(
@@ -177,32 +175,30 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                                       'symptoms': widget.symptoms
                                     });
                                   },
-                                  child: Chip(
+                                  child: const Chip(
                                     label: Text('Yes'),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
-                                Chip(
+                                const Chip(
                                   label: Text('No'),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
-                                Chip(
+                                const Chip(
                                   label: Text('I prefer not to say'),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
                                 ),
                               ],
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Flexible(
                             flex: 3,
                             fit: FlexFit.tight,
@@ -211,7 +207,7 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                               padding: const EdgeInsets.all(8),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Icon(
                                     Icons.info_outline,
                                     color: Colors.white,
@@ -235,7 +231,7 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                     ))
               ],
             );
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         });
@@ -247,16 +243,16 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Data',
+          const Text('Data',
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
               )),
-          SizedBox(height: 10),
-          Text('also known as \'Data\''),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
+          const Text('also known as \'Data\''),
+          const SizedBox(height: 10),
           RichText(
-            text: TextSpan(
+            text: const TextSpan(
                 children: [
                   TextSpan(text: 'There is a '),
                   TextSpan(
@@ -270,19 +266,19 @@ class _DiagnosisReportState extends State<DiagnosisReport> {
                     color: Colors.black,
                     fontFamily: 'ProductSans')),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             'We recommend consulting a \'data\' doctor.',
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () {},
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               child: Text(
                 'Consult a doctor',
                 style: TextStyle(fontSize: 18),

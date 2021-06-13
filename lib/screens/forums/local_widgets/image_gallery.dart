@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codered/utils/index.dart';
+import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,7 +13,9 @@ class ImageGalleryView extends StatefulWidget {
   // Accepts the current index of the image
   final int currentIndex;
 
-  ImageGalleryView({@required this.images, this.currentIndex = 0});
+  const ImageGalleryView(
+      {@required this.images, this.currentIndex = 0, Key key})
+      : super(key: key);
 
   @override
   _ImageGalleryViewState createState() => _ImageGalleryViewState();
@@ -28,7 +30,7 @@ class _ImageGalleryViewState extends State<ImageGalleryView> {
     _current = widget.currentIndex + 1;
     // DARK STATUS BAR
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.light),
@@ -40,7 +42,7 @@ class _ImageGalleryViewState extends State<ImageGalleryView> {
   void dispose() {
     // LIGHT STATUS BAR
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.dark),
@@ -65,15 +67,15 @@ class _ImageGalleryViewState extends State<ImageGalleryView> {
                       setState(() => _current = index + 1),
                   pageController:
                       PageController(initialPage: widget.currentIndex),
-                  scrollPhysics: BouncingScrollPhysics(),
+                  scrollPhysics: const BouncingScrollPhysics(),
                   itemCount: widget.images.length,
                   builder: buildGalleryImage,
-                  loadingBuilder: (context, event) => Center(
-                        child: const CircularProgressIndicator(
+                  loadingBuilder: (context, event) => const Center(
+                        child: CircularProgressIndicator(
                             valueColor:
                                 AlwaysStoppedAnimation(CodeRedColors.primary)),
                       )),
-              GalleryBackButton(),
+              const GalleryBackButton(),
               Positioned(
                 bottom: 20,
                 right: 0,
@@ -82,16 +84,17 @@ class _ImageGalleryViewState extends State<ImageGalleryView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 25),
                       decoration: BoxDecoration(
-                          color: Color.fromRGBO(0, 0, 0, 0.5),
+                          color: const Color.fromRGBO(0, 0, 0, 0.5),
                           borderRadius: BorderRadius.circular(25)),
                       child: Center(
                         child: Text(
-                          "${_current.toString()} of ${widget.images.length}",
+                          '${_current.toString()} of ${widget.images.length}',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16),
                         ),
                       ),
                     ),
@@ -132,10 +135,10 @@ class GalleryBackButton extends StatelessWidget {
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-              color: Color.fromRGBO(0, 0, 0, 0.5),
+              color: const Color.fromRGBO(0, 0, 0, 0.5),
               borderRadius: BorderRadius.circular(25)),
           child: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,
             ),
